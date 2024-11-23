@@ -1,0 +1,17 @@
+.dashboard {
+    .breadcrumb-link {
+        text-decoration: none;
+        color: #3E368C;
+        font-weight: 500;
+    }
+
+    .breadcrumb-icon {
+    }
+
+    .breadcrumb-item-active {
+        color: #6C757D;
+        font-weight: 500;
+    }
+
+    
+}
