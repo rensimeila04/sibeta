@@ -81,6 +81,22 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"></script>
     <script src="script.js"></script>
+
+    <script>
+      // Ambil URL saat ini
+      const currentPage = window.location.pathname.split("/").pop();
+
+      // Ambil semua elemen <a> di sidebar
+      const navLinks = document.querySelectorAll('a.sidebar-link');
+
+      // Loop semua link dan tambahkan class 'active' jika href cocok
+      navLinks.forEach(link => {
+        console.log(link.getAttribute('href'));
+          if (link.getAttribute('href') === currentPage) {
+              link.classList.add('sidebar-link-active');
+          }
+      });
+  </script>
   </body>
 
 </html>

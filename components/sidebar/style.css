@@ -108,6 +108,11 @@ a.sidebar-link:hover {
     color: #2E2767;
 }
 
+.sidebar-link-active {
+  background-color: #EAE9F7 !important;
+  color: #2E2767 !important;
+}
+
 a.sidebar-link-logout {
   padding: 8px 8px;
   color: #929AA7;

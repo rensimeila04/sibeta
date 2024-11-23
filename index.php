@@ -39,7 +39,7 @@
               <div class="card">
                 <div class="card-body">
                   <h6 class="text-secondary">Dokumen Diajukan</h6>
-                  <h1 class="text-primary">12</h1>
+                  <h1 class="text" style="color: #3E368C;">12</h1>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
               <div class="text-center">
                 <h5>Download Template Surat</h5>
                 <p class="text-muted">Lorem ipsum dolor sit amet consectetur. Feugiat proin aliquet.</p>
-                <a href="#" class="btn btn-primary" style="background-color: #3E368C;">Download Template</a>
+                <a href="#" class="btn" style="color:#fff; background-color: #3E368C;">Download Template</a>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
               <div class="fw-semibold fs-3">Dokumen Anda</div>
-              <a href="#" class="btn btn-primary" style="background-color: #3E368C;">Lihat Semua</a>
+              <a href="#" class="btn" style="color:#fff; background-color: #3E368C;">Lihat Semua</a>
             </div>
             <table class="table table-borderless">
               <thead>
