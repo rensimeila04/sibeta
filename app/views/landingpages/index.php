@@ -56,9 +56,11 @@
               </a>
             </li>
           </ul>
-          <button class="btn btn-masuk rounded-pill">
-            Masuk
-          </button>
+          <a href="app/views/login/index.php">
+            <button class="btn btn-masuk rounded-pill">
+              Masuk
+            </button>
+          </a>
         </div>
       </div>
     </nav>
