@@ -64,14 +64,14 @@ body {
 }
 
 .sidebar-logo {
-    margin: auto 0;
-}
-
-.sidebar-logo a {
-    color: #1D1942;
-    font-size: 1.15rem;
-    font-weight: 700;
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    text-align: center;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 
 #sidebar:not(.expand) .sidebar-logo,

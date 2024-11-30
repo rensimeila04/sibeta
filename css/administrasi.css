@@ -1,5 +1,6 @@
-.dashboard {
+.administrasi {
     .breadcrumb-link {
+        text-align: center;
         text-decoration: none;
         color: #3E368C;
         font-weight: 500;
@@ -19,5 +20,30 @@
     .badge text-bg-danger {
         padding: 6px;
     }
+    
+    .aksi{
+        display: flex;
+        gap: 15px;
+        .btn {
 
+            width: 35px;
+            height: 35px;
+            padding: 3px 3px 6px 3px;
+
+            img {
+                
+                width: 18px;
+                
+            }
+        }
+    }
+
+    .col-nama-dokumen {
+        width: 30%;
+    }
+
+    .col-tanggal {
+        width: 58%;
+    }
 }
+

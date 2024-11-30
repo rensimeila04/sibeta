@@ -24,8 +24,11 @@
           <ol class="breadcrumb">
 
             <li class="breadcrumb-item">
-              <i class="iconsax breadcrumb-icon" type="linear" stroke-width="1.5"
-                icon="home-1"></i>
+              <i class="breadcrumb-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 18V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M10.07 2.81997L3.14002 8.36997C2.36002 8.98997 1.86002 10.3 2.03002 11.28L3.36002 19.24C3.60002 20.66 4.96002 21.81 6.40002 21.81H17.6C19.03 21.81 20.4 20.65 20.64 19.24L21.97 11.28C22.13 10.3 21.63 8.98997 20.86 8.36997L13.93 2.82997C12.86 1.96997 11.13 1.96997 10.07 2.81997Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg></i>
               <a class="breadcrumb-link" href="#">SIBETA</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
@@ -88,7 +91,7 @@
               <div class="fw-semibold fs-3">Dokumen Anda</div>
               <a href="#" class="btn" style="color:#fff; background-color: #3E368C;">Lihat Semua</a>
             </div>
-            <table class="table table-borderless">
+            <table class="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">No</th>
