@@ -169,7 +169,7 @@ a.sidebar-link-logout:hover {
     border: solid;
     border-width: 0 .075rem .075rem 0;
     content: "";
-    display: inline-block;
+    display: flex;
     padding: 2px;
     position: absolute;
     right: 1.5rem;

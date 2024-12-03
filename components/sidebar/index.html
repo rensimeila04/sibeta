@@ -20,25 +20,27 @@
   <body>
     <aside id="sidebar" class="expand">
       <div class="d-flex justify-content-center align-items-center pt-4">
-          <img src="assets/logo.png">
+        <img src="assets/logo.png">
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="index.php" class="sidebar-link">
-            <i class="iconsax" type="linear" stroke-width="1.5"
-              icon="home-1"></i> 
-              <span>Dashboard</span>
+          <a href="index.php" class="sidebar-link d-flex align-items-center">
+            <img src="assets/icon/home.png" alt="home"
+              style="width: 24px; height: 23px; margin-right: 10px;">
+            <span>Dashboard</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link collapsed has-dropdown"
+          <a href="#"
+            class="sidebar-link collapsed has-dropdown d-flex align-items-center"
             data-bs-toggle="collapse"
-            data-bs-target="#unggah" aria-expanded="false" aria-controls="unggah">
-            <i class="iconsax" type="linear" stroke-width="1.5"
-              icon="document-upload"></i>
+            data-bs-target="#unggah" aria-expanded="false"
+            aria-controls="unggah">
+            <img src="assets/icon/upload.png" alt="home"
+              style="width: 24px; height: 23px; margin-right: 10px;">
             <span>Unggah Dokumen</span>
           </a>
-          <ul id="unggah" class="sidebar-dropdown list-unstyled collapse"
+          <ul id="unggah" class="sidebar-dropdown list-unstyled collapse w-25"
             data-bs-parent="#sidebar">
             <li class="sidebar-item">
               <a href="administrasi.php" class="sidebar-link">Administrasi</a>
@@ -49,24 +51,24 @@
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="dokumen.php" class="sidebar-link">
-            <i class="iconsax" type="linear" stroke-width="1.5"
-              icon="document-text-1"></i>
+          <a href="dokumen.php" class="sidebar-link d-flex align-items-center">
+            <img src="assets/icon/document.png" alt="home"
+              style="width: 24px; height: 23px; margin-right: 10px;">
             <span>Dokumen</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i class="iconsax" type="linear" stroke-width="1.5"
-              icon="headphone"></i>
+          <a href="#" class="sidebar-link d-flex align-items-center">
+            <img src="assets/icon/help.png" alt="home"
+              style="width: 24px; height: 23px; margin-right: 10px;">
             <span>Bantuan</span>
           </a>
         </li>
       </ul>
       <div class="sidebar-footer">
-        <a href="#" class="sidebar-link-logout">
-          <i class="iconsax" type="linear" stroke-width="1.5"
-            icon="logout-1" style="color: #CA3521;"></i>
+        <a href="#" class="sidebar-link-logout d-flex align-items-center">
+          <img src="assets/icon/logout.png" alt="home"
+            style="width: 24px; height: 23px; margin-right: 10px;">
           <span style="color: #CA3521;">Logout</span>
         </a>
       </div>
