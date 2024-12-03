@@ -223,6 +223,11 @@
     </div>
   </section>
 
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top-btn">
+    <i data-lucide="chevron-up"></i>
+  </button>
+
   <!-- Steps Section with rest of the content... -->
 
   <!-- Add Lucide Icons -->
@@ -261,6 +266,24 @@
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'all 0.6s ease-out';
       observer.observe(el);
+    });
+
+    // Back to Top Button functionality
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   </script>
 </body>
