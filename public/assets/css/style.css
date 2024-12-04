@@ -30,3 +30,18 @@ body {
     margin: 0 8px;
     color: #ADB5BD;
 }
+
+.btn-custom {
+    background-color: #3E368C !important; 
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: white !important; 
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.btn-custom:hover {
+    background-color: #2E2871 !important;
+    color: white !important;
+}
+

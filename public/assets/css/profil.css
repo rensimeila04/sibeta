@@ -1,0 +1,21 @@
+.profile-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .input-group-text {
+    background: transparent;
+    border-left: none;
+    cursor: pointer;
+}
+
+.password-wrapper .form-control {
+    border-right: none;
+}
