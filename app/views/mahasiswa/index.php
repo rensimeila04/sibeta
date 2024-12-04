@@ -23,18 +23,7 @@
             include '../components/header_mahasiswa.html';
             ?>
             <div class="p-3 dashboard">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <i class="breadcrumb-icon">
-                                <span class="material-symbols-outlined">
-                                    home
-                                </span></i>
-                            <a class="breadcrumb-link" href="#" style="text-align: center;">SIBETA</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                    </ol>
-                </nav>
+                
 
                 <div class="container mt-4">
                     <!-- Statistic Cards -->
