@@ -30,3 +30,22 @@ body {
     margin: 0 8px;
     color: #ADB5BD;
 }
+
+.aksi{
+    display: flex;
+    gap: 15px;
+    .btn {
+
+        width: 35px;
+        height: 35px;
+        padding: 3px 3px 6px 3px;
+    }
+}
+
+.col-nama-dokumen {
+    width: 30%;
+}
+
+.col-tanggal {
+    width: 58%;
+}
