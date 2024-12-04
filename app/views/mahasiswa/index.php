@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="../../../public/assets/css/header.css">
     <link rel="stylesheet" href="../../../public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="../../../public/assets/css/style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet" />
@@ -23,8 +23,12 @@
             include '../components/header_mahasiswa.html';
             ?>
             <div class="p-3 dashboard">
-                
-
+                <div class="breadcrumbs">
+                    <span class="material-symbols-outlined">home</span>
+                    <a href="#">SIBETA</a>
+                    <span class="separator">/</span>
+                    <span>Dashboard</span>
+                </div>
                 <div class="container mt-4">
                     <!-- Statistic Cards -->
                     <div class="row text-center mb-4">
