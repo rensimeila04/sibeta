@@ -29,7 +29,7 @@
                 </div>
 
                 <h5>Profil Admin Program Studi</h5>
-                
+
                 <!-- Profile admin Section -->
                 <div class="row mb-4 mt-4">
                     <div class="col-md-6">
@@ -44,18 +44,14 @@
                                         <input type="text" class="form-control" id="name" value="Rensi Meila Yulvinata">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim" value="2341720201">
+                                        <label for="nip" class="form-label">NIP</label>
+                                        <input type="text" class="form-control" id="nip" value="2341720201">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="class" class="form-label">Kelas</label>
-                                        <input type="text" class="form-control" id="class" value="TI-4E">
+                                    <div class="mb-4">
+                                        <label for="role" class="form-label">Peran</label>
+                                        <input type="text" class="form-control" id="role" value="Admin Program Studi" disabled>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="program" class="form-label">Program Studi</label>
-                                        <input type="text" class="form-control" id="program" value="D-IV Teknik Informatika">
-                                    </div>
-                                    <div class="text-center">
+                                    <div class="text-center py-3">
                                         <button type="submit" class="btn btn-custom">Simpan Perubahan</button>
                                     </div>
 
