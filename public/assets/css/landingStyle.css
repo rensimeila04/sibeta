@@ -268,7 +268,7 @@
     align-items: center;
     gap: 5.5rem;
     padding: 10rem 0rem;
-    background: var(--Primary-10, #eae9f7);
+    background: var(--Primary-10, #f7f7fc);
   }
   
   @media (max-width: 768px) {
@@ -621,7 +621,7 @@
     left: 0;
     width: 90rem;
     height: 44.375rem;
-    background: url("/sibeta/public/assets/images/Vector18.svg") no-repeat;
+    background: url("/sibeta/public/assets/img/GradientBg.svg") no-repeat;
     opacity: 1;
     /* Adjust transparency */
     z-index: 0;
@@ -677,11 +677,11 @@
   .footers::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 0;
+    right: 0;
     width: 87.28125rem;
     height: 43.1875rem;
-    background: url("/sibeta/public/assets/images/Vector17.svg") no-repeat;
+    background: url("/sibeta/public/assets/img/BgFooter.svg") no-repeat;
     background-size: cover; /* Ensure background scales */
     opacity: 1;
     z-index: 0; /* Keep behind content */

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIBETA - Sistem Informasi Bebas Tanggungan Tugas Akhir</title>
-  <link rel="icon" type="image/x-icon" href="/sibeta/public/assets/images/Logo-White.png">
+  <link rel="icon" type="image/x-icon" href="/sibeta/public/assets/img/Logo-White.png">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,13 +77,15 @@
             <p class="hero-description">
               Mempermudah mahasiswa menyelesaikan administrasi akhir kuliah dengan pengelolaan dokumen bebas tanggungan yang terstruktur dan tepat waktu.
             </p>
-            <button class="btn btn-ABT btn-lg rounded-pill">
-              Ajukan Bebas Tanggungan
-              <i data-lucide="arrow-right" class="me-2"></i>
-            </button>
+            <a href="app/views/login/index.php" style="text-decoration: none;">
+              <button class="btn btn-ABT btn-lg rounded-pill">
+                Ajukan Bebas Tanggungan
+                <i data-lucide="arrow-right" class="me-2"></i>
+              </button>
+            </a>
           </div>
           <div class="col-lg-6 hero-image">
-              <img src="/sibeta/public/assets/images/Dashboardimg.png">
+              <img src="/sibeta/public/assets/img/Dashboardimg.png">
           </div>
         </div>
       </div>
@@ -113,7 +115,7 @@
           </div>
         </div>
         <div class="col-lg-6 about-image mt-4 mt-lg-0">
-          <img src="/sibeta/public/assets/images/About.png" alt="">
+          <img src="/sibeta/public/assets/img/About.png" alt="">
         </div>
       </div>
     </div>
@@ -128,7 +130,7 @@
 
     <div class="features-items">
       <section class="items-holder">
-          <img src="/sibeta/public/assets/images/Kelola.png">
+          <img src="/sibeta/public/assets/img/Kelola.png">
         <div class="items-desc">
           <p class="items-title">Kelola</p>
           <div class="items-text">
@@ -145,10 +147,10 @@
             <p class="p-items">Mahasiswa dapat memantau status pengajuan dokumen mereka secara real-time, mulai dari diajukan, diverifikasi, hingga diterima atau ditolak, sehingga proses lebih transparan.</pf>
           </div>
         </div>
-        <img src="/sibeta/public/assets/images/Pantau.png">
+        <img src="/sibeta/public/assets/img/Pantau.png">
       </section>
       <section class="items-holder">
-        <img src="/sibeta/public/assets/images/Validasi.png">
+        <img src="/sibeta/public/assets/img/Validasi.png">
         <div class="items-desc">
           <p class="items-title">Validasi</p>
           <div class="items-text">
@@ -194,7 +196,7 @@
           </div>
         </div>
         <div class="col-lg-6 d-flex justify-content-center align-items-center">
-          <img src="/sibeta/public/assets/images/Administrasi.png" alt="">
+          <img src="/sibeta/public/assets/img/Administrasi.png" alt="">
       </div>
     </div>
   </section>
@@ -203,17 +205,19 @@
   <section class="footers">
     <div class="footers-section">
       <div class="cta-section">
-        <img src="/sibeta/public/assets/images/CTA.png" alt="">
+        <img src="/sibeta/public/assets/img/CTA.png" alt="">
         <div class="footer-desc text-white">
           <h3 class="footer-h3">Permudah Administrasi Bebas Tanggungan</h3>
           <p class="footer-p">Urus proses bebas tanggungan Anda dengan SI BETA! Unggah dokumen, lacak perkembangan, dan peroleh status bebas tanggungan dengan mudah.</p>
           <div class="btn-cont rounded-pill">
+            <a href="app/views/login/index.php">
             <button class="btn-footer text-white">Ajukan Bebas Tanggungan</button>
+            </a>
           </div>
         </div>
       </div>
       <div class="copyright-sect">
-        <img src="public/assets/images/Sibeta_White.svg" alt="">
+        <img src="/sibeta/public/assets/img/Sibeta_White.svg" alt="">
         <p class="copyright">© 2024. Create with ❤ by Kelompok 3 TI-2E</p>
       </div>
     </div>
