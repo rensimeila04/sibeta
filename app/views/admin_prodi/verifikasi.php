@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="../components/sidebar_admin.html">
     <link rel="stylesheet" href="../components/header_admin.html">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
@@ -16,6 +15,28 @@
         <?php
         include '../components/sidebar_admin.html';
         ?>
+        <!-- Modal -->
+        <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rejectModalLabel">Konfirmasi Penolakan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah Anda yakin menolak Surat Bebas Kompen?</p>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Komentar</label>
+                            <textarea class="form-control" id="comment" rows="3" placeholder="Tambahkan komentar"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="rejectButton">Tolak Dokumen</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="main">
             <?php
             include '../components/header_admin.html';
@@ -58,7 +79,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end gap-3">
-                            <button class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                            <button class="btn btn-outline-danger btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#rejectModal">
                                 <span class="material-symbols-outlined me-2">close</span>Tolak
                             </button>
                             <button class="btn btn-success btn-sm d-flex align-items-center">
