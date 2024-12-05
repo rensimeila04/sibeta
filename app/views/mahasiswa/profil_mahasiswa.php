@@ -14,11 +14,11 @@
 <body>
     <div class="wrapper">
         <?php
-        include '../components/sidebar_admin.html';
+        include '../components/sidebar_mahasiswa.html';
         ?>
         <div class="main">
             <?php
-            include '../components/header_admin.html';
+            include '../components/header_mahasiswa.html';
             ?>
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
