@@ -5,9 +5,10 @@
     <link rel="stylesheet" href="../components/sidebar_admin.html">
     <link rel="stylesheet" href="../components/header_admin.html">
     <link rel="stylesheet" href="../../../public/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil</title>
+    <title>Verifikasi Dokumen</title>
 </head>
 
 <body>
