@@ -25,10 +25,10 @@
                     <span class="material-symbols-outlined">home</span>
                     <a href="#">SIBETA</a>
                     <span class="separator">/</span>
-                    <span>Profil</span>
+                    <span>Profil Petugas</span>
                 </div>
 
-                <h5>Profil Admin Program Studi</h5>
+                <h5>Profil Petugas</h5>
 
                 <!-- Profile admin Section -->
                 <div class="row mb-4 mt-4">
