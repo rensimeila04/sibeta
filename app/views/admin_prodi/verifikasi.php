@@ -27,42 +27,49 @@
                     <span class="separator">/</span>
                     <a href="#">Kelola Dokumen</a>
                     <span class="separator">/</span>
-                    <a href="#">Detal Mahasiswa</a>
+                    <a href="#">Detail Mahasiswa</a>
                     <span class="separator">/</span>
                     <span>Detail Dokumen</span>
                 </div>
 
-                <div class="detail-dokumen-card">
-                <h2 class="title">Detail Dokumen</h2>
-                <div class="dokumen-info">
-                    <div class="info-row">
-                        <span class="label">Nama Dokumen</span>
-                        <span class="value">Surat Bebas Kompen</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Jenis Dokumen</span>
-                        <span class="value">Administratif</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Tanggal Upload</span>
-                        <span class="value">12 November 2024</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="label">Dokumen</span>
-                        <span class="value">Surat_Kompen_Rensi.pdf
-                            <a href="#" class="btn-view">
-                                <i class="bi bi-eye"></i> Lihat
-                            </a>
-                        </span>
+                <div class="card card-body">
+                    <div class="p-3">
+                        <h3 class="mb-4">Detail Dokumen</h3>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="info-row">
+                                <span class="label">Nama Dokumen</span>
+                                <span class="value">Surat Bebas Kompen</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Jenis Dokumen</span>
+                                <span class="value">Administratif</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Tanggal Upload</span>
+                                <span class="value">12 November 2024</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="label">Dokumen</span>
+                                <span class="value">Surat_Kompen_Rensi.pdf
+                                    <a href="#" class="btn btn-detail btn-sm ms-3">
+                                        <i class="bi bi-eye"></i> Lihat
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-3">
+                            <button class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                                <span class="material-symbols-outlined me-2">close</span>Tolak
+                            </button>
+                            <button class="btn btn-success btn-sm d-flex align-items-center">
+                                <span class="material-symbols-outlined me-2">done_all</span>Verifikasi
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="dokumen-actions">
-                    <button class="btn btn-danger">✖ Tolak</button>
-                    <button class="btn btn-success">✔ Verifikasi</button>
-                </div>
+
             </div>
         </div>
-    </div>
 </body>
 
 </html>
