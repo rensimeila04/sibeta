@@ -1,32 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 body {
-    font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .breadcrumbs {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #6C757D;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #6c757d;
 }
 
 .breadcrumbs .material-symbols-outlined {
-    font-size: 20px;
-    margin-right: 8px;
-    color: #3E368C;
+  font-size: 20px;
+  margin-right: 8px;
+  color: #3e368c;
 }
 
 .breadcrumbs a {
-    font-weight: 600;
-    color: #3E368C;
-    text-decoration: none;
+  font-weight: 600;
+  color: #3e368c;
+  text-decoration: none;
 }
 
 .breadcrumbs a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .breadcrumbs .separator {
-    margin: 0 8px;
-    color: #ADB5BD;
+  margin: 0 8px;
+  color: #adb5bd;
+}
+
+.btn-detail {
+  background-color: #3e368c !important;
+  color: white !important;
+}
+
+.btn-detail:hover {
+  background-color: #2e2767 !important;
 }
