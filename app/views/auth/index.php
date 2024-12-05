@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | SIBETA</title>
-    <link rel="icon" type="image/x-icon" href="/sibeta/public/assets/images/Logo-White.png">
+    <link rel="icon" type="image/x-icon" href="/sibeta/public/assets/img/Logo-White.png">
 
     <link rel="stylesheet" type="text/css" href="/sibeta/public/assets/css/loginStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWXg6Pkd6qGmW+g6rekW7QzQfffpfKv+aT+tfczX+6qR" crossorigin="anonymous">
@@ -21,7 +21,7 @@
 </button>
 
     <div class="login-card">
-        <img src="/sibeta/public/assets/images/Sibeta-Blue.svg" alt="Sibeta Logo" class="login-logo">
+        <img src="/sibeta/public/assets/img/Sibeta-Blue.svg" alt="Sibeta Logo" class="login-logo">
         <div class="login-title">
             <div class="login-title-desc">
                 <h4>Selamat Datang!</h4>

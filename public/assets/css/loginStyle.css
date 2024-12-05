@@ -30,7 +30,7 @@
       #f46dee 100%
     );
     filter: blur(42px);
-    background: url("/sibeta/public/assets/images/Rectangle5.svg") no-repeat;
+    background: url("/sibeta/public/assets/img/BgLogin.svg") no-repeat;
     opacity: 1;
     /* Adjust transparency */
     z-index: 0;
