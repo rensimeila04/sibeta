@@ -31,7 +31,7 @@
                     <span class="separator">/</span>
                     <span>Dashboard</span>
                 </div>
-                <div class="container mt-4">
+                <div class="container mt-4 px-4">
                     <!-- Statistic Cards -->
                     <div class="row text-center mb-4">
                         <div class="col-md-3">

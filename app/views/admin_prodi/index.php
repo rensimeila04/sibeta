@@ -31,7 +31,7 @@
                     <span class="separator">/</span>
                     <span>Dashboard</span>
                 </div>
-                <div class="container mt-4">
+                <div class="container mt-4 px-4">
                     <!-- Statistic Cards -->
                     <div class="row text-center mb-4">
                         <div class="col-md-3">
@@ -78,7 +78,7 @@
                             <button class="btn btn-detail btn-sm">Lihat Semua</button>
                         </div>
                         <div class="py-3">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-borderless">
                                 <?php
                                 $mahasiswa = [
                                     [
@@ -138,7 +138,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
-                                    <?php foreach ($mahasiswa as $mhs): ?>
+                                    <?php foreach ($mahasiswa as $index => $mhs) : ?>
                                         <tr>
                                             <td><?php echo $no++; ?></td>
                                             <td><?php echo $mhs['nim']; ?></td>
@@ -146,7 +146,9 @@
                                             <td><?php echo $mhs['program_studi']; ?></td>
                                             <td><?php echo $mhs['kelas']; ?></td>
                                             <td><?php echo $mhs['tanggal_upload']; ?></td>
-                                            <td><button class="btn btn-detail btn-sm">Detail</button></td>
+                                            <td><a href="detail.php?index=<?= $index ?>"
+                                                class="btn btn-detail btn-sm">Detail</a>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -176,6 +178,7 @@
         </div>
     </div>
     </div>
+    <script></script>
 </body>
 
 </html>

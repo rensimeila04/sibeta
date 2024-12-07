@@ -26,10 +26,10 @@
                     <span class="material-symbols-outlined">home</span>
                     <a href="#">SIBETA</a>
                     <span class="separator">/</span>
-                    <span>Riwayat Pengajuan</span>
+                    <span>Kelola Dokumen</span>
                 </div>
                 <div class="mb-3">
-                    <h2>Riwayat Pengajuan</h2>
+                    <h2>Kelola Dokumen</h2>
                 </div>
 
                 <div class="container">
