@@ -1,76 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-
 body {
-  font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  color: #6c757d;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #6C757D;
 }
 
 .breadcrumbs .material-symbols-outlined {
-  font-size: 20px;
-  margin-right: 8px;
-  color: #3e368c;
+    font-size: 20px;
+    margin-right: 8px;
+    color: #3E368C;
 }
 
 .breadcrumbs a {
-  font-weight: 600;
-  color: #3e368c;
-  text-decoration: none;
+    font-weight: 600;
+    color: #3E368C;
+    text-decoration: none;
 }
 
 .breadcrumbs a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .breadcrumbs .separator {
-  margin: 0 8px;
-  color: #adb5bd;
-}
-
-.btn-custom {
-  background-color: #3e368c !important;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  color: white !important;
-  border: none;
-  border-radius: 0.25rem;
-}
-
-.btn-custom:hover {
-  background-color: #2e2871 !important;
-  color: white !important;
-}
-
-.btn-detail {
-  background-color: #3e368c !important;
-  color: white !important;
-}
-
-.btn-detail:hover {
-  background-color: #2e2767 !important;
-}
-
-.info-row {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-}
-
-.label {
-  font-weight: medium;
-  color: #1e1e1e;
-  text-align: left;
-  font-size: 16px;
-}
-
-.value {
-  color: #6C757D;
-  text-align: left;
+    margin: 0 8px;
+    color: #ADB5BD;
 }

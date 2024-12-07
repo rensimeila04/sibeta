@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 ::after,
 ::before {
   box-sizing: border-box;
@@ -85,10 +86,9 @@ body {
 }
 
 a.sidebar-link {
-  padding: 8px 8px;
+  padding: 8px 12px;
   color: #929aa7;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin: 0;
   display: block;
   font-size: 16px;
   font-weight: 500;
@@ -96,11 +96,15 @@ a.sidebar-link {
   border-left: 3px solid transparent;
   text-decoration: none;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sidebar-link i {
   font-size: 20px;
   margin-right: 6px;
+  display: block;
+  width: 100%;
 }
 
 a.sidebar-link:hover {
@@ -114,10 +118,9 @@ a.sidebar-link:hover {
 }
 
 a.sidebar-link-logout {
-  padding: 8px 8px;
+  padding: 8px 12px;
   color: #929aa7;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin: 0;
   display: block;
   font-size: 16px;
   font-weight: 500;
@@ -125,6 +128,8 @@ a.sidebar-link-logout {
   border-left: 3px solid transparent;
   text-decoration: none;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .sidebar-link-logout i {
@@ -139,6 +144,8 @@ a.sidebar-link-logout:hover {
 
 .sidebar-item {
   position: relative;
+  width: 100%;
+  flex: 1;
 }
 
 #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
@@ -147,22 +154,52 @@ a.sidebar-link-logout:hover {
   left: 70px;
   background-color: #fff;
   padding: 0;
-  min-width: 15rem;
+  min-width: 190px;
   display: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 4px;
 }
 
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
-  display: block;
+  display: flex;
   max-height: 15em;
   width: 100%;
   opacity: 1;
 }
 
 .list-unstyled {
-  margin-left: 41px;
-  border-left: 2px solid #ededed;
+  margin-left: 0;
+  border-left: none;
   padding-left: 0;
   list-style: none;
+  width: 100%;
+}
+
+.sidebar-dropdown .sidebar-item {
+  width: 100%;
+}
+
+.sidebar-dropdown .sidebar-link {
+  padding: 8px 12px 8px 54px;
+  width: 100%;
+  display: block;
+  color: #929aa7;
+  transition: all 0.3s ease;
+}
+
+.sidebar-dropdown .sidebar-link:hover {
+  background-color: #eae9f7;
+  color: #2e2767;
+  width: 100%;
+}
+
+#sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown .sidebar-link {
+  width: 100%;
+  padding: 8px 16px;
+}
+
+#sidebar.expand .sidebar-dropdown {
+  width: 100%;
 }
 
 #sidebar.expand .sidebar-link[data-bs-toggle="collapse"]::after {
@@ -172,7 +209,7 @@ a.sidebar-link-logout:hover {
   display: flex;
   padding: 2px;
   position: absolute;
-  right: 1.5rem;
+  right: 1rem;
   top: 1.4rem;
   transform: rotate(-135deg);
   transition: all 0.2s ease-out;
