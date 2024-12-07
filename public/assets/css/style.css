@@ -3,6 +3,10 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+h5 {
+    margin-top: 20px;
+}
+
 .breadcrumbs {
     display: flex;
     align-items: center;
@@ -30,3 +34,4 @@ body {
     margin: 0 8px;
     color: #ADB5BD;
 }
+
