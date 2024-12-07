@@ -101,6 +101,8 @@ a.sidebar-link {
 .sidebar-link i {
   font-size: 20px;
   margin-right: 6px;
+  display: block;
+  width: 100%;
 }
 
 a.sidebar-link:hover {
@@ -139,6 +141,8 @@ a.sidebar-link-logout:hover {
 
 .sidebar-item {
   position: relative;
+  width: 100%;
+  flex: 1;
 }
 
 #sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
@@ -152,7 +156,7 @@ a.sidebar-link-logout:hover {
 }
 
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
-  display: block;
+  display: flex;
   max-height: 15em;
   width: 100%;
   opacity: 1;
