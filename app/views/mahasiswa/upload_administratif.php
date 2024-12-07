@@ -86,7 +86,7 @@ if (isset($_SESSION['all_documents_completed']) && $_SESSION['all_documents_comp
     <title>Administrasi - SIBETA</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=home" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <!-- Include Bootstrap JS and Popper.js -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </head>
@@ -145,12 +145,12 @@ if (isset($_SESSION['all_documents_completed']) && $_SESSION['all_documents_comp
                             <!-- Buttons and Search Section -->
                             <?php if ($showView !== 'completed'): ?>
                                 <div class="d-flex justify-content-between mb-3">
-                                    <div class="input-group w-25">
+                                    <div class="input-group w-25" style="border-radius: 8px;">
                                         <span class="input-group-text" id="basic-addon1" style="background-color: #FFFFFF;">
-                                            <span class="material-symbols-outlined">search</span>
+                                            <i class="bi bi-search" style="color: #ADB5BD; font-size: 16px;"></i>
                                         </span>
-                                        <input type="text" class="form-control" placeholder="Cari dokumen..." aria-label="Search">
-                                        <button class="btn" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: 35px;">Cari</button>
+                                        <input type="text" class="form-control" placeholder="Cari dokumen..." aria-label="Sarch" aria-describedby="basic-addon1" style="border-left: none;">
+                                        <button class="btn" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                                     </div>
                                     <a href="#" class="btn" style="color:#fff; background-color: #3E368C;" data-bs-toggle="modal" data-bs-target="#tambahDokumen">Tambah Dokumen</a>
                                 </div>
