@@ -36,7 +36,7 @@
                     <div class="row text-center mb-4">
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Diajukan</h6>
                                     <h1 class="text" style="color: #3E368C;">12</h1>
                                 </div>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Menunggu Verifikasi</h6>
                                     <h1 class="text-warning">5</h1>
                                 </div>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Terverifikasi</h6>
                                     <h1 class="text-success">4</h1>
                                 </div>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Ditolak</h6>
                                     <h1 class="text-danger">3</h1>
                                 </div>
@@ -68,9 +68,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            
 
-            <div class="container px-4">
+            <div class="container px-4 mt-4">
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between mb-3">
@@ -151,9 +151,26 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+
+                            <div class="pagination mt-5">
+                            <span>Total 10 items</span>
+                            <div class="pagination-nav">
+                                <a href="#" class="arrow">&laquo;</a>
+                                <a href="#" class="active">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">6</a>
+                                <span>...</span>
+                                <a href="#">20</a>
+                                <a href="#" class="arrow">&raquo;</a>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
         </div>
