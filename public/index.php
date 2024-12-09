@@ -48,6 +48,15 @@ switch ($page) {
         break;
 
     case 'mahasiswa':
+
+        $nim = $_SESSION['nim'];
+        $mahasiswaController = new MahasiswaController($conn);
+
+        $documentCounts = $mahasiswaController->getDocumentCounts($nim);
+
+        $documents = $mahasiswaController->getDocuments($nim);
+
+        
         include '../app/views/mahasiswa/index.php';
         break;
 
@@ -57,6 +66,9 @@ switch ($page) {
 
     case 'teknisi':
         include '../app/views/teknisi/index.php';
+        break;
+    case 'upload-administratif':
+        include '../app/views/mahasiswa/upload_administratif.php';
         break;
 
     default:

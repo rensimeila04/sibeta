@@ -1,12 +1,3 @@
-<?php
-$nim = $_SESSION['nim']; 
-$mahasiswaController = new MahasiswaController($conn);
-
-$documentCounts = $mahasiswaController->getDocumentCounts($nim);
-
-$documents = $mahasiswaController->getDocuments($nim);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
