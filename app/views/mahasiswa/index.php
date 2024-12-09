@@ -37,7 +37,7 @@ $documents = $mahasiswaController->getDocuments($nim);
                     <div class="row text-center mb-4">
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Diajukan</h6>
                                     <h1 class="text" style="color: #3E368C;"><?php echo $documentCounts['diajukan']; ?></h1>
                                 </div>
@@ -45,7 +45,7 @@ $documents = $mahasiswaController->getDocuments($nim);
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Menunggu Verifikasi</h6>
                                     <h1 class="text-warning"><?php echo $documentCounts['diajukan']; ?></h1>
                                 </div>
@@ -53,7 +53,7 @@ $documents = $mahasiswaController->getDocuments($nim);
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Terverifikasi</h6>
                                     <h1 class="text-success"><?php echo $documentCounts['terverifikasi']; ?></h1>
                                 </div>
@@ -61,7 +61,7 @@ $documents = $mahasiswaController->getDocuments($nim);
                         </div>
                         <div class="col-md-3">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Ditolak</h6>
                                     <h1 class="text-danger"><?php echo $documentCounts['ditolak']; ?></h1>
                                 </div>
@@ -79,9 +79,8 @@ $documents = $mahasiswaController->getDocuments($nim);
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="container p-4">
+            <div class="container px-4 mt-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
@@ -118,6 +117,7 @@ $documents = $mahasiswaController->getDocuments($nim);
                         </table>
                     </div>
                 </div>
+            </div>
             </div>
 
         </div>
