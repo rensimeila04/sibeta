@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../../../public/assets/css/header.css">
-    <link rel="stylesheet" href="../../../public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="../../../public/assets/css/style.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/header.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet" />
@@ -17,13 +17,9 @@
 
 <body>
     <div class="wrapper">
-        <?php
-        include '../components/sidebar_admin.html';
-        ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_admin.php"; ?>
         <div class="main">
-            <?php
-            include '../components/header_admin.html';
-            ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-3 dashboard">
                 <div class="breadcrumbs ps-3">
                     <span class="material-symbols-outlined">home</span>

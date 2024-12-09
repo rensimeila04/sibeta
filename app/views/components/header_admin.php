@@ -25,7 +25,7 @@
 
                 <div
                     class="profile-settings d-flex flex-row align-items-center">
-                    <img src="../../../public/assets/img/avatar.png" alt>
+                    <img src="/sibeta/public/assets/img/avatar.png" alt>
                     <div class="dropdown">
                         <button
                             class="border-0 bg-transparent d-flex align-items-center"

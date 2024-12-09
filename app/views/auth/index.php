@@ -6,19 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | SIBETA</title>
     <link rel="icon" type="image/x-icon" href="/sibeta/public/assets/img/Logo-White.png">
-
     <link rel="stylesheet" type="text/css" href="/sibeta/public/assets/css/loginStyle.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWXg6Pkd6qGmW+g6rekW7QzQfffpfKv+aT+tfczX+6qR" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 
 <body>
-
-<button class="back-button">
-    <a href="/sibeta/index.php">
-        <i data-lucide="arrow-left" class="me-2"></i>
-    </a>
-</button>
+    <button class="back-button">
+        <a href="../landing/">
+            <i data-lucide="arrow-left" class="me-2"></i>
+        </a>
+    </button>
 
     <div class="login-card">
         <img src="/sibeta/public/assets/img/Sibeta-Blue.svg" alt="Sibeta Logo" class="login-logo">
@@ -28,7 +25,7 @@
                 <p>Masuk sebagai mahasiswa, admin, atau teknisi untuk mengelola proses bebas tanggungan</p>
             </div>
         </div>
-        <form class="input-sect">
+        <form class="input-sect" method="POST" action="/sibeta/public/index.php?page=login">
             <div class="input-container">
                 <p>Username</p>
                 <div class="input-field">
@@ -43,17 +40,14 @@
             </div>
             <a href="#" class="forgot-password">Lupa Password?</a>
             <div class="btn-cont">
-                <button type="submit" class="btn-sect">
-                    Masuk
-                </button>
+                <button type="submit" class="btn-sect">Masuk</button>
             </div>
         </form>
     </div>
 
     <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
+    <script>
+        lucide.createIcons();
     </script>
 </body>
 

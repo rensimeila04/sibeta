@@ -56,7 +56,7 @@
               </a>
             </li>
           </ul>
-          <a href="app/views/login/index.php">
+          <a href="/sibeta/public/index.php?page=login">
             <button class="btn btn-masuk rounded-pill">
               Masuk
             </button>

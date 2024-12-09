@@ -20,7 +20,7 @@
   <body>
     <aside id="sidebar" class="expand">
       <div class="d-flex justify-content-center align-items-center pt-4">
-        <img src="../../../public/assets/img/logo.png">
+        <img src="/sibeta/public/assets/img/logo.png">
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
