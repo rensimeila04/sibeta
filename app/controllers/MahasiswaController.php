@@ -29,6 +29,16 @@ class MahasiswaController
         return $this->mahasiswaModel->getAllDocuments($nim);
     }
 
+    public function getDocumentById($id)
+    {
+        try {
+            return $this->mahasiswaModel->getDocumentById($id);
+        } catch (Exception $e) {
+            // Tangani error atau tampilkan pesan error ke user
+            return null;
+        }
+    }
+
     public function getDocumentsByType($nim, $tipe)
     {
         // Mengambil dokumen berdasarkan tipe

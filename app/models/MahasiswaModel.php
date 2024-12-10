@@ -44,6 +44,22 @@ class MahasiswaModel
         }
     }
 
+    public function getDocumentById($id)
+    {
+        try {
+            $sql = "SELECT d.DokumenID, jd.NamaDokumen, jd.Tipe, d.TanggalUpload, d.Status, d.FilePath, d.KomentarRevisi
+                    FROM Dokumen d
+                    JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
+                    WHERE d.DokumenID = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
     // Mengambil dokumen berdasarkan Type
     public function getDocumentsByType($nim, $tipe)
     {
@@ -276,7 +292,6 @@ class MahasiswaModel
                 if ($fileExtension !== 'pdf') {
                     throw new Exception("File harus berformat PDF.");
                 }
-
             }
 
             // Sisa kode sama seperti sebelumnya

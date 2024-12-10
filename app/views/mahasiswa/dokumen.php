@@ -85,8 +85,8 @@ $documents = $mahasiswaController->getDocuments($nim);
                                             </td>
                                             <td>
                                                 <div class="aksi">
-                                                    <a href="/sibeta/public/index.php?page=detail-dokumen-mahasiswa" style="text-decoration: none;">
-                                                        <button type="button" class="btn" style="color:#FFFFFF; background-color: #3E368C;">
+                                                    <a href="/sibeta/public/index.php?page=detail-dokumen-mahasiswa&id=<?php echo $document['DokumenID']; ?>" style="text-decoration: none;">
+                                                        <button type="button" class="btn btn-detail">
                                                             Detail
                                                         </button>
                                                     </a>
