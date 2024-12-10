@@ -70,9 +70,13 @@ switch ($page) {
     case 'upload-administratif':
         include '../app/views/mahasiswa/upload_administratif.php';
         break;
+    case 'upload-teknis':
+        include '../app/views/mahasiswa/upload_teknis.php';
+        break;
+    case 'dokumen':
+        include '../app/views/mahasiswa/dokumen.php';
 
     default:
-        // Default page if no match
         echo "Halaman tidak ditemukan.";
         break;
 }

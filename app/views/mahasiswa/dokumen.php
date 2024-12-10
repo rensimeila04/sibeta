@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../../../public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="../../../public/assets/css/header.css">
-    <link rel="stylesheet" href="../../../public/assets/css/style.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/header.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,9 @@
 
 <body>
     <div class="wrapper">
-        <?php
-        include '../components/sidebar_mahasiswa.html';
-        ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_mahasiswa.php"; ?>
         <div class="main">
-            <?php
-            include '../components/header_mahasiswa.html';
-            ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_mahasiswa.php"; ?>
             <div class="dokumen p-3">
                 <div class="breadcrumbs">
                     <span class="material-symbols-outlined">home</span>
