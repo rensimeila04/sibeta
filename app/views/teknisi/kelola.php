@@ -20,76 +20,51 @@
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>
-                    <a href="#">SIBETA</a>
+                    <a href="/sibeta/public/index.php?page=<?php echo $role; ?>">SIBETA</a>
                     <span class="separator">/</span>
                     <span>Kelola Dokumen</span>
                 </div>
+                <div class="mb-3">
+                    <h2>Kelola Dokumen</h2>
+                </div>
 
                 <div class="container">
-                    <div class="d-flex flex-column mb-3">
-                        <h2>Detail Mahasiswa</h2>
-                        <br><br>
-                        <div class="d-flex align-items-center mb-3">
-                            <p class="fw-bold me-3">Nama:</p>
-                            <p><?= $documentsMahasiswa[0]['NamaMahasiswa'] ?></p>
+                    <div class="d-flex justify-content-between mb-3 align-self-start">
+                        <div class="input-group w-25" style="border-radius: 8px;">
+                            <span class="input-group-text" id="basic-addon1" style="background-color: #FFFFFF;">
+                                <i class="bi bi-search" style="color: #ADB5BD; font-size: 16px;"></i>
+                            </span>
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari mahasiswa..." aria-label="Sarch" aria-describedby="basic-addon1" style="border-left: none;">
+                            <button class="btn" id="searchButton" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                         </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <p class="fw-bold me-3">NIM:</p>
-                            <p><?= $documentsMahasiswa[0]['Nim'] ?></p>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <p class="fw-bold me-3">Program Studi:</p>
-                            <p><?= $documentsMahasiswa[0]['ProgramStudi'] ?></p>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <p class="fw-bold me-3">Kelas:</p>
-                            <p><?= $documentsMahasiswa[0]['Kelas'] ?></p>
-                        </div>
-
                     </div>
 
-
                     <div class="table-container w-100">
-                        <table class="table table-striped table-borderless">
+                        <table class="table table-striped table-borderless" id="documentsTable">
                             <thead>
                                 <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Nama Dokumen</th>
-                                    <th scope="col">Tanggal Upload</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Aksi</th>
-                                    <th scope="col">Verifikasi</th>
+                                    <th>No</th>
+                                    <th>NIM</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Program Studi</th>
+                                    <th>Kelas</th>
+                                    <th>Tanggal Upload</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1;
-                                foreach ($documentsMahasiswa as $data) {
+                                foreach ($documents as $data) {
                                     $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload']));
                                     echo "<tr>
-                                                    <th scope='row'>$no</th>
-                                                    <td>$data[NamaDokumen]</td>
-                                                    <td>$data[TanggalUpload]</td>
-                                                    <td>
-                                                        <p class='" . ($data['Status'] === 'Diverifikasi' ? 'status-diverifikasi' : ($data['Status'] === 'Diajukan' ? 'status-diajukan' : ($data['Status'] === 'Ditolak' ? 'status-ditolak' : 'status-unknown'))) ." fw-semibold px-4'>"
-                                                        . htmlspecialchars($data['Status']) . "
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                    <a href='/sibeta/public/index.php?page=detail' class='btn btn-preview'><span class='material-symbols-outlined '>visibility</span></a>
-                                                    <a href='/sibeta/public/index.php?page=download' class='btn btn-custom2 btn-sm '><span class='material-symbols-outlined'>download_2</span></a>
-                                                    </td>
-                                                    <td>
-                                                        <a href='/sibeta/public/index.php?page=verifikasi&id=" . $data['DokumenID'] . "'
-                                                            class='btn btn-custom btn-sm d-flex justify-content-center" .
-                                                            (($data['Status'] === 'Diverifikasi' || $data['Status'] === 'Ditolak') ? " disabled" : "") .
-                                                            "' style='" .
-                                                            (($data['Status'] === 'Diverifikasi' || $data['Status'] === 'Ditolak') ? "pointer-events: none; opacity: 0.5;" : "") .
-                                                            "'>
-                                                            <span class='material-symbols-outlined' style='font-size: 18px; padding-top:2px'>done_all</span>
-                                                            Verifikasi
-                                                        </a>
-                                                    </td>
-                                                </tr>";
+                                    <th scope='row'>$no</th>
+                                    <td>$data[Nim]</td>
+                                    <td>$data[NamaMahasiswa]</td>
+                                    <td>$data[ProgramStudi]</td>
+                                    <td>$data[Kelas]</td>
+                                    <td>$TanggalUpload</td>
+                                    <td><a href='/sibeta/public/index.php?page=detail-mahasiswa&nim=" . $data['Nim'] . "' class='btn btn-detail btn-sm'>Detail</a></td>
+                                </tr>";
                                     $no++;
                                 }
                                 ?>
@@ -114,13 +89,41 @@
 
                     </div>
                 </div>
-
             </div>
 
         </div>
+
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script>
+        // Get the search input and table
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('documentsTable');
+        const rows = table.getElementsByTagName('tr');
+
+        // Function to filter table rows based on search
+        function filterTable() {
+            const filter = searchInput.value.toLowerCase();
+
+            // Loop through all table rows
+            for (let i = 1; i < rows.length; i++) { // Start at 1 to skip the header
+                const cells = rows[i].getElementsByTagName('td');
+                const studentName = cells[1] ? cells[1].textContent || cells[1].innerText : ''; // Get Nama Mahasiswa column
+
+                // Check if student name matches the search input
+                if (studentName.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = ''; // Show the row
+                } else {
+                    rows[i].style.display = 'none'; // Hide the row
+                }
+            }
+        }
+
+        // Add event listener to the search input field
+        searchInput.addEventListener('keyup', filterTable);
+    </script>
 </body>
 
 </html>

@@ -18,21 +18,23 @@
         <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="rejectModalLabel">Konfirmasi Penolakan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Apakah Anda yakin menolak Surat Bebas Kompen?</p>
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Komentar</label>
-                            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Tambahkan komentar"></textarea>
+                    <form action="/sibeta/public/index.php?page=verifikasi&id=<?= $id ?>&aksi=reject" method="POST">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="rejectModalLabel">Konfirmasi Penolakan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="/sibeta/public/index.php?page=verifikasi&id=<?= htmlspecialchars($id) ?>&aksi=reject" type="button" class="btn btn-danger" id="rejectButton">Tolak Dokumen</a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin menolak Surat Bebas Kompen?</p>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Komentar</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Tambahkan komentar" required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" id="rejectButton">Tolak Dokumen</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -48,23 +50,22 @@
                         <p>Apakah Anda yakin menyetujui Surat Bebas Kompen?</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="/sibeta/public/index.php?page=verifikasi&id=<?= htmlspecialchars($documentsMahasiswa[0]['DokumenID']) ?>&aksi=verify" type="button" class="btn btn-primary" id="verifyButton">Setujui Dokumen</a>
+                        <a href="/sibeta/public/index.php?page=verifikasi&id=<?= $id ?>&aksi=verify" type="button" class="btn btn-primary" id="verifyButton">Setujui Dokumen</a>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="main">
             <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>
-                    <a href="#">SIBETA</a>
+                    <a href="/sibeta/public/index.php?page=<?php echo $role; ?>">SIBETA</a>
                     <span class="separator">/</span>
-                    <a href="#">Kelola Dokumen</a>
+                    <a href="/sibeta/public/index.php?page=kelola">Kelola Dokumen</a>
                     <span class="separator">/</span>
-                    <a href="#">Detail Mahasiswa</a>
+                    <a href="/sibeta/public/index.php?page=detail-mahasiswa&nim=<?= $documentsMahasiswa[0]['Nim'] ?>">Detail Mahasiswa</a>
                     <span class="separator">/</span>
                     <span>Detail Dokumen</span>
                 </div>
@@ -107,12 +108,21 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end gap-3">
-                            <button class="btn btn-outline-danger btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                            <button
+                                class="btn btn-outline-danger btn-sm d-flex align-items-center"
+                                data-bs-toggle="modal"
+                                data-bs-target="#rejectModal"
+                                <?= ($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') ? 'disabled' : '' ?>>
                                 <span class="material-symbols-outlined me-2">close</span>Tolak
                             </button>
-                            <button class="btn btn-success btn-sm d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#verifyModal">
+                            <button
+                                class="btn btn-success btn-sm d-flex align-items-center"
+                                data-bs-toggle="modal"
+                                data-bs-target="#verifyModal"
+                                <?= ($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') ? 'disabled' : '' ?>>
                                 <span class="material-symbols-outlined me-2">done_all</span>Verifikasi
                             </button>
+
                         </div>
                     </div>
                 </div>
