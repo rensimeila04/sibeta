@@ -31,7 +31,7 @@ class MahasiswaModel
     public function getAllDocuments($nim)
     {
         try {
-            $sql = "SELECT d.DokumenID, jd.NamaDokumen, jd.Tipe, d.TanggalUpload, d.Status
+            $sql = "SELECT d.DokumenID, jd.NamaDokumen, jd.Tipe, d.TanggalUpload, d.Status, d.FilePath, d.KomentarRevisi
                     FROM Dokumen d
                     JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
                     WHERE d.MahasiswaNIM = :nim";
