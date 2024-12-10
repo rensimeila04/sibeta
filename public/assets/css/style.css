@@ -53,3 +53,14 @@ body {
 .btn-detail:hover {
   background-color: #2e2767 !important;
 }
+
+
+
+.whatsapp-logo {
+  width: 50px; /* Atur lebar sesuai kebutuhan */
+  height: auto; /* Mempertahankan rasio aspek */
+}
+
+.row {
+  padding: 20px; /* Atur padding sesuai kebutuhan */
+}
