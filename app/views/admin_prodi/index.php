@@ -134,7 +134,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
-                                    <?php foreach ($mahasiswa as $index => $mhs) : ?>
+                                    <?php foreach ($mahasiswa as $index => $mhs): ?>
                                         <tr>
                                             <td><?php echo $no++; ?></td>
                                             <td><?php echo $mhs['nim']; ?></td>
@@ -142,9 +142,9 @@
                                             <td><?php echo $mhs['program_studi']; ?></td>
                                             <td><?php echo $mhs['kelas']; ?></td>
                                             <td><?php echo $mhs['tanggal_upload']; ?></td>
-                                            <td><a href="detail.php?index=<?= $index ?>"
-                                                class="btn btn-detail btn-sm">Detail</a>
-                                            </td>
+                                            <td><a href="detail_mahasiswa.php?index=<?= $index ?>"
+                                            class="btn btn-detail btn-sm">Detail</a>
+                                        </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
