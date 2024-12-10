@@ -48,6 +48,15 @@ switch ($page) {
         break;
 
     case 'mahasiswa':
+
+        $nim = $_SESSION['nim'];
+        $mahasiswaController = new MahasiswaController($conn);
+
+        $documentCounts = $mahasiswaController->getDocumentCounts($nim);
+
+        $documents = $mahasiswaController->getDocuments($nim);
+
+        
         include '../app/views/mahasiswa/index.php';
         break;
 
@@ -58,9 +67,16 @@ switch ($page) {
     case 'teknisi':
         include '../app/views/teknisi/index.php';
         break;
+    case 'upload-administratif':
+        include '../app/views/mahasiswa/upload_administratif.php';
+        break;
+    case 'upload-teknis':
+        include '../app/views/mahasiswa/upload_teknis.php';
+        break;
+    case 'dokumen':
+        include '../app/views/mahasiswa/dokumen.php';
 
     default:
-        // Default page if no match
         echo "Halaman tidak ditemukan.";
         break;
 }

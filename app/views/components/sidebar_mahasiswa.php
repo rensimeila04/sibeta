@@ -24,7 +24,7 @@
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="index.php" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=mahasiswa" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined">
               home
             </span>
@@ -42,15 +42,15 @@
           <ul id="unggah" class="sidebar-dropdown list-unstyled collapse"
             data-bs-parent="#sidebar">
             <li class="sidebar-item">
-              <a href="administrasi.php" class="sidebar-link">Administrasi</a>
+              <a href="/sibeta/public/index.php?page=upload-administratif" class="sidebar-link">Administrasi</a>
             </li>
             <li class="sidebar-item">
-              <a href="#" class="sidebar-link">Teknis</a>
+              <a href="/sibeta/public/index.php?page=upload-teknis" class="sidebar-link">Teknis</a>
             </li>
           </ul>
         </li>
         <li class="sidebar-item">
-          <a href="dokumen.php" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=dokumen" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined">
               article
             </span>
