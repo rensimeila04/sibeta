@@ -19,6 +19,9 @@ $conn = $db->getConnection();
 
 // Initialize controllers
 $authController = new AuthController($conn);
+$mahasiswaController = new MahasiswaController($conn);
+$teknisiController = new TeknisiController($conn);
+$adminController = new AdminController($conn);
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
@@ -53,11 +56,9 @@ switch ($page) {
         break;
 
     case 'mahasiswa':
-
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
         $photo_profile_path = $_SESSION['photo_profile'];
-        $mahasiswaController = new MahasiswaController($conn);
         $documentCounts = $mahasiswaController->getDocumentCounts($nim);
         $documents = $mahasiswaController->getDocuments($nim);
         include '../app/views/mahasiswa/index.php';
@@ -67,7 +68,6 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nip'];
         $photo_profile_path = $_SESSION['photo_profile'];
-        $adminController = new AdminController($conn);
         $documentCounts = $adminController->getDocumentCounts();
         $documents = $adminController->getDocuments();
         include '../app/views/admin_prodi/index.php';
@@ -77,18 +77,26 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nip'];
         $photo_profile_path = $_SESSION['photo_profile'];
-        $teknisiController = new TeknisiController($conn);
         $documentCounts = $teknisiController->getDocumentCounts();
         $documents = $teknisiController->getDocuments();
         include '../app/views/teknisi/index.php';
         break;
     case 'upload-administratif':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/upload_administratif.php';
         break;
     case 'upload-teknis':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/upload_teknis.php';
         break;
     case 'dokumen':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/dokumen.php';
 
     case 'kelola':
@@ -99,12 +107,10 @@ switch ($page) {
         $nim = $_GET['nim'];
         switch ($role) {
             case 'Admin Prodi':
-                $adminController = new AdminController($conn);
                 $documentsMahasiswa = $adminController->getDocumentMahasiswa($nim);
                 include '../app/views/admin_prodi/kelola.php';
                 break;
             case 'Teknisi':
-                $teknisiController = new TeknisiController($conn);
                 $documentsMahasiswa = $teknisiController->getDocumentMahasiswa($nim);
                 include '../app/views/teknisi/kelola.php';
                 break;
@@ -122,7 +128,6 @@ switch ($page) {
         if ($id && $role) {
             switch ($role) {
                 case 'Admin Prodi':
-                    $adminController = new AdminController($conn);
                     $documentsMahasiswa = $adminController->getDocumentMahasiswaByIDDocument($id);
 
                     if ($aksi) {
@@ -144,7 +149,6 @@ switch ($page) {
                     break;
 
                 case 'Teknisi':
-                    $teknisiController = new TeknisiController($conn);
                     $documentsMahasiswa = $teknisiController->getDocumentMahasiswaByIDDocument($id);
 
                     if ($aksi) {
