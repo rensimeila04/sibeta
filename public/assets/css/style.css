@@ -203,3 +203,12 @@ body {
   font-size: medium;
   color: #666;
 }
+
+.whatsapp-logo {
+  width: 50px;
+  height: auto;
+}
+
+.row {
+  padding: 20px;
+}
