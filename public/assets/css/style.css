@@ -71,6 +71,36 @@ body {
   color: white !important;
 }
 
+.btn-edit {
+  background-color: #ffc107 !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  color: white !important;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.btn-hapus {
+  background-color: #ea2e3e !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  color: white !important;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background-color: #d8a305 !important;
+  color: white !important;
+}
+
+.btn-hapus:hover {
+  background-color: #c72735 !important;
+  color: white !important;
+}
+
 .btn-detail {
   background-color: #3e368c !important;
   color: white !important;

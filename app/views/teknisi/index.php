@@ -29,7 +29,7 @@
                 </div>
                 <div class="container mt-4 px-4">
                     <!-- Statistic Cards -->
-                    <div class="row text-center mb-4">
+                    <div class="row-custom">
                         <div class="col-md-3">
                             <div class="card">
                                 <div class="card-body-dash">

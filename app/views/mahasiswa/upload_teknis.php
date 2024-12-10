@@ -239,7 +239,7 @@ if ($documentCounts > 0 && !$saved) {
                                             <input type="hidden" name="action" value="add_document">
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn" style="color:#fff; background-color: #3E368C;">Simpan</button>
+                                            <button type="submit" class="btn-custom align-content-center">Simpan</button>
                                         </div>
                                     </div>
                                 </form>
@@ -256,7 +256,7 @@ if ($documentCounts > 0 && !$saved) {
                                         <input type="text" id="searchInput" class="form-control" placeholder="Cari dokumen..." aria-label="Search" aria-describedby="basic-addon1" style="border-left: none;">
                                         <button id="searchButton" class="btn" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                                     </div>
-                                    <a href="#" class="btn" style="color:#fff; background-color: #3E368C;" data-bs-toggle="modal" data-bs-target="#tambahDokumen">Tambah Dokumen</a>
+                                    <a href="#" class="btn-custom align-content-center" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#tambahDokumen">Tambah Dokumen</a>
                                 </div>
                             <?php endif; ?>
 
@@ -284,8 +284,8 @@ if ($documentCounts > 0 && !$saved) {
                                                 <td><?php echo $tanggalUpload; ?></td>
                                                 <td>
                                                     <a href="<?php echo '../app/' . $document['FilePath']; ?>" target="_blank" style="text-decoration: none;">
-                                                        <button type="button" class="btn d-flex justify-content-between gap-2" style="color:#FFFFFF; background-color: #3E368C;">
-                                                            <span class="material-symbols-outlined" style="font-size: 18px; display: flex; align-items: center; padding-top: 5px;">visibility</span>
+                                                        <button type="button" class="btn-custom px-3">
+                                                            <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
                                                         </button>
                                                     </a>
                                                 </td>
@@ -298,7 +298,7 @@ if ($documentCounts > 0 && !$saved) {
 
                             <?php if ($showView === 'with_files'): ?>
                                 <form method="POST">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col">No</th>
@@ -318,27 +318,27 @@ if ($documentCounts > 0 && !$saved) {
                                                     <td class="text-truncate" style="max-width: 50px;"><?php echo $document['NamaDokumen']; ?></td>
                                                     <td><?php echo $tanggalUpload; ?></td>
                                                     <td>
-                                                        <div class="aksi">
-                                                            <a href="<?php echo '../app/' . $document['FilePath'] ?>" target="_blank" style="text-decoration: none;">
-                                                                <button type="button" class="btn" style="color:#FFFFFF; background-color: #3E368C;">
-                                                                    <span class="material-symbols-outlined" style="color:#FFFFFF; font-size: 18px; padding:5px;">visibility</span>
+                                                        <div class="aksi d-flex flex-row gap-4">
+                                                            <a href="<?php echo '../app/' . $document['FilePath'] ?>" target="_blank" style="text-decoration: none;" class="align-items-center">
+                                                                <button type="button" class="btn-custom px-3 d-flex align-self-center">
+                                                                    <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
                                                                 </button>
                                                             </a>
-                                                            <button type="button" class="btn" style="background-color: #F7BE1A;"
+                                                            <button type="button" class="btn-edit px-3 d-flex align-self-center" style="background-color: #F7BE1A;"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#editDokumen"
                                                                 data-document-id="<?php echo $document['DokumenID']; ?>"
                                                                 data-document-name="<?php echo $document['NamaDokumen']; ?>"
                                                                 data-document-type-id="<?php echo $document['JenisDokumenID']; ?>"
                                                                 data-document-path="<?php echo '../app/' . $document['FilePath']; ?>">
-                                                                <span class="material-symbols-outlined" style="color:#FFFFFF; font-size: 18px; padding:5px;">edit</span>
+                                                                <span class="material-symbols-outlined m-0" style="font-size: 18px; color: #fff;">edit</span>
                                                             </button>
-                                                            <button type="button" class="btn" style="background-color: #DC3545;"
+                                                            <button type="button" class="btn-hapus px-3 d-flex align-self-center" style="background-color: #DC3545;"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#hapusDokumen"
                                                                 data-document-id="<?php echo $document['DokumenID']; ?>"
                                                                 data-document-name="<?php echo $document['NamaDokumen']; ?>">
-                                                                <span class="material-symbols-outlined" style="color:#FFFFFF; font-size: 18px; padding:5px;">delete</span>
+                                                                <span class="material-symbols-outlined m-0" style="color:#FFFFFF; font-size: 18px;">delete</span>
                                                             </button>
                                                         </div>
                                                     </td>
@@ -347,7 +347,7 @@ if ($documentCounts > 0 && !$saved) {
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-end">
-                                        <button type="button" class="btn" style="color:#fff; background-color: #3E368C;" id="btnSimpan">Simpan</button>
+                                        <button type="button" class="btn-custom" id="btnSimpan">Simpan</button>
                                     </div>
                                 </form>
                             <?php endif; ?>
@@ -381,7 +381,7 @@ if ($documentCounts > 0 && !$saved) {
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn" style="color:#fff; background-color: #3E368C;">Simpan</button>
+                                            <button type="submit" class="btn-custom">Simpan</button>
                                         </div>
                                     </div>
                                 </form>
@@ -402,7 +402,7 @@ if ($documentCounts > 0 && !$saved) {
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                             <form method="POST" id="saveDocumentForm">
                                                 <input type="hidden" name="action" value="save_document">
-                                                <button type="submit" class="btn" style="color:#fff; background-color: #3E368C;">Ya, Simpan</button>
+                                                <button type="submit" class="btn-custom">Ya, Simpan</button>
                                             </form>
                                         </div>
                                     </div>
@@ -438,7 +438,7 @@ if ($documentCounts > 0 && !$saved) {
                                             Apakah Anda yakin ingin menghapus <b id="deleteDocumentName"></b>?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn" style="color:#fff; background-color: #DC3545;">Hapus Dokumen</button>
+                                            <button type="submit" class="btn-hapus">Hapus Dokumen</button>
                                         </div>
                                     </div>
                                 </form>

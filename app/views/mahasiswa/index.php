@@ -60,12 +60,12 @@
                     </div>
                 </div>
                 <!-- Download Section -->
-                <div class="card">
+                <div class="card py-3">
                     <div class="card-body">
                         <div class="text-center">
                             <h5>Download Template Surat</h5>
                             <p class="text-muted">Download template surat yang anda butuhkan melalui Google Drive yang telah disediakan oleh Admin</p>
-                            <a href="https://intip.in/BerkasTI" target="_blank" class="btn" style="color:#fff; background-color: #3E368C;">Download Template</a>
+                            <a href="https://intip.in/BerkasTI" target="_blank" class="btn-custom px-3 py-2 align-content-center" style="text-decoration: none;">Download Template</a>
                         </div>
                     </div>
                 </div>
@@ -73,10 +73,10 @@
                 <div class="card mt-4">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
-                            <div class="fw-semibold fs-3">Dokumen Anda</div>
-                            <a href="#" class="btn" style="color:#fff; background-color: #3E368C;">Lihat Semua</a>
+                            <h2 class="fw-semibold fs-3">Dokumen Anda</h2>
+                            <a href="#" class="btn-custom align-content-center" style="text-decoration: none;">Lihat Semua</a>
                         </div>
-                        <table class="table table-striped">
+                        <table class="table table-striped table-borderless table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>

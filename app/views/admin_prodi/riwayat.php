@@ -44,8 +44,8 @@
                     </div>
 
 
-                    <div class="table-container w-100">
-                        <table class="table table-striped table-borderless">
+                    <div class="table-container">
+                        <table class="table table-striped table-borderless table-hover">
                             <?php
                             $mahasiswa = [
                                 [

@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <table class="table table-striped">
+                            <table class="table table-striped table-borderless table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
@@ -101,7 +101,7 @@
                                             <td>
                                                 <div class="aksi">
                                                     <a href="detail_dokumen.php" style="text-decoration: none;">
-                                                        <button type="button" class="btn" style="color:#FFFFFF; background-color: #3E368C;">
+                                                        <button type="button" class="btn-custom">
                                                             Detail
                                                         </button>
                                                     </a>
