@@ -15,6 +15,7 @@ $documents = $mahasiswaController->getDocuments($nim);
     <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SIBETA</title>
@@ -32,56 +33,55 @@ $documents = $mahasiswaController->getDocuments($nim);
                     <span class="separator">/</span>
                     <span>Dashboard</span>
                 </div>
-                <div class="container mt-4">
-                    <!-- Statistic Cards -->
-                    <div class="row text-center mb-4">
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                    <h1 class="text" style="color: #3E368C;"><?php echo $documentCounts['diajukan']; ?></h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Menunggu Verifikasi</h6>
-                                    <h1 class="text-warning"><?php echo $documentCounts['diajukan']; ?></h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Terverifikasi</h6>
-                                    <h1 class="text-success"><?php echo $documentCounts['terverifikasi']; ?></h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Ditolak</h6>
-                                    <h1 class="text-danger"><?php echo $documentCounts['ditolak']; ?></h1>
-                                </div>
+
+                <!-- Statistic Cards -->
+                <div class="row-custom">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Dokumen Diajukan</h6>
+                                <h1 class="text" style="color: #3E368C;"><?php echo $documentCounts['diajukan']; ?></h1>
                             </div>
                         </div>
                     </div>
-                    <!-- Download Section -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <h5>Download Template Surat</h5>
-                                <p class="text-muted">Download template surat yang anda butuhkan melalui Google Drive yang telah disediakan oleh Admin</p>
-                                <a href="https://intip.in/BerkasTI" target="_blank" class="btn" style="color:#fff; background-color: #3E368C;">Download Template</a>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Menunggu Verifikasi</h6>
+                                <h1 class="text-warning"><?php echo $documentCounts['diajukan']; ?></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Dokumen Terverifikasi</h6>
+                                <h1 class="text-success"><?php echo $documentCounts['terverifikasi']; ?></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Dokumen Ditolak</h6>
+                                <h1 class="text-danger"><?php echo $documentCounts['ditolak']; ?></h1>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            <div class="container px-4 mt-4">
+                <!-- Download Section -->
                 <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5>Download Template Surat</h5>
+                            <p class="text-muted">Download template surat yang anda butuhkan melalui Google Drive yang telah disediakan oleh Admin</p>
+                            <a href="https://intip.in/BerkasTI" target="_blank" class="btn" style="color:#fff; background-color: #3E368C;">Download Template</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">
                             <div class="fw-semibold fs-3">Dokumen Anda</div>

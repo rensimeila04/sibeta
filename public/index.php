@@ -14,9 +14,16 @@ $conn = $db->getConnection();
 
 // Initialize controllers
 $authController = new AuthController($conn);
+$mahasiswaController = new MahasiswaController($conn);
+
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
+$action = $_GET['action'] ?? '';
+
+if($action === 'edit') {
+    $mahasiswaController->handleUpdateProfile();
+}
 
 // Middleware: Cek jika pengguna sudah login untuk halaman tertentu
 $protectedPages = ['mahasiswa', 'admin', 'teknisi']; // Halaman yang memerlukan login
@@ -58,7 +65,10 @@ switch ($page) {
     case 'teknisi':
         include '../app/views/teknisi/index.php';
         break;
-
+    case 'profil_mahasiswa':
+        include '../app/views/mahasiswa/profil.php';
+        break;
+    
     default:
         // Default page if no match
         echo "Halaman tidak ditemukan.";

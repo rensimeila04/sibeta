@@ -1,11 +1,59 @@
+<?php
+$nim = $_SESSION['nim'];
+$mahasiswaController = new MahasiswaController($conn);
+
+$mahasiswaDetails = $mahasiswaController->getMahasiswaInfo($nim);
+require_once  $_SERVER['DOCUMENT_ROOT'] . '/sibeta/app/controllers/MahasiswaController.php';
+
+$mahasiswaController = new MahasiswaController($conn);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'updateProfile':
+                $mahasiswaController->handleUpdateProfile();
+                break;
+            case 'updatePassword':
+                $mahasiswaController->handleUpdatePassword();
+                break;
+            default:
+                header('HTTP/1.0 404 Not Found');
+                echo "Action not found";
+                break;
+        }
+    } else {
+        header('HTTP/1.0 400 Bad Request');
+        echo "Action not specified";
+    }
+    exit();
+}
+
+?>
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success">
+        <?php
+        if ($_GET['success'] === 'updateProfile') echo "Profil berhasil diperbarui!";
+        if ($_GET['success'] === 'updatePassword') echo "Kata sandi berhasil diubah!";
+        ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        <?php echo htmlspecialchars($_GET['error']); ?>
+    </div>
+<?php endif; ?>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link rel="stylesheet" href="../components/sidebar_mahasiswa.html">
-    <link rel="stylesheet" href="../components/header_mahasiswa.html">
-    <link rel="stylesheet" href="../../../public/assets/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/header.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Mahasiswa</title>
@@ -13,13 +61,9 @@
 
 <body>
     <div class="wrapper">
-        <?php
-        include '../components/sidebar_mahasiswa.html';
-        ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_mahasiswa.php"; ?>
         <div class="main">
-            <?php
-            include '../components/header_mahasiswa.html';
-            ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_mahasiswa.php"; ?>
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>
@@ -29,7 +73,7 @@
                 </div>
 
                 <h5>Profil Mahasiswa</h5>
-                
+
                 <!-- Profile Mahasiswa Section -->
                 <div class="row mb-4 mt-4">
                     <div class="col-md-6">
@@ -38,22 +82,22 @@
                                 <div class="text-center mb-4">
                                     <img src="../../../public/assets/img/avatar.png" alt="" style="width: 80px; height: 80px;">
                                 </div>
-                                <form>
+                                <form method="POST" action="/sibeta/public/index?action=edit">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Nama</label>
-                                        <input type="text" class="form-control" id="name" value="Rensi Meila Yulvinata">
+                                        <input type="text" class="form-control" id="name" value="<?php echo $mahasiswaDetails['NamaMahasiswa']; ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim" value="2341720201">
+                                        <input type="text" class="form-control" id="nim" value="<?php echo $mahasiswaDetails['NIM']; ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="class" class="form-label">Kelas</label>
-                                        <input type="text" class="form-control" id="class" value="TI-4E">
+                                        <input type="text" class="form-control" id="class" value="<?php echo $mahasiswaDetails['NamaKelas']; ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="program" class="form-label">Program Studi</label>
-                                        <input type="text" class="form-control" id="program" value="D-IV Teknik Informatika">
+                                        <input type="text" class="form-control" id="program" value="<?php echo $mahasiswaDetails['NamaProdi']; ?>">
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-custom">Simpan Perubahan</button>
@@ -69,7 +113,7 @@
                         <div class="card p-4">
                             <div class="card-body">
                                 <h5 class="card-title text-start mb-4">Ubah Kata Sandi</h5>
-                                <form>
+                                <form method="POST" action="/sibeta/app/controllers/handleUpdatePassword.php">
                                     <div class="mb-3 password-wrapper">
                                         <label for="new-password" class="form-label">Kata Sandi Baru</label>
                                         <div class="input-group">

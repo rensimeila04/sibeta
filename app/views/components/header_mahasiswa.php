@@ -49,7 +49,7 @@
                                 <span class="material-symbols-outlined" style="margin-left: 15px;">
                                     person
                                 </span>
-                                <a href="#"
+                                <a href="/sibeta/public/index.php?page=profil_mahasiswa"
                                     class="dropdown-item border-0 bg-transparent"
                                     style="color: #212529;">
                                     Profil Mahasiswa
