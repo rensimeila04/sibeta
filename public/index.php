@@ -103,7 +103,13 @@ switch ($page) {
         $nim = $_SESSION['nim'];
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/dokumen.php';
-
+        break;
+    case 'detail-dokumen-mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/mahasiswa/detail_dokumen.php';
+        break;
     case 'kelola':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];

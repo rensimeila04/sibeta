@@ -1,3 +1,7 @@
+<?php
+$documents = $mahasiswaController->getDocuments($nim);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,13 +19,13 @@
 
 <body>
     <div class="wrapper">
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_mahasiswa.php"; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_mahasiswa.php"; ?>
         <div class="main">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_mahasiswa.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_mahasiswa.php"; ?>
             <div class="dokumen p-3">
                 <div class="breadcrumbs">
                     <span class="material-symbols-outlined">home</span>
-                    <a href="#">SIBETA</a>
+                    <a href="/sibeta/public/index.php?page=landing">SIBETA</a>
                     <span class="separator">/</span>
                     <span>Dokumen</span>
                 </div>
@@ -36,8 +40,8 @@
                                     <span class="input-group-text" id="basic-addon1" style="background-color: #FFFFFF;">
                                         <i class="bi bi-search" style="color: #ADB5BD; font-size: 16px;"></i>
                                     </span>
-                                    <input type="text" class="form-control" placeholder="Cari dokumen..." aria-label="Sarch" aria-describedby="basic-addon1" style="border-left: none;">
-                                    <button class="btn" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: 35px;">Cari</button>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Cari dokumen..." aria-label="Search" aria-describedby="basic-addon1" style="border-left: none;">
+                                    <button id="searchButton" class="btn" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                                 </div>
                             </div>
 
@@ -54,30 +58,11 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $documents = [
-                                        [
-                                            'name' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca',
-                                            'type' => 'Administratif',
-                                            'date' => '12 November 2024',
-                                            'status' => 'Ditolak'
-                                        ],
-                                        [
-                                            'name' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca',
-                                            'type' => 'Administratif',
-                                            'date' => '12 November 2024',
-                                            'status' => 'Diajukan'
-                                        ],
-                                        [
-                                            'name' => 'Surat Bebas Kompen',
-                                            'type' => 'Administratif',
-                                            'date' => '12 November 2024',
-                                            'status' => 'Ditolak'
-                                        ],
-                                    ];
                                     foreach ($documents as $index => $document) {
+                                        $tanggalUpload = date('d F Y', strtotime($document['TanggalUpload']));
                                         $badgeClass = '';
-                                        switch ($document['status']) {
-                                            case 'Terverifikasi':
+                                        switch ($document['Status']) {
+                                            case 'Diverifikasi':
                                                 $badgeClass = 'bg-success';
                                                 break;
                                             case 'Diajukan':
@@ -90,18 +75,18 @@
                                     ?>
                                         <tr>
                                             <th scope="row"><?php echo $index + 1; ?></th>
-                                            <td class="text-truncate" style="max-width: 50px;"><?php echo $document['name']; ?></td>
-                                            <td scope="row"><?php echo $document['type']; ?></td>
-                                            <td><?php echo $document['date']; ?></td>
+                                            <td class="text-truncate" style="max-width: 50px;"><?php echo $document['NamaDokumen']; ?></td>
+                                            <td scope="row"><?php echo $document['Tipe']; ?></td>
+                                            <td><?php echo $tanggalUpload; ?></td>
                                             <td>
                                                 <span class="badge <?php echo $badgeClass; ?>" style="border-radius: 16px; font-size: 16px; height: 35px; width: 126px; font-weight: 400; padding-top: 7px;">
-                                                    <?php echo $document['status']; ?>
+                                                    <?php echo $document['Status']; ?>
                                                 </span>
                                             </td>
                                             <td>
                                                 <div class="aksi">
-                                                    <a href="detail_dokumen.php" style="text-decoration: none;">
-                                                        <button type="button" class="btn-custom">
+                                                    <a href="/sibeta/public/index.php?page=detail-dokumen-mahasiswa&id=<?php echo $document['DokumenID']; ?>" style="text-decoration: none;">
+                                                        <button type="button" class="btn btn-detail">
                                                             Detail
                                                         </button>
                                                     </a>
@@ -119,7 +104,40 @@
             </div>
         </div>
     </div>
-    <!-- <script src="components/sidebar/script.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Cari semua tabel yang ada
+                const tables = document.querySelectorAll('.table');
+
+                tables.forEach(table => {
+                    const tbody = table.querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('tr');
+
+                        rows.forEach(row => {
+                            const documentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                            row.style.display = documentName.includes(searchTerm) ? '' : 'none';
+                        });
+                    }
+                });
+            }
+
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            searchInput.addEventListener('input', performSearch);
+        });
+    </script>
 </body>
 
 </html>
