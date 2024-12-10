@@ -53,7 +53,7 @@ switch ($page) {
         break;
 
     case 'mahasiswa':
-        
+
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
         $photo_profile_path = $_SESSION['photo_profile'];
@@ -111,66 +111,66 @@ switch ($page) {
         }
         break;
 
-        case 'verifikasi':
-            $nama = $_SESSION['nama'];
-            $nip = $_SESSION['nip'];
-            $photo_profile_path = $_SESSION['photo_profile'];
-            $role = $_SESSION['role'];
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Sanitizing ID as a number
-            $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : ''; // No sanitization needed for 'aksi' since it's a simple action
-        
-            if ($id && $role) {
-                switch ($role) {
-                    case 'Admin Prodi':
-                        $adminController = new AdminController($conn);
-                        $documentsMahasiswa = $adminController->getDocumentMahasiswaByIDDocument($id);
-        
-                        if ($aksi) {
-                            switch ($aksi) {
-                                case 'reject':
-                                    // Sanitize comment input
-                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                    $adminController->updateDocumentStatus($id, 'reject', $comment);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                                case 'verify':
-                                    $adminController->updateDocumentStatus($id, 'verify', null);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                            }
+    case 'verifikasi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        $role = $_SESSION['role'];
+        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Sanitizing ID as a number
+        $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : ''; // No sanitization needed for 'aksi' since it's a simple action
+
+        if ($id && $role) {
+            switch ($role) {
+                case 'Admin Prodi':
+                    $adminController = new AdminController($conn);
+                    $documentsMahasiswa = $adminController->getDocumentMahasiswaByIDDocument($id);
+
+                    if ($aksi) {
+                        switch ($aksi) {
+                            case 'reject':
+                                // Sanitize comment input
+                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                $adminController->updateDocumentStatus($id, 'reject', $comment);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
+                            case 'verify':
+                                $adminController->updateDocumentStatus($id, 'verify', null);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
                         }
-        
-                        include '../app/views/admin_prodi/verifikasi.php';
-                        break;
-        
-                    case 'Teknisi':
-                        $teknisiController = new TeknisiController($conn);
-                        $documentsMahasiswa = $teknisiController->getDocumentMahasiswaByIDDocument($id);
-        
-                        if ($aksi) {
-                            switch ($aksi) {
-                                case 'reject':
-                                    // Sanitize comment input
-                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                    $teknisiController->updateDocumentStatus($id, 'reject', $comment);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                                case 'verify':
-                                    $teknisiController->updateDocumentStatus($id, 'verify', null);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                            }
+                    }
+
+                    include '../app/views/admin_prodi/verifikasi.php';
+                    break;
+
+                case 'Teknisi':
+                    $teknisiController = new TeknisiController($conn);
+                    $documentsMahasiswa = $teknisiController->getDocumentMahasiswaByIDDocument($id);
+
+                    if ($aksi) {
+                        switch ($aksi) {
+                            case 'reject':
+                                // Sanitize comment input
+                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                $teknisiController->updateDocumentStatus($id, 'reject', $comment);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
+                            case 'verify':
+                                $teknisiController->updateDocumentStatus($id, 'verify', null);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
                         }
-        
-                        include '../app/views/teknisi/verifikasi.php';
-                        break;
-                }
-            } else {
-                header('Location: /sibeta/public/index.php?page=error');
-                exit;
+                    }
+
+                    include '../app/views/teknisi/verifikasi.php';
+                    break;
             }
-            break;
-        
+        } else {
+            header('Location: /sibeta/public/index.php?page=error');
+            exit;
+        }
+        break;
+
 
 
     default:
