@@ -108,17 +108,33 @@ class TeknisiModel
         }
     }
 
-    public function updateDocumentStatus($id, $status, $comment) {
+    public function updateDocumentStatus($id, $nip, $status, $comment)
+    {
         try {
             $sql = "UPDATE Dokumen SET 
                         Status = :status,
+                        VerifikatorNIP = :nip,
                         TanggalVerifikasi = GETDATE(),
                         KomentarRevisi = :comment
                     WHERE DokumenID = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }   
+
+    public function createNotification($nim, $pesan){
+        try {
+            $sql = "INSERT INTO Notifikasi (MahasiswaNIM, Pesan) VALUES (:nim, :pesan)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->bindParam(':pesan', $pesan, PDO::PARAM_STR);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {

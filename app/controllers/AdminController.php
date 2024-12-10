@@ -31,7 +31,7 @@ class AdminController {
         return $this->adminModel->getDocumentMahasiswaByIDDocument($id);
     }
 
-    public function updateDocumentStatus($id, $status, $comment) {
+    public function updateDocumentStatus($id, $nip, $status, $comment) {
         switch ($status) {
             case 'verify':
                 $status = 'Diverifikasi';
@@ -40,6 +40,18 @@ class AdminController {
                 $status = 'Ditolak';
                 break;
         }
-        return $this->adminModel->updateDocumentStatus($id, $status, $comment);
+        return $this->adminModel->updateDocumentStatus($id, $nip, $status, $comment);
+    }
+
+    public function createNotification($nim, $status, $file, $comment) {
+        switch ($status) {
+            case 'reject':
+                $pesan = "Dokumen " . $file . " telah ditolak, karena " . $comment . ", silahkan cek dokumen pada halaman Detail Dokumen.";
+                break;
+            case 'verify':
+                $pesan = "Dokumen " . $file . " telah diverifikasi, silahkan cek dokumen pada halaman Detail Dokumen.";
+                break;
+        }
+        return $this->adminModel->createNotification($nim, $pesan);
     }
 }

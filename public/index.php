@@ -3,14 +3,7 @@ session_start();
 
 // Load Config & Controller
 require_once '../config/database.php';
-require_once '../app/controllers/AuthController.php';
-require_once '../app/models/UserModel.php';
-require_once '../app/controllers/MahasiswaController.php';
-require_once '../app/models/MahasiswaModel.php';
-require_once '../app/controllers/AdminController.php';
-require_once '../app/models/AdminModel.php';
-require_once '../app/controllers/TeknisiController.php';
-require_once '../app/models/TeknisiModel.php';
+require_once '../app/autoload.php';
 
 // Database connection
 $db = new Database();
@@ -19,9 +12,13 @@ $conn = $db->getConnection();
 
 // Initialize controllers
 $authController = new AuthController($conn);
+$mahasiswaController = new MahasiswaController($conn);
+$teknisiController = new TeknisiController($conn);
+$adminController = new AdminController($conn);
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
+
 
 // Middleware: Cek jika pengguna sudah login untuk halaman tertentu
 $protectedPages = ['mahasiswa', 'admin', 'teknisi']; // Halaman yang memerlukan login
@@ -56,7 +53,7 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
         $photo_profile_path = $_SESSION['photo_profile'];
-        $mahasiswaController = new MahasiswaController($conn);
+
         $documentCounts = $mahasiswaController->getDocumentCounts($nim);
         $documents = $mahasiswaController->getDocuments($nim);
         include '../app/views/mahasiswa/index.php';
@@ -64,9 +61,9 @@ switch ($page) {
 
     case 'admin':
         $nama = $_SESSION['nama'];
-        $nim = $_SESSION['nip'];
+        $nip = $_SESSION['nip'];
+        $role = 'admin';
         $photo_profile_path = $_SESSION['photo_profile'];
-        $adminController = new AdminController($conn);
         $documentCounts = $adminController->getDocumentCounts();
         $documents = $adminController->getDocuments();
         include '../app/views/admin_prodi/index.php';
@@ -74,9 +71,9 @@ switch ($page) {
 
     case 'teknisi':
         $nama = $_SESSION['nama'];
-        $nim = $_SESSION['nip'];
+        $nip = $_SESSION['nip'];
+        $role = 'teknisi';
         $photo_profile_path = $_SESSION['photo_profile'];
-        $teknisiController = new TeknisiController($conn);
         $documentCounts = $teknisiController->getDocumentCounts();
         $documents = $teknisiController->getDocuments();
         include '../app/views/teknisi/index.php';
@@ -85,87 +82,113 @@ switch ($page) {
     case 'kelola':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
-        $photo_profile_path = $_SESSION['photo_profile'];
         $role = $_SESSION['role'];
-        $nim = $_GET['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
         switch ($role) {
             case 'Admin Prodi':
-                $adminController = new AdminController($conn);
-                $documentsMahasiswa = $adminController->getDocumentMahasiswa($nim);
+                $role = 'admin';
+                $documents = $adminController->getDocuments();
                 include '../app/views/admin_prodi/kelola.php';
                 break;
             case 'Teknisi':
-                $teknisiController = new TeknisiController($conn);
-                $documentsMahasiswa = $teknisiController->getDocumentMahasiswa($nim);
+                $role = 'teknisi';
+                $documents = $teknisiController->getDocuments();
                 include '../app/views/teknisi/kelola.php';
                 break;
         }
         break;
 
-        case 'verifikasi':
-            $nama = $_SESSION['nama'];
-            $nip = $_SESSION['nip'];
-            $photo_profile_path = $_SESSION['photo_profile'];
-            $role = $_SESSION['role'];
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Sanitizing ID as a number
-            $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : ''; // No sanitization needed for 'aksi' since it's a simple action
-        
-            if ($id && $role) {
-                switch ($role) {
-                    case 'Admin Prodi':
-                        $adminController = new AdminController($conn);
-                        $documentsMahasiswa = $adminController->getDocumentMahasiswaByIDDocument($id);
-        
-                        if ($aksi) {
-                            switch ($aksi) {
-                                case 'reject':
-                                    // Sanitize comment input
-                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                    $adminController->updateDocumentStatus($id, 'reject', $comment);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                                case 'verify':
-                                    $adminController->updateDocumentStatus($id, 'verify', null);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                            }
+    case 'detail-mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        $role = $_SESSION['role'];
+        $nim = $_GET['nim'];
+        switch ($role) {
+            case 'Admin Prodi':
+                $documentsMahasiswa = $adminController->getDocumentMahasiswa($nim);
+                include '../app/views/admin_prodi/detail_mahasiswa.php';
+                break;
+            case 'Teknisi':
+                $documentsMahasiswa = $teknisiController->getDocumentMahasiswa($nim);
+                include '../app/views/teknisi/detail_mahasiswa.php';
+                break;
+        }
+        break;
+
+    case 'verifikasi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        $role = $_SESSION['role'];
+        $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+        $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : '';
+
+        if ($id && $role) {
+            switch ($role) {
+                case 'Admin Prodi':
+                    $role = 'admin';
+                    $documentsMahasiswa = $adminController->getDocumentMahasiswaByIDDocument($id);
+
+                    if ($aksi) {
+                        switch ($aksi) {
+                            case 'reject':
+                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                $adminController->updateDocumentStatus($id, $nip, 'reject', $comment);
+                                $file = basename($documentsMahasiswa[0]['FilePath']);
+                                $nim = $documentsMahasiswa[0]['Nim'];
+                                $adminController->createNotification($nim, 'reject', $file, $comment);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
+                            case 'verify':
+                                $adminController->updateDocumentStatus($id, $nip, 'verify', null);
+                                $file = basename($documentsMahasiswa[0]['FilePath']);
+                                $nim = $documentsMahasiswa[0]['Nim'];
+                                $adminController->createNotification($nim, 'verify', $file, null);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
                         }
-        
-                        include '../app/views/admin_prodi/verifikasi.php';
-                        break;
-        
-                    case 'Teknisi':
-                        $teknisiController = new TeknisiController($conn);
-                        $documentsMahasiswa = $teknisiController->getDocumentMahasiswaByIDDocument($id);
-        
-                        if ($aksi) {
-                            switch ($aksi) {
-                                case 'reject':
-                                    // Sanitize comment input
-                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                    $teknisiController->updateDocumentStatus($id, 'reject', $comment);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                                case 'verify':
-                                    $teknisiController->updateDocumentStatus($id, 'verify', null);
-                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                    exit;
-                            }
+                    }
+
+                    include '../app/views/admin_prodi/verifikasi.php';
+                    break;
+
+                case 'Teknisi':
+                    $role = 'teknisi';
+                    $documentsMahasiswa = $teknisiController->getDocumentMahasiswaByIDDocument($id);
+
+                    if ($aksi) {
+                        switch ($aksi) {
+                            case 'reject':
+                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                $teknisiController->updateDocumentStatus($id, $nip, 'reject', $comment);
+                                $file = basename($documentsMahasiswa[0]['FilePath']);
+                                $nim = $documentsMahasiswa[0]['Nim'];
+                                $teknisiController->createNotification($nim, 'reject', $file, $comment);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
+                            case 'verify':
+                                $teknisiController->updateDocumentStatus($id, $nip, 'verify', null);
+                                $file = basename($documentsMahasiswa[0]['FilePath']);
+                                $nim = $documentsMahasiswa[0]['Nim'];
+                                $teknisiController->createNotification($nim, 'verify', $file, null);
+                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                exit;
                         }
-        
-                        include '../app/views/teknisi/verifikasi.php';
-                        break;
-                }
-            } else {
-                header('Location: /sibeta/public/index.php?page=error');
-                exit;
+                    }
+
+                    include '../app/views/teknisi/verifikasi.php';
+                    break;
             }
-            break;
-        
+        } else {
+            header('Location: /sibeta/public/index.php?page=error');
+            exit;
+        }
+        break;
+
 
 
     default:
-        // Default page if no match
         echo "Halaman tidak ditemukan.";
         break;
 }
