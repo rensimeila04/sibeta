@@ -35,13 +35,19 @@
         <li class="sidebar-item">
           <a href="#" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined"> upload_file </span>
-            <span>Kelola Dokumen</span>
+            <span>Pengguna</span>
           </a>
         </li>
         <li class="sidebar-item">
           <a href="#" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined"> history </span>
-            <span>Riwayat Pengajuan</span>
+            <span>Kelas</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link d-flex align-items-center">
+            <span class="material-symbols-outlined"> history </span>
+            <span>Program Studi</span>
           </a>
         </li>
       </ul>

@@ -27,10 +27,10 @@
         <div class="profile">
             <div class="profile-info">
                 <div class="profile-name">
-                    <?php echo htmlspecialchars($_SESSION['nama']); ?>
+                    <?= $nama ?>
                 </div>
                 <div class="profile-nim">
-                    <?php echo htmlspecialchars($_SESSION['nim']); ?>
+                    <?= $nim ?>
                 </div>
             </div>
 

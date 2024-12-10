@@ -24,7 +24,7 @@
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="index.php" class="sidebar-link d-flex align-items-center">
+          <a href="#" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined">
               home
             </span>
@@ -67,7 +67,7 @@
         </li>
       </ul>
       <div class="sidebar-footer">
-        <a href="#" class="sidebar-link-logout d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=logout" class="sidebar-link-logout d-flex align-items-center">
           <span class="material-symbols-outlined" style="color: #CA3521;">
             logout
           </span>

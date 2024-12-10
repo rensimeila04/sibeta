@@ -77,8 +77,51 @@ body {
   cursor: pointer;
 }
 
+.status-diverifikasi {
+  background-color: #2dc751; /* Light green */
+  border-radius: 50px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+.status-diajukan {
+  background-color: #FFC107; /* Light yellow */
+  border-radius: 50px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+.status-ditolak {
+  background-color: #ea2e3e; /* Light red */
+  border-radius: 50px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+}
+
+
 .btn-detail:hover {
   background-color: #2e2767 !important;
+}
+
+.btn-preview {
+  background-color: #3e368c !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.btn-preview:hover {
+  background-color: #2e2767 !important;
+}
+
+.btn-download {
+  background-color: rgba(7, 169, 7, 0.55) !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.btn-download:hover {
+  background-color: rgba(6, 82, 6, 0.75) !important;
 }
 
 .input-group {

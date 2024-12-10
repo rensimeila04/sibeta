@@ -1,3 +1,12 @@
+<?php
+$nim = $_SESSION['nip']; 
+
+$adminController = new AdminController($conn);
+
+$documentCounts = $adminController->getDocumentCounts();
+
+$documents = $adminController->getDocuments();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +26,9 @@
 
 <body>
     <div class="wrapper">
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_admin.php"; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_admin.php"; ?>
         <div class="main">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-3 dashboard">
                 <div class="breadcrumbs ps-3">
                     <span class="material-symbols-outlined">home</span>
@@ -34,7 +43,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                    <h1 class="text" style="color: #3E368C;">12</h1>
+                                    <h1 class="text" style="color: #3E368C;"><?php echo $documentCounts['diajukan']; ?></h1>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +51,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Menunggu Verifikasi</h6>
-                                    <h1 class="text-warning">5</h1>
+                                    <h1 class="text-warning"><?php echo $documentCounts['diajukan']; ?></h1>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +59,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Terverifikasi</h6>
-                                    <h1 class="text-success">4</h1>
+                                    <h1 class="text-success"><?php echo $documentCounts['terverifikasi']; ?></h1>
                                 </div>
                             </div>
                         </div>
@@ -58,117 +67,72 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Ditolak</h6>
-                                    <h1 class="text-danger">3</h1>
+                                    <h1 class="text-danger"><?php echo $documentCounts['ditolak']; ?></h1>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            
 
-            <div class="container px-4 mt-4">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between mb-3">
-                            <div class="fw-semibold fs-3">Daftar Pengajuan</div>
-                            <button class="btn btn-detail btn-sm">Lihat Semua</button>
-                        </div>
-                        <div class="py-3">
-                            <table class="table table-striped table-borderless">
-                                <?php
-                                $mahasiswa = [
-                                    [
-                                        'nim' => '123456789',
-                                        'nama' => 'John Doe',
-                                        'program_studi' => 'D-IV Teknik Informatika',
-                                        'kelas' => '4E',
-                                        'tanggal_upload' => '22 November 2024'
-                                    ],
-                                    [
-                                        'nim' => '987654321',
-                                        'nama' => 'Jane Smith',
-                                        'program_studi' => 'D-IV Teknik Informatika',
-                                        'kelas' => '4E',
-                                        'tanggal_upload' => '25 November 2024'
-                                    ],
-                                    [
-                                        'nim' => '234567890',
-                                        'nama' => 'Michael Johnson',
-                                        'program_studi' => 'D-IV Sistem Informasi',
-                                        'kelas' => '4E',
-                                        'tanggal_upload' => '28 November 2024'
-                                    ],
-                                    [
-                                        'nim' => '345678901',
-                                        'nama' => 'Emily Brown',
-                                        'program_studi' => 'D-IV Teknik Informatika',
-                                        'kelas' => '4F',
-                                        'tanggal_upload' => '01 Desember 2024'
-                                    ],
-                                    [
-                                        'nim' => '456789012',
-                                        'nama' => 'David Lee',
-                                        'program_studi'  => 'D-IV Sistem Informasi',
-                                        'kelas' => '4F',
-                                        'tanggal_upload' => '05 Desember 2024'
-                                    ],
-                                    [
-                                        'nim' => '567890123',
-                                        'nama' => 'Olivia Taylor',
-                                        'program_studi' => 'D-IV Teknik Informatika',
-                                        'kelas' => '4E',
-                                        'tanggal_upload' => '10 Desember 2024'
-                                    ]
-                                ];
-                                ?>
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NIM</th>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Program Studi</th>
-                                        <th>Kelas</th>
-                                        <th>Tanggal Upload</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $no = 1; ?>
-                                    <?php foreach ($mahasiswa as $index => $mhs) : ?>
-                                        <tr>
-                                            <td><?php echo $no++; ?></td>
-                                            <td><?php echo $mhs['nim']; ?></td>
-                                            <td><?php echo $mhs['nama']; ?></td>
-                                            <td><?php echo $mhs['program_studi']; ?></td>
-                                            <td><?php echo $mhs['kelas']; ?></td>
-                                            <td><?php echo $mhs['tanggal_upload']; ?></td>
-                                            <td><a href="detail.php?index=<?= $index ?>"
-                                                class="btn btn-detail btn-sm">Detail</a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
 
-                            <div class="pagination mt-5">
-                            <span>Total 10 items</span>
-                            <div class="pagination-nav">
-                                <a href="#" class="arrow">&laquo;</a>
-                                <a href="#" class="active">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
-                                <a href="#">6</a>
-                                <span>...</span>
-                                <a href="#">20</a>
-                                <a href="#" class="arrow">&raquo;</a>
+                <div class="container px-4 mt-4">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="fw-semibold fs-3">Daftar Pengajuan</div>
+                                <button class="btn btn-detail btn-sm">Lihat Semua</button>
                             </div>
-                        </div>
+                            <div class="py-3">
+                                <table class="table table-striped table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">NIM</th>
+                                            <th scope="col">Nama Mahasiswa</th>
+                                            <th scope="col">Program Studi</th>
+                                            <th scope="col">Kelas</th>
+                                            <th scope="col">Tanggal Upload</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $no = 1; 
+                                        foreach ($documents as $data){
+                                            $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload']));
+                                            echo "<tr>
+                                                    <th scope='row'>$no</th>
+                                                    <td>$data[Nim]</td>
+                                                    <td>$data[NamaMahasiswa]</td>
+                                                    <td>$data[ProgramStudi]</td>
+                                                    <td>$data[Kelas]</td>
+                                                    <td>$TanggalUpload</td>
+                                                    <td><a href='/sibeta/public/index.php?page=kelola&nim=" . $data['Nim'] . "' class='btn btn-detail btn-sm'>Detail</a></td>
+                                                </tr>" ;
+                                            $no++;
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+
+                                <div class="pagination mt-5">
+                                    <span>Total 10 items</span>
+                                    <div class="pagination-nav">
+                                        <a href="#" class="arrow">&laquo;</a>
+                                        <a href="#" class="active">1</a>
+                                        <a href="#">2</a>
+                                        <a href="#">3</a>
+                                        <a href="#">4</a>
+                                        <a href="#">5</a>
+                                        <a href="#">6</a>
+                                        <span>...</span>
+                                        <a href="#">20</a>
+                                        <a href="#" class="arrow">&raquo;</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
         </div>
