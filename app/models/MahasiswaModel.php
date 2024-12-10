@@ -116,6 +116,40 @@ class MahasiswaModel
         }
     }
 
+    public function isTeknisDocumentsComplete($nim)
+    {
+        try {
+            // Mengambil semua jenis dokumen administratif
+            $sql = "SELECT jd.JenisDokumenID
+                FROM JenisDokumen jd
+                WHERE jd.Tipe = 'Teknis'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $jenisDokumenTeknis = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Mengecek apakah mahasiswa sudah mengunggah semua dokumen administratif
+            foreach ($jenisDokumenTeknis as $dokumen) {
+                $sql = "SELECT COUNT(*) as count
+                    FROM Dokumen d
+                    WHERE d.MahasiswaNIM = :nim
+                    AND d.JenisDokumenID = :jenisDokumenID";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+                $stmt->bindParam(':jenisDokumenID', $dokumen['JenisDokumenID'], PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Jika ada dokumen yang belum diunggah
+                if ($result['count'] == 0) {
+                    return false; // Dokumen belum lengkap
+                }
+            }
+            return true; // Semua dokumen administratif sudah diunggah
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
     // Menampilkan semua jenis dokumen
     public function getJenisDokumen($tipe)
     {

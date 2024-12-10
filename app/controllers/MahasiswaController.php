@@ -48,6 +48,12 @@ class MahasiswaController
         return $this->mahasiswaModel->isAdministrativeDocumentsComplete($nim);
     }
 
+    public function isTeknisDocumentsComplete($nim)
+    {
+        // Memanggil model untuk memeriksa kelengkapan dokumen administratif
+        return $this->mahasiswaModel->isTeknisDocumentsComplete($nim);
+    }
+
     public function getJenisDokumen($tipe)
     {
         // Mengambil semua jenis dokumen berdasarkan tipe
