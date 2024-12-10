@@ -2,7 +2,7 @@
 
 class Database
 {
-    private $host = 'DESKTOP-01VBN74';
+    private $host = 'localhost';
     private $db_name = 'SIBETA';
     private $username = '';
     private $password = '';

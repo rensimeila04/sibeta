@@ -113,6 +113,8 @@ body {
 
 .card {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-body-dash {
@@ -123,6 +125,17 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;;
+}
+
+.row-custom {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 25px;
+  text-align: center;
+  gap: 25px;
+  width: 94%;
 }
 
 .pagination {
