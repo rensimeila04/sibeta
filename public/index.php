@@ -25,6 +25,11 @@ $adminController = new AdminController($conn);
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
+$action = $_GET['action'] ?? '';
+
+if($action === 'edit') {
+    $mahasiswaController->handleUpdateProfile();
+}
 
 // Middleware: Cek jika pengguna sudah login untuk halaman tertentu
 $protectedPages = ['mahasiswa', 'admin', 'teknisi']; // Halaman yang memerlukan login
@@ -177,6 +182,10 @@ switch ($page) {
 
 
 
+    case 'profil_mahasiswa':
+        include '../app/views/mahasiswa/profil.php';
+        break;
+    
     default:
         echo "Halaman tidak ditemukan.";
         break;

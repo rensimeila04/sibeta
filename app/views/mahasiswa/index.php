@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SIBETA</title>
@@ -70,6 +71,7 @@
                     </div>
                 </div>
 
+                <div class="card mt-4">
                 <div class="card mt-4">
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3">

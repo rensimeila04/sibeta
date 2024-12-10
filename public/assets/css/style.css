@@ -197,7 +197,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  width: 100%;;
 }
 
 .row-custom {
@@ -210,6 +210,12 @@ body {
   text-align: center !important;
   gap: 25px !important;
   width: 94% !important;
+}
+
+.col-md-3 {
+  flex: 1 1 22%; /* Lebar 22% untuk setiap kolom agar card tetap sejajar */
+  display: flex;
+  justify-content: center;
 }
 
 .pagination {
