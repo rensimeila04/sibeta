@@ -17,7 +17,7 @@
 
 <body>
     <div class="wrapper">
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_teknisi.php"; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
         <div class="main">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-3 dashboard">
@@ -34,7 +34,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                    <h1 class="text" style="color: #3E368C;"><?= $documentCounts['diajukan']; ?></h1>
+                                    <h1 class="text" style="color: #3E368C;">12</h1>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Menunggu Verifikasi</h6>
-                                    <h1 class="text-warning"><?= $documentCounts['diajukan']; ?></h1>
+                                    <h1 class="text-warning">5</h1>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Terverifikasi</h6>
-                                    <h1 class="text-success"><?= $documentCounts['terverifikasi']; ?></h1>
+                                    <h1 class="text-success">4</h1>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Ditolak</h6>
-                                    <h1 class="text-danger"><?= $documentCounts['ditolak']; ?></h1
+                                    <h1 class="text-danger">3</h1>
                                 </div>
                             </div>
                         </div>
@@ -74,6 +74,52 @@
                             </div>
                             <div class="py-3">
                                 <table class="table table-striped table-borderless table-hover">
+                                    <?php
+                                    $mahasiswa = [
+                                        [
+                                            'nim' => '123456789',
+                                            'nama' => 'John Doe',
+                                            'program_studi' => 'D-IV Teknik Informatika',
+                                            'kelas' => '4E',
+                                            'tanggal_upload' => '22 November 2024'
+                                        ],
+                                        [
+                                            'nim' => '987654321',
+                                            'nama' => 'Jane Smith',
+                                            'program_studi' => 'D-IV Teknik Informatika',
+                                            'kelas' => '4E',
+                                            'tanggal_upload' => '25 November 2024'
+                                        ],
+                                        [
+                                            'nim' => '234567890',
+                                            'nama' => 'Michael Johnson',
+                                            'program_studi' => 'D-IV Sistem Informasi',
+                                            'kelas' => '4E',
+                                            'tanggal_upload' => '28 November 2024'
+                                        ],
+                                        [
+                                            'nim' => '345678901',
+                                            'nama' => 'Emily Brown',
+                                            'program_studi' => 'D-IV Teknik Informatika',
+                                            'kelas' => '4F',
+                                            'tanggal_upload' => '01 Desember 2024'
+                                        ],
+                                        [
+                                            'nim' => '456789012',
+                                            'nama' => 'David Lee',
+                                            'program_studi'  => 'D-IV Sistem Informasi',
+                                            'kelas' => '4F',
+                                            'tanggal_upload' => '05 Desember 2024'
+                                        ],
+                                        [
+                                            'nim' => '567890123',
+                                            'nama' => 'Olivia Taylor',
+                                            'program_studi' => 'D-IV Teknik Informatika',
+                                            'kelas' => '4E',
+                                            'tanggal_upload' => '10 Desember 2024'
+                                        ]
+                                    ];
+                                    ?>
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -86,24 +132,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $no = 1; 
-                                        foreach ($documents as $data){
-                                            $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload']));
-                                            echo "<tr>
-                                                    <th scope='row'>$no</th>
-                                                    <td>$data[Nim]</td>
-                                                    <td>$data[NamaMahasiswa]</td>
-                                                    <td>$data[ProgramStudi]</td>
-                                                    <td>$data[Kelas]</td>
-                                                    <td>$TanggalUpload</td>
-                                                    <td><a href='/sibeta/public/index.php?page=kelola&nim=" . $data['Nim'] . "' class='btn btn-detail btn-sm'>Detail</a></td>
-                                                </tr>" ;
-                                            $no++;
-                                        }
-                                        ?>
+                                        <?php $no = 1; ?>
+                                        <?php foreach ($mahasiswa as $mhs): ?>
+                                            <tr>
+                                                <td><?php echo $no++; ?></td>
+                                                <td><?php echo $mhs['nim']; ?></td>
+                                                <td><?php echo $mhs['nama']; ?></td>
+                                                <td><?php echo $mhs['program_studi']; ?></td>
+                                                <td><?php echo $mhs['kelas']; ?></td>
+                                                <td><?php echo $mhs['tanggal_upload']; ?></td>
+                                                <td><button class="btn btn-detail btn-sm">Detail</button></td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
-
+                                
                                 <div class="pagination mt-5">
                                     <span>Total 10 items</span>
                                     <div class="pagination-nav">

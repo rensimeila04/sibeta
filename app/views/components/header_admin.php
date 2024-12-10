@@ -16,10 +16,10 @@
             <div class="profile">
                 <div class="profile-info">
                     <div class="profile-name">
-                        Rensi Meila Yulvinata
+                        <?= $nama?>
                     </div>
                     <div class="profile-identity">
-                        Admin Program Studi
+                        <?= $_SESSION['role'] ?>
                     </div>
                 </div>
 

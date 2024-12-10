@@ -46,7 +46,7 @@
         </li>
       </ul>
       <div class="sidebar-footer">
-        <a href="#" class="sidebar-link-logout d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=logout" class="sidebar-link-logout d-flex align-items-center">
           <span class="material-symbols-outlined" style="color: #ca3521">
             logout
           </span>

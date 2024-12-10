@@ -4,9 +4,61 @@ class UserModel
 {
     private $conn;
 
+    private $UserID;
+    private $Username;
+    private $Password;
+    private $Nama;
+    private $photo_profile_path;
+    private $RoleID;
+    private $IsActive;
+
     public function __construct($db)
     {
         $this->conn = $db;
+    }
+
+    public function setUserID($UserID){
+        $this->UserID = $UserID;
+    }
+
+    public function setUsername($Username){
+        $this->Username = $Username;
+    }
+
+    public function setPassword($Password){
+        $this->Password = $Password;
+    }
+
+    public function setNama($Nama){
+        $this->Nama = $Nama;
+    }
+
+    public function getNama(){
+        return $this->Nama;
+    }
+
+    public function getphoto_profile_path(){
+        return $this->photo_profile_path;
+    }
+
+    public function getRoleID(){
+        return $this->RoleID;
+    }
+
+    public function getIsActive(){
+        return $this->IsActive;
+    }
+
+    public function setphoto_profile_path($photo_profile_path){
+        $this->photo_profile_path = $photo_profile_path;
+    }
+
+    public function setRoleID($RoleID){
+        $this->RoleID = $RoleID;
+    }
+
+    public function setIsActive($IsActive){
+        $this->IsActive = $IsActive;
     }
 
     public function getUserByUsername($username)
@@ -31,6 +83,22 @@ class UserModel
             $sql = "SELECT u.Nama, u.photo_profile_path, m.NIM
                 FROM Users u
                 JOIN Mahasiswa m ON u.UserID = m.UserID
+                WHERE u.UserID = :userID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getStaffDetails($userID)
+    {
+        try {
+            $sql = "SELECT u.Nama, u.photo_profile_path, a.NIP
+                FROM Users u
+                JOIN staff a ON u.UserID = a.UserID
                 WHERE u.UserID = :userID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
