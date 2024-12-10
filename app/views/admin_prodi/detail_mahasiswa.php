@@ -172,24 +172,30 @@
                                             <td class="fw-bold"><?php echo $no++; ?></td>
                                             <td><?php echo $doc['nama_dokumen']; ?></td>
                                             <td><?php echo $doc['tanggal_upload']; ?></td>
-                                            <td><p class="<?php
-                                                        // Apply different classes based on the status
-                                                        if ($doc['status'] == 'Terverifikasi') {
-                                                            echo 'status-terverifikasi';
-                                                        } elseif ($doc['status'] == 'Diajukan') {
-                                                            echo 'status-diajukan';
-                                                        } elseif ($doc['status'] == 'Ditolak') {
-                                                            echo 'status-ditolak';
-                                                        }
-                                                        ?> fw-semibold px-4">
-                                                <?php echo $doc['status']; ?>
+                                            <td>
+                                                <p class="<?php
+                                                            // Apply different classes based on the status
+                                                            if ($doc['status'] == 'Terverifikasi') {
+                                                                echo 'status-terverifikasi';
+                                                            } elseif ($doc['status'] == 'Diajukan') {
+                                                                echo 'status-diajukan';
+                                                            } elseif ($doc['status'] == 'Ditolak') {
+                                                                echo 'status-ditolak';
+                                                            }
+                                                            ?> fw-semibold px-4">
+                                                    <?php echo $doc['status']; ?>
                                             </td>
                                             <td>
                                                 <i class="material-symbols-outlined align-items-center btn-custom">visibility</i>
                                                 <i class="material-symbols-outlined align-items-center btn-custom2">download</i>
                                             </td>
+                                            <?php
+                                            $buttonClass = ($doc['status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';
+                                            ?>
                                             <td>
-                                                <button class="btn btn-custom d-flex align-items-center"><i class="material-symbols-outlined align-items-center btn-custom3">check</i>Verifikasi</button>
+                                                <button class="<?php echo $buttonClass; ?>">
+                                                    <i class="material-symbols-outlined align-items-center btn-custom3">check</i>Verifikasi
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

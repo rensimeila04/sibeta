@@ -69,6 +69,26 @@ body {
     text-align: center;
 }
 
+.btn-disabled {
+  background-color: #6156ca !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  color: rgb(225, 225, 225) !important;
+  border: none;
+  border-radius: 0.25rem;
+  pointer-events: none;
+}
+
+.btn-detail {
+  background-color: #3e368c !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+.btn-detail:hover {
+  background-color: #2e2767 !important;
+}
+
 .btn-custom {
     background-color: #3e368c !important;
     padding: 0.375rem 0.75rem;
