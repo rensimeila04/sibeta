@@ -16,7 +16,6 @@ class AdminModel
                     JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
                     WHERE jd.Tipe = 'Administratif' AND d.Status = :status";
             $stmt = $this->conn->prepare($sql);
-            // $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -44,7 +43,6 @@ class AdminModel
                     WHERE jd.Tipe = 'Administratif'
                     ORDER BY d.TanggalUpload DESC";
             $stmt = $this->conn->prepare($sql);
-            // $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -61,6 +59,7 @@ class AdminModel
                         d.TanggalUpload as TanggalUpload, 
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi
@@ -91,6 +90,7 @@ class AdminModel
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
                         d.FilePath as FilePath,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi

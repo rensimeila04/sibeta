@@ -60,6 +60,7 @@ class TeknisiModel
                         d.TanggalUpload as TanggalUpload, 
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi
@@ -89,6 +90,7 @@ class TeknisiModel
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
                         d.FilePath as FilePath,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi

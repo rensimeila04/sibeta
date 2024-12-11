@@ -100,7 +100,7 @@
                                             <td>
                                                 <a href="/sibeta/public/index.php?page=verifikasi&id=<?php echo $doc['DokumenID']; ?>"
                                                     class="<?php echo $buttonClass; ?> text-decoration-none"
-                                                    <?php if ($doc['Status'] === 'Diverifikasi' || $doc['Status'] === 'Ditolak'): ?>
+                                                    <?php if (($doc['Status'] === 'Diverifikasi' || $doc['Status'] === 'Ditolak') || ($doc['Status'] === 'Diajukan' && $doc['IsSaved'] == '0')): ?>
                                                     style="pointer-events: none; opacity: 0.5;"
                                                     class="disabled"
                                                     <?php endif; ?>>

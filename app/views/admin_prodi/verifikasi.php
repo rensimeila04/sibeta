@@ -112,14 +112,14 @@
                                 class="btn btn-outline-danger btn-sm d-flex align-items-center"
                                 data-bs-toggle="modal"
                                 data-bs-target="#rejectModal"
-                                <?= ($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') ? 'disabled' : '' ?>>
+                                <?= (($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') || ($documentsMahasiswa[0]['Status'] === 'Diajukan' && $documentsMahasiswa[0]['IsSaved'] == '0')) ? 'disabled' : '' ?>>
                                 <span class="material-symbols-outlined me-2">close</span>Tolak
                             </button>
                             <button
                                 class="btn btn-success btn-sm d-flex align-items-center"
                                 data-bs-toggle="modal"
                                 data-bs-target="#verifyModal"
-                                <?= ($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') ? 'disabled' : '' ?>>
+                                <?= (($documentsMahasiswa[0]['Status'] === 'Diverifikasi' || $documentsMahasiswa[0]['Status'] === 'Ditolak') || ($documentsMahasiswa[0]['Status'] === 'Diajukan' && $documentsMahasiswa[0]['IsSaved'] == '0')) ? 'disabled' : '' ?>>
                                 <span class="material-symbols-outlined me-2">done_all</span>Verifikasi
                             </button>
 
