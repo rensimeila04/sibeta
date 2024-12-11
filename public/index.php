@@ -3,14 +3,7 @@ session_start();
 
 // Load Config & Controller
 require_once '../config/database.php';
-require_once '../app/controllers/AuthController.php';
-require_once '../app/models/UserModel.php';
-require_once '../app/controllers/MahasiswaController.php';
-require_once '../app/models/MahasiswaModel.php';
-require_once '../app/controllers/AdminController.php';
-require_once '../app/models/AdminModel.php';
-require_once '../app/controllers/TeknisiController.php';
-require_once '../app/models/TeknisiModel.php';
+require_once '../app/autoload.php';
 
 // Database connection
 $db = new Database();
@@ -19,6 +12,9 @@ $conn = $db->getConnection();
 
 // Initialize controllers
 $authController = new AuthController($conn);
+$mahasiswaController = new MahasiswaController($conn);
+$teknisiController = new TeknisiController($conn);
+$adminController = new AdminController($conn);
 $mahasiswaController = new MahasiswaController($conn);
 $teknisiController = new TeknisiController($conn);
 $adminController = new AdminController($conn);
@@ -71,7 +67,8 @@ switch ($page) {
 
     case 'admin':
         $nama = $_SESSION['nama'];
-        $nim = $_SESSION['nip'];
+        $nip = $_SESSION['nip'];
+        $role = 'admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $adminController->getDocumentCounts();
         $documents = $adminController->getDocuments();
@@ -80,7 +77,8 @@ switch ($page) {
 
     case 'teknisi':
         $nama = $_SESSION['nama'];
-        $nim = $_SESSION['nip'];
+        $nip = $_SESSION['nip'];
+        $role = 'teknisi';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $teknisiController->getDocumentCounts();
         $documents = $teknisiController->getDocuments();
@@ -113,17 +111,36 @@ switch ($page) {
     case 'kelola':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
+        $role = $_SESSION['role'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        switch ($role) {
+            case 'Admin Prodi':
+                $role = 'admin';
+                $documents = $adminController->getDocuments();
+                include '../app/views/admin_prodi/kelola.php';
+                break;
+            case 'Teknisi':
+                $role = 'teknisi';
+                $documents = $teknisiController->getDocuments();
+                include '../app/views/teknisi/kelola.php';
+                break;
+        }
+        break;
+
+    case 'detail-mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
         $photo_profile_path = $_SESSION['photo_profile'];
         $role = $_SESSION['role'];
         $nim = $_GET['nim'];
         switch ($role) {
             case 'Admin Prodi':
                 $documentsMahasiswa = $adminController->getDocumentMahasiswa($nim);
-                include '../app/views/admin_prodi/kelola.php';
+                include '../app/views/admin_prodi/detail_mahasiswa.php';
                 break;
             case 'Teknisi':
                 $documentsMahasiswa = $teknisiController->getDocumentMahasiswa($nim);
-                include '../app/views/teknisi/kelola.php';
+                include '../app/views/teknisi/detail_mahasiswa.php';
                 break;
         }
         break;

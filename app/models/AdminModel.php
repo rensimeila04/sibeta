@@ -16,7 +16,6 @@ class AdminModel
                     JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
                     WHERE jd.Tipe = 'Administratif' AND d.Status = :status";
             $stmt = $this->conn->prepare($sql);
-            // $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -44,7 +43,6 @@ class AdminModel
                     WHERE jd.Tipe = 'Administratif'
                     ORDER BY d.TanggalUpload DESC";
             $stmt = $this->conn->prepare($sql);
-            // $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -52,7 +50,8 @@ class AdminModel
         }
     }
 
-    public function getDocumentMahasiswa($nim) {
+    public function getDocumentMahasiswa($nim)
+    {
         try {
             $sql = "SELECT 
                         d.DokumenID,
@@ -60,6 +59,7 @@ class AdminModel
                         d.TanggalUpload as TanggalUpload, 
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi
@@ -79,7 +79,8 @@ class AdminModel
         }
     }
 
-    public function getDocumentMahasiswaByIDDocument($id) {
+    public function getDocumentMahasiswaByIDDocument($id)
+    {
         try {
             $sql = "SELECT 
                         d.DokumenID,
@@ -89,6 +90,7 @@ class AdminModel
                         d.Status as Status,
                         d.MahasiswaNIM as Nim,
                         d.FilePath as FilePath,
+                        d.IsSaved as IsSaved,
                         u.Nama as NamaMahasiswa,
                         k.namaKelas as Kelas,
                         p.NamaProdi as ProgramStudi
@@ -108,17 +110,33 @@ class AdminModel
         }
     }
 
-    public function updateDocumentStatus($id, $status, $comment) {
+    public function updateDocumentStatus($id, $nip, $status, $comment)
+    {
         try {
             $sql = "UPDATE Dokumen SET 
                         Status = :status,
-                        TanggalVerifikasi = NOW(),
+                        VerifikatorNIP = :nip,
+                        TanggalVerifikasi = GETDATE(),
                         KomentarRevisi = :comment
                     WHERE DokumenID = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':nip', $nip, PDO::PARAM_STR);
             $stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }  
+    
+    public function createNotification($nim, $pesan){
+        try {
+            $sql = "INSERT INTO Notifikasi (MahasiswaNIM, Pesan) VALUES (:nim, :pesan)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->bindParam(':pesan', $pesan, PDO::PARAM_STR);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -126,4 +144,3 @@ class AdminModel
         }
     }
 }
-

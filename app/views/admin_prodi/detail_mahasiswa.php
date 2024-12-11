@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="../components/sidebar_admin.html">
-    <link rel="stylesheet" href="../components/header_admin.html">
-    <link rel="stylesheet" href="../../../public/assets/css/style.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/header.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Mahasiswa</title>
@@ -12,19 +12,15 @@
 
 <body>
     <div class="wrapper">
-        <?php
-        include '../components/sidebar_admin.html';
-        ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_admin.php"; ?>
         <div class="main">
-            <?php
-            include '../components/header_admin.html';
-            ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-4">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>
-                    <a href="#">SIBETA</a>
+                    <a href="/sibeta/public/index.php?page=<?php echo $role; ?>">SIBETA</a>
                     <span class="separator">/</span>
-                    <a href="#">Kelola Dokumen</a>
+                    <a href="/sibeta/public/index.php?page=kelola">Kelola Dokumen</a>
                     <span class="separator">/</span>
                     <span>Detail Mahasiswa</span>
                 </div>
@@ -39,116 +35,24 @@
                             </div>
                         </div>
                         <div class="py-3">
-                            <?php
-                            $mahasiswa = [
-                                [
-                                    'nim' => '123456789',
-                                    'nama' => 'John Doe',
-                                    'program_studi' => 'D-IV Teknik Informatika',
-                                    'kelas' => '4E',
-                                    'tanggal_upload' => '22 November 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Ditolak'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Terverifikasi'],
-                                    ]
-                                ],
-                                [
-                                    'nim' => '987654321',
-                                    'nama' => 'Jane Smith',
-                                    'program_studi' => 'D-IV Teknik Informatika',
-                                    'kelas' => '4E',
-                                    'tanggal_upload' => '25 November 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Ditolak'],
-                                    ]
-                                ],
-                                [
-                                    'nim' => '234567890',
-                                    'nama' => 'Michael Johnson',
-                                    'program_studi' => 'D-IV Sistem Informasi',
-                                    'kelas' => '4E',
-                                    'tanggal_upload' => '28 November 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Terverifikasi'],
-                                    ]
-                                ],
-                                [
-                                    'nim' => '345678901',
-                                    'nama' => 'Emily Brown',
-                                    'program_studi' => 'D-IV Teknik Informatika',
-                                    'kelas' => '4F',
-                                    'tanggal_upload' => '01 Desember 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Ditolak'],
-                                    ]
-                                ],
-                                [
-                                    'nim' => '456789012',
-                                    'nama' => 'David Lee ',
-                                    'program_studi'  => 'D-IV Sistem Informasi',
-                                    'kelas' => '4F',
-                                    'tanggal_upload' => '05 Desember 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Ditolak'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Terverifikasi'],
-                                    ]
-                                ],
-                                [
-                                    'nim' => '567890123',
-                                    'nama' => 'Olivia Taylor',
-                                    'program_studi' => 'D-IV Teknik Informatika',
-                                    'kelas' => '4E',
-                                    'tanggal_upload' => '10 Desember 2024',
-                                    'documents' => [
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca', 'tanggal_upload' => '20 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Tanda Terima Penyerahan Laporan PKL/Magang ke Ruang Baca', 'tanggal_upload' => '22 November 2024', 'status' => 'Diajukan'],
-                                        ['nama_dokumen' => 'Scan TOEIC', 'tanggal_upload' => '15 November 2024', 'status' => 'Terverifikasi'],
-                                        ['nama_dokumen' => 'Surat Bebas Kompen', 'tanggal_upload' => '18 November 2024', 'status' => 'Ditolak'],
-                                    ]
-                                ]
-                            ];
-
-                            $index = isset($_GET['index']) ? (int)$_GET['index'] : null;
-
-                            if ($index !== null && isset($mahasiswa[$index])) {
-                                $mhs = $mahasiswa[$index];
-                            } else {
-                                die("Index Mahasiswa Invalid");
-                            }
-
-                            ?>
-
                             <div class="detail-desc mb-5 gap-1 w-50">
                                 <table class="table table-borderless">
                                     <tbody>
                                         <tr>
                                             <th>NIM</th>
-                                            <td><?php echo $mhs['nim']; ?></td>
+                                            <td><?php echo $documentsMahasiswa[0]['Nim']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Nama</th>
-                                            <td><?php echo $mhs['nama']; ?></td>
+                                            <td><?php echo $documentsMahasiswa[0]['NamaMahasiswa']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Program Studi</th>
-                                            <td><?php echo $mhs['program_studi']; ?></td>
+                                            <td><?php echo $documentsMahasiswa[0]['ProgramStudi']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Kelas</th>
-                                            <td><?php echo $mhs['kelas']; ?></td>
+                                            <td><?php echo $documentsMahasiswa[0]['Kelas']; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -167,35 +71,42 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
-                                    <?php foreach ($mhs['documents'] as $doc): ?>
+                                    <?php foreach ($documentsMahasiswa as $doc): 
+                                        $TanggalUpload = date('d-m-Y', strtotime($doc['TanggalUpload']));?>
                                         <tr>
                                             <td class="fw-bold"><?php echo $no++; ?></td>
-                                            <td><?php echo $doc['nama_dokumen']; ?></td>
-                                            <td><?php echo $doc['tanggal_upload']; ?></td>
+                                            <td><?php echo $doc['NamaDokumen']; ?></td>
+                                            <td><?php echo $TanggalUpload; ?></td>
                                             <td>
                                                 <p class="<?php
                                                             // Apply different classes based on the status
-                                                            if ($doc['status'] == 'Terverifikasi') {
-                                                                echo 'status-terverifikasi';
-                                                            } elseif ($doc['status'] == 'Diajukan') {
+                                                            if ($doc['Status'] == 'Diverifikasi') {
+                                                                echo 'status-diverifikasi';
+                                                            } elseif ($doc['Status'] == 'Diajukan') {
                                                                 echo 'status-diajukan';
-                                                            } elseif ($doc['status'] == 'Ditolak') {
+                                                            } elseif ($doc['Status'] == 'Ditolak') {
                                                                 echo 'status-ditolak';
                                                             }
                                                             ?> fw-semibold px-4">
-                                                    <?php echo $doc['status']; ?>
+                                                    <?php echo $doc['Status']; ?>
                                             </td>
                                             <td>
                                                 <i class="material-symbols-outlined align-items-center btn-custom">visibility</i>
                                                 <i class="material-symbols-outlined align-items-center btn-custom2">download</i>
                                             </td>
                                             <?php
-                                            $buttonClass = ($doc['status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';
+                                            $buttonClass = ($doc['Status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';
                                             ?>
                                             <td>
-                                                <button class="<?php echo $buttonClass; ?>">
+                                                <a href="/sibeta/public/index.php?page=verifikasi&id=<?php echo $doc['DokumenID']; ?>"
+                                                    class="<?php echo $buttonClass; ?> text-decoration-none"
+                                                    <?php if (($doc['Status'] === 'Diverifikasi' || $doc['Status'] === 'Ditolak') || ($doc['Status'] === 'Diajukan' && $doc['IsSaved'] == '0')): ?>
+                                                    style="pointer-events: none; opacity: 0.5;"
+                                                    class="disabled"
+                                                    <?php endif; ?>>
                                                     <i class="material-symbols-outlined align-items-center btn-custom3">check</i>Verifikasi
-                                                </button>
+                                                </a>
+
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

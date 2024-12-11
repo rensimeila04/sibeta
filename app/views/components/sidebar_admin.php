@@ -27,13 +27,13 @@
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=<?php echo $role; ?>" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined"> home </span>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=kelola" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined"> upload_file </span>
             <span>Kelola Dokumen</span>
           </a>
