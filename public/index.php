@@ -189,6 +189,8 @@ switch ($page) {
 
 
     case 'profil_mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
         include '../app/views/mahasiswa/profil.php';
         break;
     
