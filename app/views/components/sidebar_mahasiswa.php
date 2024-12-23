@@ -58,7 +58,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=bantuan" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined">
               help
             </span>

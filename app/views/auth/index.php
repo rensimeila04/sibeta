@@ -42,6 +42,11 @@
             <div class="btn-cont">
                 <button type="submit" class="btn-sect">Masuk</button>
             </div>
+            <?php if(!empty($message)): ?>
+                <div class="alert alert-danger align-items-center w-100 mb-3">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 

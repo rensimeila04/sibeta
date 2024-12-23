@@ -45,6 +45,8 @@ switch ($page) {
             $username = $_POST['username'] ?? '';
             $password = $_POST['password'] ?? '';
             $authController->login($username, $password);
+
+            $message = $authController->login($username, $password);
         }
         // Include login view
         include '../app/views/auth/index.php';
@@ -163,11 +165,11 @@ switch ($page) {
                             case 'reject':
                                 // Sanitize comment input
                                 $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                $adminController->updateDocumentStatus($id, 'reject', $comment);
+                                $adminController->updateDocumentStatus($id, $nip, 'reject', $comment);
                                 header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
                                 exit;
                             case 'verify':
-                                $adminController->updateDocumentStatus($id, 'verify', null);
+                                $adminController->updateDocumentStatus($id, $nip, 'verify', null);
                                 header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
                                 exit;
                         }
@@ -184,11 +186,11 @@ switch ($page) {
                             case 'reject':
                                 // Sanitize comment input
                                 $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                $teknisiController->updateDocumentStatus($id, 'reject', $comment);
+                                $teknisiController->updateDocumentStatus($id, $nip,'reject', $comment);
                                 header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
                                 exit;
                             case 'verify':
-                                $teknisiController->updateDocumentStatus($id, 'verify', null);
+                                $teknisiController->updateDocumentStatus($id, $nip, 'verify', null);
                                 header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
                                 exit;
                         }
@@ -208,7 +210,14 @@ switch ($page) {
     case 'profil_mahasiswa':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/profil.php';
+        break;
+    case 'bantuan':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/mahasiswa/bantuan.php';
         break;
     
     default:

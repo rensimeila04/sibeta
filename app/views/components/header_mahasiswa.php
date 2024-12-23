@@ -35,7 +35,7 @@
             </div>
 
             <div class="profile-settings d-flex flex-row align-items-center">
-                <img src="<?php echo htmlspecialchars($_SESSION['photo_profile']); ?>" alt="avatar">
+                <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 40px; height: 40px;">
                 <div class="dropdown">
                     <button
                         class="border-0 bg-transparent d-flex align-items-center"

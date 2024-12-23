@@ -36,7 +36,7 @@
                         <div class="card p-4">
                             <div class="card-body">
                                 <div class="text-center mb-4">
-                                    <img src="../../../public/assets/img/avatar.png" alt="" style="width: 80px; height: 80px;">
+                                <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 80px; height: 80px;">
                                 </div>
                                 <form>
                                     <div class="mb-3">

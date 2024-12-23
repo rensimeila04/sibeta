@@ -55,13 +55,12 @@ class AuthController
                         break;
 
                     default:
-                        echo "Role tidak dikenal!";
-                        break;
+                        return "Role tidak dikenal!";
                 }
 
                 exit;
             } else {
-                echo "Username atau password salah!";
+                return "Username atau password salah!";
             }
         } catch (Exception $e) {
             die($e->getMessage());
