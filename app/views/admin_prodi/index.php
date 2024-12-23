@@ -34,7 +34,7 @@
                             <div class="card">
                                 <div class="card-body-dash">
                                     <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                    <h1 class="text" style="color: #3E368C;"><?= $documentCounts['diajukan']; ?></h1>
+                                    <h1 class="text" style="color: #3E368C;"><?= $documentCounts['diajukanNoSaved']; ?></h1>
                                 </div>
                             </div>
                         </div>
@@ -73,10 +73,32 @@
                                     <a href="/sibeta/public/index.php?page=kelola" class="btn btn-detail btn-sm" style="display: inline-flex; justify-content: center; align-items: center; text-align: center; height: 40px; padding: 0 20px;">
                                         Lihat Semua
                                     </a>
-
-
-
                                 </div>
+
+                                <!-- Dropdown Filters -->
+                                <div class="d-flex gap-3">
+                                    <select id="filterKelas" class="form-select" aria-label="Filter by Kelas">
+                                        <option value="">Pilih Kelas</option>
+                                        <?php
+                                        // Assuming you have a list of classes in $classes
+                                        $classes = array_unique(array_column($documents, 'Kelas'));
+                                        foreach ($classes as $class) {
+                                            echo "<option value='$class'>$class</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <select id="filterProdi" class="form-select" aria-label="Filter by Program Studi">
+                                        <option value="">Pilih Program Studi</option>
+                                        <?php
+                                        // Assuming you have a list of programs in $programs
+                                        $programs = array_unique(array_column($documents, 'ProgramStudi'));
+                                        foreach ($programs as $program) {
+                                            echo "<option value='$program'>$program</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
                                 <div class="py-3">
                                     <table class="table table-striped table-borderless table-hover">
                                         <thead>
@@ -93,7 +115,7 @@
                                         <tbody>
                                             <?php $no = 1;
                                             foreach ($documents as $data) {
-                                                $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload']));
+                                                $TanggalUpload = date('d F Y', strtotime($data['TanggalUpload']));
                                                 echo "<tr>
                                                     <th scope='row'>$no</th>
                                                     <td>$data[Nim]</td>
@@ -133,6 +155,41 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterKelas = document.getElementById("filterKelas");
+            const filterProdi = document.getElementById("filterProdi");
+            const table = document.getElementById("documentsTable");
+
+            filterKelas.addEventListener("change", function() {
+                filterTable();
+            });
+
+            filterProdi.addEventListener("change", function() {
+                filterTable();
+            });
+
+            function filterTable() {
+                const selectedKelas = filterKelas.value;
+                const selectedProdi = filterProdi.value;
+
+                const rows = table.getElementsByTagName("tr");
+
+                for (let i = 0; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName("td");
+                    const kelas = cells[3].textContent;
+                    const prodi = cells[2].textContent;
+
+                    if ((selectedKelas === "" || kelas === selectedKelas) && (selectedProdi === "" || prodi === selectedProdi)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

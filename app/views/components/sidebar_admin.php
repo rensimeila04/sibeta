@@ -39,7 +39,7 @@
           </a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link d-flex align-items-center">
+          <a href="/sibeta/public/index.php?page=riwayat_staff" class="sidebar-link d-flex align-items-center">
             <span class="material-symbols-outlined"> history </span>
             <span>Riwayat Pengajuan</span>
           </a>
