@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="card p-4">
                             <div class="card-body">
                                 <div class="text-center mb-4">
-                                <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 80px; height: 80px;">
+                                    <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 80px; height: 80px;">
                                 </div>
                                 <form method="POST" action="/sibeta/public/index?action=edit">
                                     <div class="mb-3">
@@ -113,11 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="card p-4">
                             <div class="card-body">
                                 <h5 class="card-title text-start mb-4">Ubah Kata Sandi</h5>
-                                <form method="POST" action="/sibeta/app/controllers/handleUpdatePassword.php">
+                                <form method="POST" action="/sibeta/public/index.php?page=updatePassword" id="passwordForm" onsubmit="return validatePassword()">
                                     <div class="mb-3 password-wrapper">
                                         <label for="new-password" class="form-label">Kata Sandi Baru</label>
                                         <div class="input-group">
-                                            <input type="password" class="form-control" id="new-password" placeholder="Masukkan Kata Sandi Baru">
+                                            <input type="password" class="form-control" id="new-password" name="newPassword" required placeholder="Masukkan Kata Sandi Baru">
                                             <span class="input-group-text" onclick="togglePassword('new-password')">
                                                 <i class="bi bi-eye" id="new-password-icon"></i>
                                             </span>
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="mb-3 password-wrapper">
                                         <label for="confirm-password" class="form-label">Konfirmasi Kata Sandi</label>
                                         <div class="input-group">
-                                            <input type="password" class="form-control" id="confirm-password" placeholder="Konfirmasi Kata Sandi">
+                                            <input type="password" class="form-control" id="confirm-password" name="confirmPassword" required placeholder="Konfirmasi Kata Sandi">
                                             <span class="input-group-text" onclick="togglePassword('confirm-password')">
                                                 <i class="bi bi-eye" id="confirm-password-icon"></i>
                                             </span>
@@ -135,7 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-custom">Ubah Kata Sandi</button>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -160,6 +159,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 icon.classList.remove('bi-eye-slash');
                 icon.classList.add('bi-eye'); // Icon for hidden password
             }
+        }
+
+        function validatePassword() {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword.length < 6) {
+                alert('Kata sandi harus minimal 6 karakter!');
+                return false;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert('Konfirmasi kata sandi tidak cocok!');
+                return false;
+            }
+
+            return true;
         }
     </script>
 </body>

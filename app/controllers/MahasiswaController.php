@@ -158,12 +158,31 @@ class MahasiswaController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nim = $_SESSION['nim'];
             $newPassword = $_POST['newPassword'];
+            $confirmPassword = $_POST['confirmPassword'];
 
             try {
-                $this->mahasiswaModel->updatePassword($nim, $newPassword);
-                header('Location: /sibeta/app/views/profil.php?success=updatePassword');
+                // Validate password
+                if (empty($newPassword)) {
+                    throw new Exception("Password cannot be empty!");
+                }
+
+                if (strlen($newPassword) < 6) {
+                    throw new Exception("Password must be at least 6 characters long!");
+                }
+
+                if ($newPassword !== $confirmPassword) {
+                    throw new Exception("Password confirmation does not match!");
+                }
+
+                $result = $this->mahasiswaModel->updatePassword($nim, $newPassword);
+
+                if ($result) {
+                    header('Location: /sibeta/public/index.php?page=profil_mahasiswa&success=updatePassword');
+                } else {
+                    throw new Exception("Failed to update password!");
+                }
             } catch (Exception $e) {
-                header('Location: /sibeta/app/views/profil.php?error=' . urlencode($e->getMessage()));
+                header('Location: /sibeta/public/index.php?page=profil_mahasiswa&error=' . urlencode($e->getMessage()));
             }
             exit();
         }

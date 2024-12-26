@@ -20,7 +20,7 @@ $dokumenController = new DokumenController($conn);
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
 $action = $_GET['action'] ?? '';
 
-if($action === 'edit') {
+if ($action === 'edit') {
     $mahasiswaController->handleUpdateProfile();
 }
 
@@ -310,8 +310,36 @@ switch ($page) {
                 break;
         }
         break;
+    case 'updatePassword':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $mahasiswaController = new MahasiswaController($conn);
+            try {
+                $newPassword = $_POST['newPassword'] ?? '';
+                $confirmPassword = $_POST['confirmPassword'] ?? '';
 
+                // Debug
+                error_log("Received password update request");
 
+                if (empty($newPassword) || empty($confirmPassword)) {
+                    throw new Exception("Password fields cannot be empty");
+                }
+
+                if ($newPassword !== $confirmPassword) {
+                    throw new Exception("Passwords do not match");
+                }
+
+                if (!isset($_SESSION['nim'])) {
+                    throw new Exception("User not logged in");
+                }
+
+                $mahasiswaController->handleUpdatePassword();
+            } catch (Exception $e) {
+                error_log("Password update error: " . $e->getMessage());
+                header('Location: /sibeta/public/index.php?page=profil_mahasiswa&error=' . urlencode($e->getMessage()));
+                exit();
+            }
+        }
+        break;
     case 'profil_mahasiswa':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
@@ -324,7 +352,7 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/bantuan.php';
         break;
-    
+
     default:
         echo "Halaman tidak ditemukan.";
         break;

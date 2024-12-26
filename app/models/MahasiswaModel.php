@@ -375,24 +375,50 @@ class MahasiswaModel
     public function updatePassword($nim, $newPassword)
     {
         try {
-            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-            $sql = "UPDATE Users u
-                JOIN Mahasiswa m ON u.UserID = m.UserID
-                SET u.Password = :password
-                WHERE m.NIM = :nim";
-            $stmt = $this->conn->prepare($sql);
+            // Debug: Print input parameters
+            error_log("Attempting to update password for NIM: " . $nim);
 
+            // Hash the password
+            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+
+            // Debug: Confirm hash was created
+            error_log("Password hash created successfully");
+
+            // Use SQL Server JOIN syntax
+            $sql = "UPDATE u 
+                    SET u.Password = :password 
+                    FROM Users u 
+                    INNER JOIN Mahasiswa m ON u.UserID = m.UserID 
+                    WHERE m.NIM = :nim";
+
+            // Debug: Print the SQL (without sensitive data)
+            error_log("Executing SQL: " . str_replace(":password", "[HIDDEN]", $sql));
+
+            $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
 
-            $stmt->execute();
+            $success = $stmt->execute();
+
+            // Debug: Check execution result
+            error_log("Query execution result: " . ($success ? "success" : "failed"));
+            error_log("Rows affected: " . $stmt->rowCount());
+
+            if ($stmt->rowCount() === 0) {
+                error_log("No rows were updated in the database");
+                throw new Exception("Tidak ada perubahan yang dilakukan pada kata sandi.");
+            }
+
+            error_log("Password update completed successfully");
             return true;
         } catch (PDOException $e) {
-            throw new Exception("Update gagal: " . $e->getMessage());
+            error_log("Database error during password update: " . $e->getMessage());
+            throw new Exception("Gagal mengubah kata sandi: " . $e->getMessage());
         }
-    }    
-    
-    public function getMahasiswaByNIM($nim) {
+    }
+
+    public function getMahasiswaByNIM($nim)
+    {
         try {
             $sql = "SELECT 
                 m.NIM,
@@ -408,8 +434,8 @@ class MahasiswaModel
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) { 
+        } catch (PDOException $e) {
             throw new Exception("Query gagal: " . $e->getMessage());
-        }        
+        }
     }
 }
