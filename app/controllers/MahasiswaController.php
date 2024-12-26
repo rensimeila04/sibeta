@@ -23,6 +23,11 @@ class MahasiswaController
         ];
     }
 
+    public function getMahasiswaByNIM($nim)
+    {
+        return $this->mahasiswaModel->getMahasiswaByNIM($nim);
+    }
+
     public function getDocuments($nim)
     {
         // Mengambil semua dokumen mahasiswa

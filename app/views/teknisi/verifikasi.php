@@ -101,8 +101,8 @@
                                     $file = basename($documentsMahasiswa[0]['FilePath']);
                                     echo $file;
                                     ?>
-                                    <a href="#" class="btn btn-detail btn-sm ms-3">
-                                        <i class="bi bi-eye"></i> Lihat
+                                    <a href="<?php echo '../app' . $documentsMahasiswa[0]['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom" target="_blank">
+                                        visibility
                                     </a>
                                 </span>
                             </div>

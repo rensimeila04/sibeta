@@ -390,5 +390,26 @@ class MahasiswaModel
         } catch (PDOException $e) {
             throw new Exception("Update gagal: " . $e->getMessage());
         }
+    }    
+    
+    public function getMahasiswaByNIM($nim) {
+        try {
+            $sql = "SELECT 
+                m.NIM,
+                u.Nama as NamaMahasiswa,
+                k.namaKelas as Kelas,
+                p.NamaProdi as ProgramStudi
+            FROM Mahasiswa m
+            JOIN Users u ON m.UserID = u.UserID
+            JOIN Kelas k ON m.KelasID = k.KelasID 
+            JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
+            WHERE m.NIM = :nim";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) { 
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }        
     }
 }

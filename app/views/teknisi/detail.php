@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="../../../public/assets/css/header.css">
-    <link rel="stylesheet" href="../../../public/assets/css/sidebar.css">
-    <link rel="stylesheet" href="../../../public/assets/css/style.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/header.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
+    <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet" />
@@ -17,13 +17,9 @@
 
 <body>
     <div class="wrapper">
-        <?php
-        include '../components/sidebar_admin.html';
-        ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_teknisi.php"; ?>
         <div class="main">
-            <?php
-            include '../components/header_admin.html';
-            ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-3 pt-4 dashboard">
                 <div class="breadcrumbs ps-3">
                     <span class="material-symbols-outlined">home</span>
@@ -176,9 +172,12 @@
                                             <td class="fw-bold"><?php echo $no++; ?></td>
                                             <td><?php echo $doc['nama_dokumen']; ?></td>
                                             <td><?php echo $doc['tanggal_upload']; ?></td>
-                                            <td><p class="bg-success rounded-pill py-2 text-white text-center">Terverifikasi</p></td>
+                                            <td>
+                                                <p class="bg-success rounded-pill py-2 text-white text-center">Terverifikasi</p>
+                                            </td>
                                             <td><i class="material-symbols-outlined align-items-center btn-custom">visibility</i>
-                                            <i class="material-symbols-outlined align-items-center btn-custom2">download</i></td>
+                                                <i class="material-symbols-outlined align-items-center btn-custom2">download</i>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

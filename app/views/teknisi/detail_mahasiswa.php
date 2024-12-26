@@ -40,19 +40,19 @@
                                     <tbody>
                                         <tr>
                                             <th>NIM</th>
-                                            <td><?php echo $documentsMahasiswa[0]['Nim']; ?></td>
+                                            <td><?php echo $mahasiswa['NIM']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Nama</th>
-                                            <td><?php echo $documentsMahasiswa[0]['NamaMahasiswa']; ?></td>
+                                            <td><?php echo $mahasiswa['NamaMahasiswa']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Program Studi</th>
-                                            <td><?php echo $documentsMahasiswa[0]['ProgramStudi']; ?></td>
+                                            <td><?php echo $mahasiswa['ProgramStudi']; ?></td>
                                         </tr>
                                         <tr>
                                             <th>Kelas</th>
-                                            <td><?php echo $documentsMahasiswa[0]['Kelas']; ?></td>
+                                            <td><?php echo $mahasiswa['Kelas']; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -71,8 +71,8 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
-                                    <?php foreach ($documentsMahasiswa as $doc): 
-                                        $TanggalUpload = date('d-m-Y', strtotime($doc['TanggalUpload']));?>
+                                    <?php foreach ($documentsMahasiswa as $doc):
+                                        $TanggalUpload = date('d F Y', strtotime($doc['TanggalUpload'])); ?>
                                         <tr>
                                             <td class="fw-bold"><?php echo $no++; ?></td>
                                             <td><?php echo $doc['NamaDokumen']; ?></td>
@@ -91,8 +91,13 @@
                                                     <?php echo $doc['Status']; ?>
                                             </td>
                                             <td>
-                                                <i class="material-symbols-outlined align-items-center btn-custom">visibility</i>
-                                                <i class="material-symbols-outlined align-items-center btn-custom2">download</i>
+                                                <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom" target="_blank">
+                                                    visibility
+                                                </a>
+                                                <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom2" download>
+                                                    download
+                                                </a>
+
                                             </td>
                                             <?php
                                             $buttonClass = ($doc['Status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';

@@ -20,7 +20,7 @@
                     <span class="material-symbols-outlined">home</span>
                     <a href="/sibeta/public/index.php?page=<?php echo $role; ?>">SIBETA</a>
                     <span class="separator">/</span>
-                    <a href="/sibeta/public/index.php?page=kelola">Kelola Dokumen</a>
+                    <a href="/sibeta/public/index.php?page=riwayat_staff">Riwayat Pengajuan</a>
                     <span class="separator">/</span>
                     <span>Detail Mahasiswa</span>
                 </div>
@@ -66,7 +66,6 @@
                                         <th>Tanggal Upload</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
-                                        <th>Verifikasi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -97,22 +96,10 @@
                                                 <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom2" download>
                                                     download
                                                 </a>
-
                                             </td>
                                             <?php
                                             $buttonClass = ($doc['Status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';
                                             ?>
-                                            <td>
-                                                <a href="/sibeta/public/index.php?page=verifikasi&id=<?php echo $doc['DokumenID']; ?>"
-                                                    class="<?php echo $buttonClass; ?> text-decoration-none"
-                                                    <?php if (($doc['Status'] === 'Diverifikasi' || $doc['Status'] === 'Ditolak') || ($doc['Status'] === 'Diajukan' && $doc['IsSaved'] == '0')): ?>
-                                                    style="pointer-events: none; opacity: 0.5;"
-                                                    class="disabled"
-                                                    <?php endif; ?>>
-                                                    <i class="material-symbols-outlined align-items-center btn-custom3">check</i>Verifikasi
-                                                </a>
-
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
