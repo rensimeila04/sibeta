@@ -340,6 +340,19 @@ switch ($page) {
             }
         }
         break;
+    case 'change_mahasiswa_profile':
+        try {
+            $result = $mahasiswaController->handleUpdateProfileName();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=profil_mahasiswa&success=updateProfile');
+            } else {
+                header('Location: /sibeta/public/index.php?page=profil_mahasiswa&error=Update gagal');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=profil_mahasiswa&error=' . urlencode($e->getMessage()));
+        }
+        exit;
+        break;
     case 'profil_mahasiswa':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];

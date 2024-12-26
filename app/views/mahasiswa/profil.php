@@ -82,22 +82,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="text-center mb-4">
                                     <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 80px; height: 80px;">
                                 </div>
-                                <form method="POST" action="/sibeta/public/index?action=edit">
+                                <form method="POST" action="/sibeta/public/index.php?page=change_mahasiswa_profile">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Nama</label>
-                                        <input type="text" class="form-control" id="name" value="<?php echo $mahasiswaDetails['NamaMahasiswa']; ?>">
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $mahasiswaDetails['NamaMahasiswa']; ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim" value="<?php echo $mahasiswaDetails['NIM']; ?>">
+                                        <input type="text" class="form-control" id="nim" value="<?php echo $mahasiswaDetails['NIM']; ?>" disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="class" class="form-label">Kelas</label>
-                                        <input type="text" class="form-control" id="class" value="<?php echo $mahasiswaDetails['NamaKelas']; ?>">
+                                        <input type="text" class="form-control" id="class" value="<?php echo $mahasiswaDetails['NamaKelas']; ?>" disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="program" class="form-label">Program Studi</label>
-                                        <input type="text" class="form-control" id="program" value="<?php echo $mahasiswaDetails['NamaProdi']; ?>">
+                                        <input type="text" class="form-control" id="program" value="<?php echo $mahasiswaDetails['NamaProdi']; ?>" disabled>
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-custom">Simpan Perubahan</button>

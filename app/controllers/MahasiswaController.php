@@ -152,6 +152,39 @@ class MahasiswaController
             exit();
         }
     }
+    public function handleUpdateProfileName()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nim = $_SESSION['nim'];
+            $nama = $_POST['name'];
+
+            if (empty($nama)) {
+                throw new Exception("Nama tidak boleh kosong");
+            }
+
+            // Get current mahasiswa data
+            $currentData = $this->getMahasiswaByNIM($nim);
+
+            $newData = [
+                'nama' => $nama,
+                'newNim' => $nim,
+                'kelas' => $currentData['Kelas'],
+                'programStudi' => $currentData['ProgramStudi']
+            ];
+
+            try {
+                $result = $this->mahasiswaModel->updateProfile($nim, $newData);
+                if ($result) {
+                    $_SESSION['nama'] = $nama;
+                    return true;
+                }
+                return false;
+            } catch (Exception $e) {
+                throw new Exception("Gagal mengupdate profil: " . $e->getMessage());
+            }
+        }
+        return false;
+    }
 
     public function handleUpdatePassword()
     {

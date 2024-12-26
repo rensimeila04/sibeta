@@ -349,25 +349,21 @@ class MahasiswaModel
     public function updateProfile($nim, $newData)
     {
         try {
-            $sql = "UPDATE Mahasiswa m
-                JOIN Users u ON m.UserID = u.UserID
-                JOIN Kelas k ON m.KelasID = k.KelasID
-                SET u.Nama = :nama,
-                    m.NIM = :newNim,
-                    m.KelasID = (SELECT KelasID FROM Kelas WHERE NamaKelas = :kelas),
-                    k.ProdiID = (SELECT ProdiID FROM ProgramStudi WHERE NamaProdi = :programStudi)
-                WHERE m.NIM = :nim";
-            $stmt = $this->conn->prepare($sql);
+            // Update only the name using SQL Server JOIN syntax
+            $sql = "UPDATE u 
+                    SET u.Nama = :nama
+                    FROM Users u 
+                    INNER JOIN Mahasiswa m ON u.UserID = m.UserID 
+                    WHERE m.NIM = :nim";
 
+            $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':nama', $newData['nama'], PDO::PARAM_STR);
-            $stmt->bindParam(':newNim', $newData['newNim'], PDO::PARAM_STR);
-            $stmt->bindParam(':kelas', $newData['kelas'], PDO::PARAM_STR);
-            $stmt->bindParam(':programStudi', $newData['programStudi'], PDO::PARAM_STR);
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
 
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
+            error_log("Update profile error: " . $e->getMessage());
             throw new Exception("Update gagal: " . $e->getMessage());
         }
     }
