@@ -72,40 +72,39 @@
                 </div>
 
                 <div class="card mt-4">
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between mb-3">
-                                <h2 class="fw-semibold fs-3">Dokumen Anda</h2>
-                                <a href="#" class="btn-custom align-content-center" style="text-decoration: none;">Lihat Semua</a>
-                            </div>
-                            <table class="table table-striped table-borderless table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Nama Dokumen</th>
-                                        <th scope="col">Jenis Dokumen</th>
-                                        <th scope="col">Tanggal Upload</th>
-                                        <th scope="col">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($documents as $document) {
-                                        $tanggalUpload = date('d F Y', strtotime($document['TanggalUpload']));
-                                        $badgeClass = '';
-                                        switch ($document['Status']) {
-                                            case 'Diverifikasi':
-                                                $badgeClass = 'bg-success';
-                                                break;
-                                            case 'Diajukan':
-                                                $badgeClass = 'bg-warning';
-                                                break;
-                                            case 'Ditolak':
-                                                $badgeClass = 'bg-danger';
-                                                break;
-                                        }
-                                        echo "<tr>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h2 class="fw-semibold fs-3">Dokumen Anda</h2>
+                            <a href="#" class="btn-custom align-content-center" style="text-decoration: none;">Lihat Semua</a>
+                        </div>
+                        <table class="table table-striped table-borderless table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama Dokumen</th>
+                                    <th scope="col">Jenis Dokumen</th>
+                                    <th scope="col">Tanggal Upload</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($documents as $document) {
+                                    $tanggalUpload = date('d F Y', strtotime($document['TanggalUpload']));
+                                    $badgeClass = '';
+                                    switch ($document['Status']) {
+                                        case 'Diverifikasi':
+                                            $badgeClass = 'bg-success';
+                                            break;
+                                        case 'Diajukan':
+                                            $badgeClass = 'bg-warning';
+                                            break;
+                                        case 'Ditolak':
+                                            $badgeClass = 'bg-danger';
+                                            break;
+                                    }
+                                    echo "<tr>
                                             <th scope='row'>{$no}</th>
                                             <td class='text-truncate' style='max-width: 50px;'>{$document['NamaDokumen']}</td>
                                             <td>{$document['Tipe']}</td>
@@ -116,12 +115,11 @@
                                                 </span>
                                             </td>
                                         </tr>";
-                                        $no++;
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                    $no++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
