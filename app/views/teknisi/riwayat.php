@@ -105,15 +105,50 @@
                             <div class="pagination mt-5 text-center">
                                 <?php
                                 $totalPages = ceil($totalDocuments / $itemsPerPage);
-                                echo '<div class="pagination-nav">';
-                                for ($i = 1; $i <= $totalPages; $i++) {
-                                    $active = $i == $currentPage ? 'active' : '';
-                                    echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$i' class='$active'>$i</a>";
-                                }
-                                echo '</div>';
 
+                                if ($totalPages > 1) {
+                                    echo '<div class="pagination-nav">';
+
+                                    // Add "Previous" arrow
+                                    if ($currentPage > 1) {
+                                        $prevPage = $currentPage - 1;
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$prevPage' class='arrow'>&laquo;</a>";
+                                    }
+
+                                    // Display page numbers with "..." for truncation
+                                    $startPage = max(1, $currentPage - 2);
+                                    $endPage = min($totalPages, $currentPage + 2);
+
+                                    if ($startPage > 1) {
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=1'>1</a>";
+                                        if ($startPage > 2) {
+                                            echo "<span class='dots'>...</span>";
+                                        }
+                                    }
+
+                                    for ($i = $startPage; $i <= $endPage; $i++) {
+                                        $active = $i == $currentPage ? 'active' : '';
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$i' class='$active'>$i</a>";
+                                    }
+
+                                    if ($endPage < $totalPages) {
+                                        if ($endPage < $totalPages - 1) {
+                                            echo "<span class='dots'>...</span>";
+                                        }
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$totalPages'>$totalPages</a>";
+                                    }
+
+                                    // Add "Next" arrow
+                                    if ($currentPage < $totalPages) {
+                                        $nextPage = $currentPage + 1;
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$nextPage' class='arrow'>&raquo;</a>";
+                                    }
+
+                                    echo '</div>';
+                                }
                                 ?>
                             </div>
+
                         </div>
                     </div>
 
@@ -122,7 +157,7 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
         <script>
             // Get elements

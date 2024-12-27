@@ -118,20 +118,52 @@
                                 </tbody>
                             </table>
 
-                            <div class="pagination mt-5">
-                                <span>Total 10 items</span>
-                                <div class="pagination-nav">
-                                    <a href="#" class="arrow">&laquo;</a>
-                                    <a href="#" class="active">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                    <a href="#">4</a>
-                                    <a href="#">5</a>
-                                    <a href="#">6</a>
-                                    <span>...</span>
-                                    <a href="#">20</a>
-                                    <a href="#" class="arrow">&raquo;</a>
-                                </div>
+                            <!-- Pagination Controls -->
+                            <div class="pagination mt-5 text-center">
+                                <?php
+                                $totalPages = ceil($totalDocuments / $itemsPerPage);
+
+                                if ($totalPages > 1) {
+                                    echo '<div class="pagination-nav">';
+
+                                    // Add "Previous" arrow
+                                    if ($currentPage > 1) {
+                                        $prevPage = $currentPage - 1;
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$prevPage' class='arrow'>&laquo;</a>";
+                                    }
+
+                                    // Display page numbers with "..." for truncation
+                                    $startPage = max(1, $currentPage - 2);
+                                    $endPage = min($totalPages, $currentPage + 2);
+
+                                    if ($startPage > 1) {
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=1'>1</a>";
+                                        if ($startPage > 2) {
+                                            echo "<span class='dots'>...</span>";
+                                        }
+                                    }
+
+                                    for ($i = $startPage; $i <= $endPage; $i++) {
+                                        $active = $i == $currentPage ? 'active' : '';
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$i' class='$active'>$i</a>";
+                                    }
+
+                                    if ($endPage < $totalPages) {
+                                        if ($endPage < $totalPages - 1) {
+                                            echo "<span class='dots'>...</span>";
+                                        }
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$totalPages'>$totalPages</a>";
+                                    }
+
+                                    // Add "Next" arrow
+                                    if ($currentPage < $totalPages) {
+                                        $nextPage = $currentPage + 1;
+                                        echo "<a href='/sibeta/public/index.php?page=kelola&page_number=$nextPage' class='arrow'>&raquo;</a>";
+                                    }
+
+                                    echo '</div>';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
