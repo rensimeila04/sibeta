@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -36,6 +37,7 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .breadcrumbs .material-symbols-outlined {
     margin-bottom: 8px;
   }
@@ -108,21 +110,26 @@ body {
 }
 
 .status-diverifikasi {
-  background-color: #2dc751; /* Light green */
+  background-color: #2dc751;
+  /* Light green */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
   color: white;
 }
+
 .status-diajukan {
-  background-color: #ffc107; /* Light yellow */
+  background-color: #ffc107;
+  /* Light yellow */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
   color: white;
 }
+
 .status-ditolak {
-  background-color: #ea2e3e; /* Light red */
+  background-color: #ea2e3e;
+  /* Light red */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
@@ -197,7 +204,8 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;;
+  width: 100%;
+  ;
 }
 
 .row-custom {
@@ -213,7 +221,8 @@ body {
 }
 
 .col-md-3 {
-  flex: 1 1 22%; /* Lebar 22% untuk setiap kolom agar card tetap sejajar */
+  flex: 1 1 22%;
+  /* Lebar 22% untuk setiap kolom agar card tetap sejajar */
   display: flex;
   justify-content: center;
 }
@@ -279,9 +288,11 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .pagination-nav {
     flex-direction: column;
   }
+
   .pagination-nav a,
   .pagination-nav span {
     margin-bottom: 8px;
@@ -303,19 +314,24 @@ body {
 }
 
 .status-terverifikasi {
-  background-color: #2dc751; /* Light green */
+  background-color: #2dc751;
+  /* Light green */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
 }
+
 .status-diajukan {
-  background-color: #ffe522; /* Light yellow */
+  background-color: #ffe522;
+  /* Light yellow */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
 }
+
 .status-ditolak {
-  background-color: #ea2e3e; /* Light red */
+  background-color: #ea2e3e;
+  /* Light red */
   border-radius: 50px;
   padding: 5px;
   text-align: center;
@@ -432,9 +448,11 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .pagination-nav {
     flex-direction: column;
   }
+
   .pagination-nav a,
   .pagination-nav span {
     margin-bottom: 8px;
