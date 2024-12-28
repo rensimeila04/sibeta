@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="py-3">
-                                    <table class="table table-striped table-borderless table-hover">
+                                    <table id="documentsTable" class="table table-striped table-borderless table-hover">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -188,39 +188,41 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const filterKelas = document.getElementById("filterKelas");
-            const filterProdi = document.getElementById("filterProdi");
-            const table = document.getElementById("documentsTable");
+        // Get elements
+        const filterKelas = document.getElementById('filterKelas');
+        const filterProdi = document.getElementById('filterProdi');
+        const table = document.getElementById('documentsTable');
+        const rows = table.getElementsByTagName('tr');
 
-            filterKelas.addEventListener("change", function() {
-                filterTable();
-            });
+        // Function to filter table rows
+        function filterTable() {
+            const kelasValue = filterKelas.value.toLowerCase();
+            const prodiValue = filterProdi.value.toLowerCase();
 
-            filterProdi.addEventListener("change", function() {
-                filterTable();
-            });
+            for (let i = 1; i < rows.length; i++) { // Start at 1 to skip the header
+                const cells = rows[i].getElementsByTagName('td');
+                const studentKelas = cells[3] ? cells[3].textContent.toLowerCase() : '';
+                const studentProdi = cells[2] ? cells[2].textContent.toLowerCase() : '';
 
-            function filterTable() {
-                const selectedKelas = filterKelas.value;
-                const selectedProdi = filterProdi.value;
+                // Check all filters
+                const matchKelas = !kelasValue || studentKelas === kelasValue;
+                const matchProdi = !prodiValue || studentProdi === prodiValue;
 
-                const rows = table.getElementsByTagName("tr");
+                if (matchKelas && matchProdi) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
 
-                for (let i = 0; i < rows.length; i++) {
-                    const cells = rows[i].getElementsByTagName("td");
-                    const kelas = cells[3].textContent;
-                    const prodi = cells[2].textContent;
-
-                    if ((selectedKelas === "" || kelas === selectedKelas) && (selectedProdi === "" || prodi === selectedProdi)) {
-                        rows[i].style.display = "";
-                    } else {
-                        rows[i].style.display = "none";
-                    }
                 }
             }
-        });
+        }
+
+        // Add event listeners
+        filterKelas.addEventListener('change', filterTable);
+        filterProdi.addEventListener('change', filterTable);
     </script>
 </body>
 

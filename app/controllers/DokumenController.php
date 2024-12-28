@@ -33,8 +33,14 @@ class DokumenController {
     }
 
     public function getPageDocuments($tipe, $currentPage, $itemsPerPage) {
+
         return $this->dokumenModel->getPageDocuments($tipe, $currentPage, $itemsPerPage);
     }
+
+    public function getPageDocumentsRiwayat($tipe, $currentPage, $itemsPerPage) {
+        return $this->dokumenModel->getPageDocumentsRiwayat($tipe, $currentPage, $itemsPerPage);
+    }
+
 
     public function getPageDocumentsMahasiswa($nim, $tipe, $currentPage, $itemsPerPage) {
         return $this->dokumenModel->getPageDocumentsMahasiswa($nim, $tipe, $currentPage, $itemsPerPage);

@@ -320,15 +320,15 @@ switch ($page) {
                 $nip = $staff['NIP'];
                 $role = 'admin';
                 $totalDocuments = $dokumenController->getTotalDocuments('Administratif');
-                $documents = $dokumenController->getPageDocuments('Administratif', $currentPage, $itemsPerPage);
+                $documents = $dokumenController->getPageDocumentsRiwayat('Administratif', $currentPage, $itemsPerPage);
                 include '../app/views/admin_prodi/riwayat.php';
                 break;
             case 'Teknisi':
                 $nama = $staff['Nama'];
                 $nip = $staff['NIP'];
                 $role = 'teknisi';
-                $totalDocuments = $dokumenController->getTotalDocuments('Administratif');
-                $documents = $dokumenController->getPageDocuments('Administratif', $currentPage, $itemsPerPage);
+                $totalDocuments = $dokumenController->getTotalDocuments('Teknis');
+                $documents = $dokumenController->getPageDocumentsRiwayat('Teknis', $currentPage, $itemsPerPage);
                 include '../app/views/teknisi/riwayat.php';
                 break;
         }
