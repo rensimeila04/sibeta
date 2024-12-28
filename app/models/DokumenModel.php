@@ -144,27 +144,28 @@ OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY;
 
             $sql = "
                 SELECT DISTINCT
-                    d.MahasiswaNIM AS Nim,
-                    u.Nama AS NamaMahasiswa,
-                    p.NamaProdi AS ProgramStudi,
-                    k.NamaKelas AS Kelas,
-                    MAX(d.TanggalUpload) AS TanggalUpload
-                FROM Mahasiswa m
-                INNER JOIN Dokumen d ON d.MahasiswaNIM = m.NIM
-                INNER JOIN Users u ON m.UserID = u.UserID
-                INNER JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
-                INNER JOIN Kelas k ON m.KelasID = k.KelasID 
-                INNER JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
-                LEFT JOIN Dokumen d2 
-                    ON d2.MahasiswaNIM = d.MahasiswaNIM
-                    AND d2.JenisDokumenID = d.JenisDokumenID
-                    AND d2.Status = 'Diajukan'
-                WHERE jd.Tipe = :tipe
-                  AND d.IsSaved = 1
-                GROUP BY d.MahasiswaNIM, u.Nama, p.NamaProdi, k.NamaKelas
-                HAVING COUNT(d2.MahasiswaNIM) = 0  -- Pastikan tidak ada dokumen dengan status 'Diajukan'
-                ORDER BY MAX(d.TanggalUpload) DESC
-                OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY;
+    d.MahasiswaNIM AS Nim,
+    u.Nama AS NamaMahasiswa,
+    p.NamaProdi AS ProgramStudi,
+    k.NamaKelas AS Kelas,
+    MAX(d.TanggalUpload) AS TanggalUpload
+FROM Mahasiswa m
+INNER JOIN Dokumen d ON d.MahasiswaNIM = m.NIM
+INNER JOIN Users u ON m.UserID = u.UserID
+INNER JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
+INNER JOIN Kelas k ON m.KelasID = k.KelasID 
+INNER JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
+LEFT JOIN Dokumen d2 
+    ON d2.MahasiswaNIM = d.MahasiswaNIM
+    AND d2.JenisDokumenID = d.JenisDokumenID
+    AND d2.Status != 'Diverifikasi'  -- Pastikan tidak ada dokumen dengan status selain 'Diverifikasi'
+WHERE jd.Tipe = :tipe
+  AND d.IsSaved = 1
+GROUP BY d.MahasiswaNIM, u.Nama, p.NamaProdi, k.NamaKelas
+HAVING COUNT(d2.MahasiswaNIM) = 0  -- Pastikan tidak ada dokumen yang tidak berstatus 'Diverifikasi'
+ORDER BY MAX(d.TanggalUpload) DESC
+OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY;
+
             ";
 
             $stmt = $this->conn->prepare($sql);
