@@ -9,6 +9,10 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet" />
     <link rel="stylesheet" href="../../../public/assets/css/dashboard.css">
+    <!-- Include Required Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SIBETA</title>
@@ -17,9 +21,9 @@
 
 <body>
     <div class="wrapper">
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
         <div class="main">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
             <div class="p-3 dashboard">
                 <div class="breadcrumbs ps-3">
                     <span class="material-symbols-outlined">home</span>
@@ -27,150 +31,111 @@
                     <span class="separator">/</span>
                     <span>Dashboard</span>
                 </div>
-                <div class="container mt-4 px-4">
-                    <!-- Statistic Cards -->
-                    <div class="row text-center mb-4">
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                    <h1 class="text" style="color: #3E368C;">12</h1>
-                                </div>
+                <!-- Statistic Cards -->
+                <div class="row text-center mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Jumlah Mahasiswa</h6>
+                                <h1 class="text" style="color: #3E368C;">12</h1>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Menunggu Verifikasi</h6>
-                                    <h1 class="text-warning">5</h1>
-                                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Jumlah Teknisi</h6>
+                                <h1 class="text-warning">2</h1>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Terverifikasi</h6>
-                                    <h1 class="text-success">4</h1>
-                                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Jumlah Admin</h6>
+                                <h1 class="text-success">2</h1>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body-dash">
-                                    <h6 class="text-secondary">Dokumen Ditolak</h6>
-                                    <h1 class="text-danger">3</h1>
-                                </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body-dash">
+                                <h6 class="text-secondary">Dokumen Diajukan</h6>
+                                <h1 class="text-info">36</h1>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="container px-4 mt-4">
-                    <div class="card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="fw-semibold fs-3">Daftar Pengajuan</div>
-                                <button class="btn btn-detail btn-sm">Lihat Semua</button>
-                            </div>
-                            <div class="py-3">
-                                <table class="table table-striped table-borderless table-hover">
-                                    <?php
-                                    $mahasiswa = [
-                                        [
-                                            'nim' => '123456789',
-                                            'nama' => 'John Doe',
-                                            'program_studi' => 'D-IV Teknik Informatika',
-                                            'kelas' => '4E',
-                                            'tanggal_upload' => '22 November 2024'
-                                        ],
-                                        [
-                                            'nim' => '987654321',
-                                            'nama' => 'Jane Smith',
-                                            'program_studi' => 'D-IV Teknik Informatika',
-                                            'kelas' => '4E',
-                                            'tanggal_upload' => '25 November 2024'
-                                        ],
-                                        [
-                                            'nim' => '234567890',
-                                            'nama' => 'Michael Johnson',
-                                            'program_studi' => 'D-IV Sistem Informasi',
-                                            'kelas' => '4E',
-                                            'tanggal_upload' => '28 November 2024'
-                                        ],
-                                        [
-                                            'nim' => '345678901',
-                                            'nama' => 'Emily Brown',
-                                            'program_studi' => 'D-IV Teknik Informatika',
-                                            'kelas' => '4F',
-                                            'tanggal_upload' => '01 Desember 2024'
-                                        ],
-                                        [
-                                            'nim' => '456789012',
-                                            'nama' => 'David Lee',
-                                            'program_studi'  => 'D-IV Sistem Informasi',
-                                            'kelas' => '4F',
-                                            'tanggal_upload' => '05 Desember 2024'
-                                        ],
-                                        [
-                                            'nim' => '567890123',
-                                            'nama' => 'Olivia Taylor',
-                                            'program_studi' => 'D-IV Teknik Informatika',
-                                            'kelas' => '4E',
-                                            'tanggal_upload' => '10 Desember 2024'
-                                        ]
-                                    ];
-                                    ?>
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>NIM</th>
-                                            <th>Nama Mahasiswa</th>
-                                            <th>Program Studi</th>
-                                            <th>Kelas</th>
-                                            <th>Tanggal Upload</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no = 1; ?>
-                                        <?php foreach ($mahasiswa as $mhs): ?>
-                                            <tr>
-                                                <td><?php echo $no++; ?></td>
-                                                <td><?php echo $mhs['nim']; ?></td>
-                                                <td><?php echo $mhs['nama']; ?></td>
-                                                <td><?php echo $mhs['program_studi']; ?></td>
-                                                <td><?php echo $mhs['kelas']; ?></td>
-                                                <td><?php echo $mhs['tanggal_upload']; ?></td>
-                                                <td><button class="btn btn-detail btn-sm">Detail</button></td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                
-                                <div class="pagination mt-5">
-                                    <span>Total 10 items</span>
-                                    <div class="pagination-nav">
-                                        <a href="#" class="arrow">&laquo;</a>
-                                        <a href="#" class="active">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">4</a>
-                                        <a href="#">5</a>
-                                        <a href="#">6</a>
-                                        <span>...</span>
-                                        <a href="#">20</a>
-                                        <a href="#" class="arrow">&raquo;</a>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="row row-cols-2 mt-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <h4 class="mb-5">Jumlah Dokumen Diajukan</h4>
+            <canvas id="myChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <h4 class="mb-4">Program Studi</h4>
+            <div class="d-flex flex-column justify-content-between gap-5">
+                <div class="card flex-grow-1 shadow-sm">
+                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                        <h5 class="fw-medium mb-3">D-IV Teknik Informatika</h5>
+                        <div class="mt-2">
+                            <h1 style="color: #3E368C">526</h1>
+                            <h6 class="text-secondary">Mahasiswa</h6>
                         </div>
                     </div>
                 </div>
+                <div class="card flex-grow-1 shadow-sm">
+                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                        <h5 class="fw-medium mb-3">D-IV Sistem Informasi Bisnis</h5>
+                        <div class="mt-2">
+                            <h1 style="color: #3E368C">526</h1>
+                            <h6 class="text-secondary">Mahasiswa</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
 
         </div>
     </div>
     </div>
+
+    <script>
+        const labels = ['2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Dokumen',
+                backgroundColor: 'rgba(78, 115, 223, 1)',
+                borderColor: 'rgba(78, 115, 223, 1)',
+                data: [1799, 2170, 2690, 3376, 2810, 1890, 1090],
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            },
+        };
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
 </body>
 
 </html>
