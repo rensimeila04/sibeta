@@ -416,7 +416,53 @@ switch ($page) {
         include '../app/views/mahasiswa/bantuan.php';
         break;
     case 'generate_surat':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/generate_surat.php';
+        break;
+    case 'tambah_mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/mahasiswa.php';
+        break;
+    case 'tambah_admin':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/admin.php';
+        break;
+    case 'tambah_teknisi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/teknisi.php';
+        break;
+    case 'tambah_kelas':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/kelas.php';
+        break;
+    case 'tambah_prodi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/prodi.php';
+        break;
+    case 'tambah_dokumen':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/dokumen.php';
         break;
     default:
         echo "Halaman tidak ditemukan.";

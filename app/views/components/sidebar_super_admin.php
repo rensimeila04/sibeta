@@ -26,7 +26,7 @@
     </div>
     <ul class="sidebar-nav">
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=super_admin" class="sidebar-link d-flex align-items-center">
           <span class="material-symbols-outlined"> home </span>
           <span>Dashboard</span>
         </a>
@@ -42,30 +42,30 @@
         <ul id="pengguna" class="sidebar-dropdown list-unstyled collapse"
           data-bs-parent="#sidebar">
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Mahasiswa</a>
+            <a href="/sibeta/public/index.php?page=tambah_mahasiswa" class="sidebar-link">Mahasiswa</a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Admin</a>
+            <a href="/sibeta/public/index.php?page=tambah_admin" class="sidebar-link">Admin</a>
           </li>
           <li class="sidebar-item">
-            <a href="#" class="sidebar-link">Teknisi</a>
+            <a href="/sibeta/public/index.php?page=tambah_teknisi" class="sidebar-link">Teknisi</a>
           </li>
         </ul>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=tambah_kelas" class="sidebar-link d-flex align-items-center">
           <span class="material-symbols-outlined"> book </span>
           <span>Kelas</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=tambah_prodi" class="sidebar-link d-flex align-items-center">
           <span class="material-symbols-outlined"> school </span>
           <span>Program Studi</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a href="#" class="sidebar-link d-flex align-items-center">
+        <a href="/sibeta/public/index.php?page=tambah_dokumen" class="sidebar-link d-flex align-items-center">
           <span class="material-symbols-outlined">
             text_snippet
           </span>
