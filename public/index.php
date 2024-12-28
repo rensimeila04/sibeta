@@ -70,7 +70,10 @@ switch ($page) {
         $role = 'admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $dokumenController->getDocumentCounts('Administratif');
-        $documents = $dokumenController->getDocuments('Administratif');
+        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
+        $itemsPerPage = 10;
+        $totalDocuments = $dokumenController->getTotalDocuments('Administratif');
+        $documents = $dokumenController->getPageDocuments('Administratif', $currentPage, $itemsPerPage);
         include '../app/views/admin_prodi/index.php';
         break;
 
@@ -80,7 +83,10 @@ switch ($page) {
         $role = 'teknisi';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $dokumenController->getDocumentCounts('Teknis');
-        $documents = $dokumenController->getDocuments('Teknis');
+        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
+        $itemsPerPage = 10;
+        $totalDocuments = $dokumenController->getTotalDocuments('Teknis');
+        $documents = $dokumenController->getPageDocuments('Teknis', $currentPage, $itemsPerPage);
         include '../app/views/teknisi/index.php';
         break;
     case 'super_admin':
@@ -150,16 +156,21 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         $role = $_SESSION['role'];
         $nim = $_GET['nim'];
+
+        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
+        $itemsPerPage = 10;
         switch ($role) {
             case 'Admin Prodi':
                 $role = 'admin';
-                $documentsMahasiswa = $dokumenController->getDocumentMahasiswa($nim, 'Administratif');
+                $totalDocuments = $dokumenController->getTotalDocuments('Administratif');
+                $documentsMahasiswa = $dokumenController->getPageDocumentsMahasiswa($nim, 'Administratif', $currentPage, $itemsPerPage);
                 $mahasiswa = $mahasiswaController->getMahasiswaByNIM($nim);
                 include '../app/views/admin_prodi/detail_mahasiswa.php';
                 break;
             case 'Teknisi':
                 $role = 'teknisi';
-                $documentsMahasiswa = $dokumenController->getDocumentMahasiswa($nim, 'Teknis');
+                $totalDocuments = $dokumenController->getTotalDocuments('Teknis');
+                $documentsMahasiswa = $dokumenController->getPageDocumentsMahasiswa($nim, 'Teknis', $currentPage, $itemsPerPage);
                 $mahasiswa = $mahasiswaController->getMahasiswaByNIM($nim);
                 include '../app/views/teknisi/detail_mahasiswa.php';
                 break;
@@ -233,6 +244,7 @@ switch ($page) {
     case 'profile_staff':
         $nip = $_SESSION['nip'];
         $staff = $staffController->getStaff($nip);
+        $photo_profile_path = $_SESSION['photo_profile'];
         switch ($staff['RoleName']) {
             case 'Admin Prodi':
                 $nama = $staff['Nama'];
@@ -250,36 +262,55 @@ switch ($page) {
         break;
 
     case 'change_staff_profile':
-        $nama = $_POST['name'];
-        $nipChange = $_POST['nip'];
-        $nip = $_SESSION['nip'];
-        $result = $staffController->getStaff($nip);
-        $userid = $result['UserID'];
-        $resultUpdate = $staffController->updateStaffProfile($userid, $nama, $nipChange);
-        if ($resultUpdate) {
-            $_SESSION['nama'] = $nama;
-            $_SESSION['nip'] = $nipChange; // Update session jika berhasil
-            header('Location: /sibeta/public/index.php?page=profile_staff');
-            exit;
-        } else {
-            echo "Update gagal.";
+        try {
+            $result = $staffController->handleUpdateProfileName();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=profile_staff&success=updateProfile');
+            } else {
+                header('Location: /sibeta/public/index.php?page=profile_staff&error=Update gagal');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=profile_staff&error=' . urlencode($e->getMessage()));
         }
+        exit;
         break;
 
     case 'change_staff_password':
-        $password = $_POST['password'];
-        $nip = $_SESSION['nip'];
-        $result = $staffController->getStaff($nip);
-        $userid = $result['UserID'];
-        $staffController->updateStaffPassword($userid, $password);
-        header('Location: /sibeta/public/index.php?page=profile_staff');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $staffController = new StaffController($conn);
+            try {
+                $newPassword = $_POST['newPassword'] ?? '';
+                $confirmPassword = $_POST['confirmPassword'] ?? '';
+
+                // Debug
+                error_log("Received password update request");
+
+                if (empty($newPassword) || empty($confirmPassword)) {
+                    throw new Exception("Password fields cannot be empty");
+                }
+
+                if ($newPassword !== $confirmPassword) {
+                    throw new Exception("Passwords do not match");
+                }
+
+                if (!isset($_SESSION['nip'])) {
+                    throw new Exception("User not logged in");
+                }
+
+                $staffController->handleUpdatePassword();
+            } catch (Exception $e) {
+                error_log("Password update error: " . $e->getMessage());
+                header('Location: /sibeta/public/index.php?page=profile_staff&error=' . urlencode($e->getMessage()));
+                exit();
+            }
+        }
         break;
-        exit;
 
 
     case 'riwayat_staff':
         $nip = $_SESSION['nip'];
         $staff = $staffController->getStaff($nip);
+        $photo_profile_path = $_SESSION['photo_profile'];
 
         $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
         $itemsPerPage = 10;
@@ -308,17 +339,23 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $mahasiswa = $mahasiswaController->getMahasiswaByNIM($nim);
         $staff = $staffController->getStaff($nip);
+        $photo_profile_path = $_SESSION['photo_profile'];
+
+        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
+        $itemsPerPage = 10;
         switch ($staff['RoleName']) {
             case 'Admin Prodi':
                 $nama = $staff['Nama'];
-                $documentsMahasiswa = $dokumenController->getDocumentMahasiswa($nim, 'Administratif');
                 $role = 'admin';
+                $totalDocuments = $dokumenController->getTotalDocumentsMahasiswa($nim, 'Administratif');
+                $documentsMahasiswa = $dokumenController->getPageDocumentsMahasiswa($nim, 'Administratif', $currentPage, $itemsPerPage);
                 include '../app/views/admin_prodi/detail_riwayat_mahasiswa.php';
                 break;
             case 'Teknisi':
                 $nama = $staff['Nama'];
-                $documentsMahasiswa = $dokumenController->getDocumentMahasiswa($nim, 'Administratif');
                 $role = 'teknisi';
+                $totalDocuments = $dokumenController->getTotalDocumentsMahasiswa($nim, 'Teknis');
+                $documentsMahasiswa = $dokumenController->getPageDocumentsMahasiswa($nim, 'Teknis', $currentPage, $itemsPerPage);
                 include '../app/views/teknisi/detail_riwayat_mahasiswa.php';
                 break;
         }

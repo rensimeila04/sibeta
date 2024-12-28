@@ -18,46 +18,45 @@
 
 <body>
     <div class="header">
+
         <div class="profile">
             <div class="profile-info">
                 <div class="profile-name">
                     <?= $nama ?>
                 </div>
-                <div class="profile-identity">
-                    <?= $_SESSION['role'] ?>
+                <div class="profile-nim">
+                    <?= $nip ?>
                 </div>
             </div>
 
             <div class="profile-settings d-flex flex-row align-items-center">
-                <img src="<?php echo htmlspecialchars($_SESSION['photo_profile']); ?>" alt="avatar">
-                <div class="dropdown">
-                    <button
-                        class="border-0 bg-transparent d-flex align-items-center"
+                <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <div class="dropdown ms-2">
+                    <button 
+                        class="btn border-0 bg-transparent dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
                         data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <span class="material-symbols-outlined">keyboard_arrow_down</span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <li>
-                            <div class="d-flex flex-row align-items-center">
-                                <span class="material-symbols-outlined" style="margin-left: 15px;">
-                                    person
-                                </span>
-                                <a href="/sibeta/public/index.php?page=profil_staff"
-                                    class="dropdown-item border-0 bg-transparent"
-                                    style="color: #212529;">
-                                    Profil <?= $_SESSION['role'] ?>
-                                </a>
-                            </div>
+                            <a href="/sibeta/public/index.php?page=profile_staff" class="dropdown-item d-flex align-items-center">
+                                <span class="material-symbols-outlined me-2">person</span>
+                                Profil <?= $role; ?>
+                            </a>
                         </li>
                     </ul>
                 </div>
+                
             </div>
         </div>
+
     </div>
 
     <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 </body>
