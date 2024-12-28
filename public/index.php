@@ -176,7 +176,18 @@ switch ($page) {
                 break;
         }
         break;
-
+    case 'program_studi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = $_SESSION['role'];
+            include '../app/views/super_admin/program_studi.php';
+        break;
+    case 'detail_program_studi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = $_SESSION['role'];
+        include '../app/views/super_admin/detail_program_studi.php';
+        break;
     case 'verifikasi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
@@ -233,6 +244,11 @@ switch ($page) {
                     }
 
                     include '../app/views/teknisi/verifikasi.php';
+                    break;
+
+                case 'Super Admin':
+                    $role = 'super_admin';
+                    $documentsMahasiswa = $dokumenController->getDocumentMahasiswaByIDDocument($id, 'Administratif');
                     break;
             }
         } else {

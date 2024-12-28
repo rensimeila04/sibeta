@@ -65,9 +65,9 @@ class AuthController
 
                         header("Location: /sibeta/public/index.php?page=super_admin");
                         break;
-                        break;
                     default:
                         return "Role tidak dikenal!";
+                        break;
                 }
 
                 exit;
