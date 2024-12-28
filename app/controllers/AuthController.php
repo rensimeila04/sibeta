@@ -53,7 +53,18 @@ class AuthController
 
                         header("Location: /sibeta/public/index.php?page=teknisi");
                         break;
+                    case 'Super Admin':
+                        $adminDetails = $this->userModel->getStaffDetails($user['UserID']);
+                        $_SESSION['nama'] = $adminDetails['Nama'];
+                        $_SESSION['nip'] = $adminDetails['NIP'];
+                        $_SESSION['photo_profile'] = $adminDetails['photo_profile_path'] ?? '/sibeta/public/assets/img/default-avatar.png';
 
+                        $nama = $_SESSION['nama'];
+                        $nip = $_SESSION['nip'];
+                        $photo_profile_path = $_SESSION['photo_profile'];
+
+                        header("Location: /sibeta/public/index.php?page=super_admin");
+                        break;
                     default:
                         return "Role tidak dikenal!";
                 }

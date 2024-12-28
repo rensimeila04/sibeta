@@ -83,6 +83,15 @@ switch ($page) {
         $documents = $dokumenController->getDocuments('Teknis');
         include '../app/views/teknisi/index.php';
         break;
+    case 'super_admin':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super_admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        $documentCounts = $dokumenController->getDocumentCounts('Teknis');
+        $documents = $dokumenController->getDocuments('Teknis');
+        include '../app/views/super_admin/index.php';
+        break;
     case 'upload-administratif':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
@@ -152,7 +161,18 @@ switch ($page) {
                 break;
         }
         break;
-
+    case 'program_studi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = $_SESSION['role'];
+            include '../app/views/super_admin/program_studi.php';
+        break;
+    case 'detail_program_studi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = $_SESSION['role'];
+        include '../app/views/super_admin/detail_program_studi.php';
+        break;
     case 'verifikasi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
@@ -209,6 +229,11 @@ switch ($page) {
                     }
 
                     include '../app/views/teknisi/verifikasi.php';
+                    break;
+
+                case 'Super Admin':
+                    $role = 'super_admin';
+                    $documentsMahasiswa = $dokumenController->getDocumentMahasiswaByIDDocument($id, 'Administratif');
                     break;
             }
         } else {
