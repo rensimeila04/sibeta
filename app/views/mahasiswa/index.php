@@ -31,7 +31,8 @@
                         <div class="card">
                             <div class="card-body-dash">
                                 <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                <h1 class="text" style="color: #3E368C;"><?php echo $documentCounts['diajukan']; ?></h1>
+                                <?php $totalDokumen = $documentCounts['diajukan'] + $documentCounts['terverifikasi'] + $documentCounts['ditolak'];  ?>
+                                <h1 class="text" style="color: #3E368C;"><?php echo $totalDokumen; ?></h1>
                             </div>
                         </div>
                     </div>
