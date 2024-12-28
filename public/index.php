@@ -83,6 +83,13 @@ switch ($page) {
         $documents = $dokumenController->getDocuments('Teknis');
         include '../app/views/teknisi/index.php';
         break;
+    case 'super_admin':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/index.php';
+        break;
     case 'upload-administratif':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
