@@ -39,7 +39,7 @@
           <span class="material-symbols-outlined">person</span>
           <span>Pengguna</span>
         </a>
-        <ul id="unggah" class="sidebar-dropdown list-unstyled collapse"
+        <ul id="pengguna" class="sidebar-dropdown list-unstyled collapse"
           data-bs-parent="#sidebar">
           <li class="sidebar-item">
             <a href="#" class="sidebar-link">Mahasiswa</a>
@@ -84,7 +84,7 @@
   </aside>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ENjdO4Dr38bgBIFAGvZ/keYrPGqtdrmM+av03pSLy0yJzRHMqePDmSpWB+gIBtsF"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
   <script src="script.js"></script>
 
