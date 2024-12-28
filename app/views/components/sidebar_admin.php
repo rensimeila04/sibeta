@@ -33,8 +33,9 @@
       </li>
       <li class="sidebar-item">
         <a href="/sibeta/public/index.php?page=kelola" class="sidebar-link d-flex align-items-center">
-          <span class="material-symbols-outlined"> upload_file </span>
-          <span>Kelola Dokumen</span>
+          <span class="material-symbols-outlined">
+            text_snippet
+          </span> <span>Kelola Dokumen</span>
         </a>
       </li>
       <li class="sidebar-item">

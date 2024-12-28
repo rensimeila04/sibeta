@@ -80,22 +80,24 @@
                                                 <p class="<?php
                                                             // Apply different classes based on the status
                                                             if ($doc['Status'] == 'Diverifikasi') {
-                                                                echo 'status-diverifikasi';
+                                                                echo 'bg-success';
                                                             } elseif ($doc['Status'] == 'Diajukan') {
-                                                                echo 'status-diajukan';
+                                                                echo 'bg-warning';
                                                             } elseif ($doc['Status'] == 'Ditolak') {
-                                                                echo 'status-ditolak';
+                                                                echo 'bg-danger';
                                                             }
-                                                            ?> fw-semibold px-4">
+                                                            ?> fw-semibold" style='border-radius: 16px; font-size: 16px; height: 35px; width: 126px; font-weight: 400; padding-top: 5px; text-align: center; color: white;'>
                                                     <?php echo $doc['Status']; ?>
                                             </td>
                                             <td>
-                                                <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom" target="_blank">
-                                                    visibility
-                                                </a>
-                                                <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom2" download>
-                                                    download
-                                                </a>
+                                                <div class="d-flex justify-content-start align-items-center gap-2">
+                                                    <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom" target="_blank" style="text-decoration: none; font-size:18px;">
+                                                        visibility
+                                                    </a>
+                                                    <a href="<?php echo '../app' . $doc['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom2" style="text-decoration: none; font-size: 18px;" download>
+                                                        download
+                                                    </a>
+                                                </div>
                                             </td>
                                             <?php
                                             $buttonClass = ($doc['Status'] === 'Terverifikasi') ? 'btn-disabled d-flex align-items-center' : 'btn-custom d-flex align-items-center';
