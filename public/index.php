@@ -108,6 +108,12 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/dokumen.php';
         break;
+    case 'download-surat':
+        $nama = $_SESSION['nama'];
+        $nim = $_SESSION['nim'];
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/mahasiswa/download.php';
+        break;
     case 'detail-dokumen-mahasiswa':
         $nama = $_SESSION['nama'];
         $nim = $_SESSION['nim'];
