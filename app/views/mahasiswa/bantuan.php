@@ -27,7 +27,7 @@
                 </div>
 
                 <!-- kerjain disini -->
-                <div class="card">
+                <div class="card py-4">
                     <h3 class="text-center mb-2">Mengalami kesulitan?</h3>
                     <div class="text-center mb-2 w-100 d-flex justify-content-center">
                         <p class="text-muted w-50 align-items-center ">Hubungi pihak terkait dengan menggunakan kontak dibawah, pesan Anda akan dibalas di jam kerja</p>
