@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/sibeta/public/assets/css/sidebar.css">
     <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/dashboard.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,7 @@
 <body>
     <div class="wrapper">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
-        
+
         <div class="main">
             <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
 
@@ -24,13 +25,16 @@
                     <span class="material-symbols-outlined">home</span>
                     <a href="#">SIBETA</a>
                     <span class="separator">/</span>
-                    <span>Profil</span>
+                    <span>Teknisi</span>
+                    <span class="separator">/</span>
+                    <span>Detail Teknisi</span>
                 </div>
 
-                <h5>Detail Teknisi</h5>
-
+                <div class="px-3 mt-3">
+                    <h5>Detail Teknisi</h5>
+                </div>
                 <!-- Profil Mahasiswa -->
-                <div class="row mb-4 mt-4">
+                <div class="row mb-4 mt-2">
                     <div class="col-md-6">
                         <div class="card p-4">
                             <div class="card-body">
@@ -95,6 +99,22 @@
 
         </div>
     </div>
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(`${fieldId}-icon`);
+
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash'); // Icon for visible password
+            } else {
+                field.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye'); // Icon for hidden password
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -85,8 +85,8 @@
                                         <td><?php echo $mhs['nim']; ?></td>
                                         <td><?php echo $mhs['nama']; ?></td>
                                         <td>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;" target="_blank">visibility</a>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;" download>delete</a>
+                                            <a href="/sibeta/public/index.php?page=super_admin/detail_teknisi" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;" target="_blank">visibility</a>
+                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;">delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

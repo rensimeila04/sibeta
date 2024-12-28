@@ -48,8 +48,8 @@
                 <form action="#">
                     <div class="mb-3 d-flex align-items-center">
                         <p class="mb-0" style="width: 30%; white-space: nowrap; margin-left: 20px;">Nama Dokumen</p>
-                        <div style="width: 65%;">
-                            <input type="text" class="form-control" id="namaDokumen" name="nama_dokumen" required style="margin-left: 50px; width: 100%;" value="Tanda Terima Penyerahan Laporan Tugas Akhir/Skripsi ke Ruang Baca">
+                        <div style="width: 100%;">
+                            <input type="text" class="form-control" id="namaDokumen" name="nama_dokumen" required style="margin-left: 50px; width: 100%;" placeholder="Masukkan nama dokumen">
                         </div>
                     </div>
                     <div class="mb-3 d-flex align-items-center">

@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container px-3 py-3 mx-4 my-4">
                 <div class="card">
                     <!-- Search and Add Mahasiswa Buttons -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -47,7 +47,7 @@
                             <input type="text" id="searchInput" class="form-control" placeholder="Cari ..." aria-label="Search" aria-describedby="basic-addon1" style="border-left: none;">
                             <button class="btn" id="searchButton" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                         </div>
-                        <a href="#" class="btn btn-primary" style="background-color: #3E368C; color: #fff; border-radius: 4px; height: auto; line-height: 1.5; margin: 20px;">Tambah Dokumen</a>
+                        <a href="/sibeta/public/index.php?page=super_admin/tambah_dokumen" class="btn btn-sm btn-custom">Tambah Dokumen</a>
                     </div>
 
                     <!-- Mahasiswa Table -->

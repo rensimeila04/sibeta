@@ -180,7 +180,7 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = $_SESSION['role'];
-            include '../app/views/super_admin/program_studi.php';
+        include '../app/views/super_admin/program_studi.php';
         break;
     case 'detail_program_studi':
         $nama = $_SESSION['nama'];
@@ -438,47 +438,96 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/generate_surat.php';
         break;
-    case 'tambah_mahasiswa':
+    case 'super_admin/mahasiswa':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/mahasiswa.php';
         break;
-    case 'tambah_admin':
+    case 'super_admin/admin':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/admin.php';
         break;
-    case 'tambah_teknisi':
+    case 'super_admin/teknisi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/teknisi.php';
         break;
-    case 'tambah_kelas':
+    case 'super_admin/kelas':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/kelas.php';
         break;
-    case 'tambah_prodi':
+    case 'super_admin/prodi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
-        include '../app/views/super_admin/prodi.php';
+        include '../app/views/super_admin/program_studi.php';
         break;
-    case 'tambah_dokumen':
+    case 'super_admin/dokumen':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/dokumen.php';
+        break;
+    case 'super_admin/tambah_admin':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/tambah_admin.php';
+        break;
+    case 'super_admin/tambah_teknisi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/tambah_teknisi.php';
+        break;
+    case 'super_admin/tambah_dokumen':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/tambah_dokumen.php';
+        break;
+    case 'super_admin/tambah_mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/tambah_mahasiswa.php';
+        break;
+    case 'super_admin/detail_mahasiswa':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/detail_pengguna_mahasiswa.php';
+        break;
+    case 'super_admin/detail_admin':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/detail_pengguna_admin.php';
+        break;
+    case 'super_admin/detail_teknisi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+        include '../app/views/super_admin/detail_pengguna_teknisi.php';
         break;
     default:
         echo "Halaman tidak ditemukan.";
