@@ -39,7 +39,8 @@ class DokumenModel
         return $result['total'];
     }
 
-    public function getTotalDocumentsMahasiswa($nim, $type){
+    public function getTotalDocumentsMahasiswa($nim, $type)
+    {
         // Menghitung total dokumen mahasiswa berdasarkan NIM dan tipe (Administratif atau Teknis)
         $sql = "SELECT COUNT(*) as total FROM Dokumen d 
                 JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID 
@@ -58,10 +59,9 @@ class DokumenModel
             $sql = "SELECT COUNT(*) AS count
                     FROM Dokumen d
                     JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
-                    WHERE jd.Tipe = :tipe AND d.Status = :status AND d.IsSaved = 0";
+                    WHERE jd.Tipe = :tipe AND d.IsSaved = 1";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':tipe', $tipe);
-            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':tipe', $tipe, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['count'];
@@ -102,21 +102,28 @@ class DokumenModel
     {
         try {
             $offset = ($currentPage - 1) * $itemsPerPage;
-            $sql = "SELECT DISTINCT
-                    d.MahasiswaNIM AS Nim,
-                    u.Nama AS NamaMahasiswa,
-                    p.NamaProdi AS ProgramStudi, 
-                    k.NamaKelas AS Kelas,
-                    d.TanggalUpload
-                FROM Dokumen d
-                INNER JOIN Mahasiswa m ON d.MahasiswaNIM = m.NIM
-                INNER JOIN Users u ON m.UserID = u.UserID
-                INNER JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
-                INNER JOIN Kelas k ON m.KelasID = k.KelasID 
-                INNER JOIN ProgramStudi p ON k.ProdiID = p.ProdiID 
-                WHERE jd.Tipe = :tipe AND d.IsSaved = 1 
-                ORDER BY d.TanggalUpload DESC
-                OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY";
+            $sql = "WITH LatestDokumen AS (
+    SELECT 
+        d.MahasiswaNIM AS Nim,
+        u.Nama AS NamaMahasiswa,
+        p.NamaProdi AS ProgramStudi,
+        k.NamaKelas AS Kelas,
+        d.TanggalUpload,
+        ROW_NUMBER() OVER (PARTITION BY d.MahasiswaNIM ORDER BY d.TanggalUpload DESC) AS RowNum
+    FROM Mahasiswa m
+    INNER JOIN Dokumen d ON d.MahasiswaNIM = m.NIM
+    INNER JOIN Users u ON m.UserID = u.UserID
+    INNER JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
+    INNER JOIN Kelas k ON m.KelasID = k.KelasID 
+    INNER JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
+    WHERE jd.Tipe = :tipe AND d.IsSaved = 1
+)
+SELECT Nim, NamaMahasiswa, ProgramStudi, Kelas, TanggalUpload
+FROM LatestDokumen
+WHERE RowNum = 1
+ORDER BY TanggalUpload DESC
+OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY;
+";
 
 
             $stmt = $this->conn->prepare($sql);
@@ -129,6 +136,52 @@ class DokumenModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function getPageDocumentsRiwayat($tipe, $currentPage, $itemsPerPage)
+    {
+        try {
+            $offset = ($currentPage - 1) * $itemsPerPage;
+
+            $sql = "
+                SELECT DISTINCT
+                    d.MahasiswaNIM AS Nim,
+                    u.Nama AS NamaMahasiswa,
+                    p.NamaProdi AS ProgramStudi,
+                    k.NamaKelas AS Kelas,
+                    MAX(d.TanggalUpload) AS TanggalUpload
+                FROM Mahasiswa m
+                INNER JOIN Dokumen d ON d.MahasiswaNIM = m.NIM
+                INNER JOIN Users u ON m.UserID = u.UserID
+                INNER JOIN JenisDokumen jd ON d.JenisDokumenID = jd.JenisDokumenID
+                INNER JOIN Kelas k ON m.KelasID = k.KelasID 
+                INNER JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
+                LEFT JOIN Dokumen d2 
+                    ON d2.MahasiswaNIM = d.MahasiswaNIM
+                    AND d2.JenisDokumenID = d.JenisDokumenID
+                    AND d2.Status = 'Diajukan'
+                WHERE jd.Tipe = :tipe
+                  AND d.IsSaved = 1
+                GROUP BY d.MahasiswaNIM, u.Nama, p.NamaProdi, k.NamaKelas
+                HAVING COUNT(d2.MahasiswaNIM) = 0  -- Pastikan tidak ada dokumen dengan status 'Diajukan'
+                ORDER BY MAX(d.TanggalUpload) DESC
+                OFFSET :offset ROWS FETCH NEXT :limit ROWS ONLY;
+            ";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':tipe', $tipe);
+            $stmt->bindParam(':limit', $itemsPerPage, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+
+
+
 
     public function getPageDocumentsMahasiswa($nim, $tipe, $currentPage, $itemsPerPage)
     {
