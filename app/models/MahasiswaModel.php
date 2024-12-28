@@ -480,4 +480,44 @@ class MahasiswaModel
             throw new Exception($e->getMessage());
         }
     }
+
+    public function areAllDocumentsVerifiedByType($nim, $tipe)
+    {
+        try {
+            // First, get all required document types
+            $sql = "SELECT jd.JenisDokumenID 
+                    FROM JenisDokumen jd 
+                    WHERE jd.Tipe = :tipe AND jd.IsRequired = 1";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':tipe', $tipe, PDO::PARAM_STR);
+            $stmt->execute();
+            $requiredDocs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // For each required document type, check if there's a verified document
+            foreach ($requiredDocs as $doc) {
+                $sql = "SELECT COUNT(*) as count 
+                        FROM Dokumen 
+                        WHERE MahasiswaNIM = :nim 
+                        AND JenisDokumenID = :jenisDokumenID 
+                        AND Status = 'Diverifikasi'";
+
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+                $stmt->bindParam(':jenisDokumenID', $doc['JenisDokumenID'], PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // If any required document is not verified, return false
+                if ($result['count'] == 0) {
+                    return false;
+                }
+            }
+
+            // All required documents are verified
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Query failed: " . $e->getMessage());
+        }
+    }
 }

@@ -229,4 +229,19 @@ class MahasiswaController
             throw new Exception("Gagal memperbarui dokumen: " . $e->getMessage());
         }
     }
+
+    public function areAllDocumentsVerified($nim) {
+        try {
+            // Check if all required administrative documents are verified
+            $adminDocsVerified = $this->mahasiswaModel->areAllDocumentsVerifiedByType($nim, 'Administratif');
+            
+            // Check if all required technical documents are verified
+            $technicalDocsVerified = $this->mahasiswaModel->areAllDocumentsVerifiedByType($nim, 'Teknis');
+            
+            // Return true only if both types are completely verified
+            return $adminDocsVerified && $technicalDocsVerified;
+        } catch (Exception $e) {
+            throw new Exception("Error checking document verification status: " . $e->getMessage());
+        }
+    }
 }
