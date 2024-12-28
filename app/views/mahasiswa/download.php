@@ -30,7 +30,7 @@
                         <div class="text-center">
                             <h5>Download Surat Bebas Tanggungan</h5>
                             <p class="text-muted">Unduh Surat Bebas Tanggungan Anda sekarang dengan sekali klik melalui tombol di bawah ini.</p>
-                            <a href="#" target="_blank" class="btn-custom px-3 py-2 align-content-center" style="text-decoration: none;">Download Surat</a>
+                            <a href="/sibeta/public/index.php?page=generate_surat" target="_blank" class="btn-custom px-3 py-2 align-content-center" style="text-decoration: none;">Download Surat</a>
                         </div>
                     </div>
                 </div>

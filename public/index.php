@@ -415,7 +415,9 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/bantuan.php';
         break;
-
+    case 'generate_surat':
+        include '../app/views/mahasiswa/generate_surat.php';
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;
