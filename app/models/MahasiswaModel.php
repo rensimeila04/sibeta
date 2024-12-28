@@ -434,4 +434,50 @@ class MahasiswaModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function updateDocumentFile($dokumenID, $filePath = null)
+    {
+        try {
+            // Validasi file PDF jika filepath ada
+            if (!empty($filePath)) {
+                // Validasi ekstensi file
+                $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+                if ($fileExtension !== 'pdf') {
+                    throw new Exception("File harus berformat PDF.");
+                }
+            }
+
+            // Update dokumen dengan file baru dan reset status
+            if (empty($filePath)) {
+                $sql = "UPDATE Dokumen
+                    SET TanggalUpload = GETDATE(),
+                        Status = 'Diajukan',
+                        TanggalVerifikasi = NULL,
+                        VerifikatorNIP = NULL,
+                        KomentarRevisi = NULL
+                    WHERE DokumenID = :dokumenID";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':dokumenID', $dokumenID, PDO::PARAM_INT);
+            } else {
+                $sql = "UPDATE Dokumen
+                    SET FilePath = :filePath,
+                        TanggalUpload = GETDATE(),
+                        Status = 'Diajukan',
+                        TanggalVerifikasi = NULL,
+                        VerifikatorNIP = NULL,
+                        KomentarRevisi = NULL
+                    WHERE DokumenID = :dokumenID";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':dokumenID', $dokumenID, PDO::PARAM_INT);
+                $stmt->bindParam(':filePath', $filePath, PDO::PARAM_STR);
+            }
+
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Update dokumen gagal: " . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

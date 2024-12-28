@@ -220,4 +220,13 @@ class MahasiswaController
             exit();
         }
     }
+
+    public function updateDocumentFile($dokumenID, $filePath = null)
+    {
+        try {
+            return $this->mahasiswaModel->updateDocumentFile($dokumenID, $filePath);
+        } catch (Exception $e) {
+            throw new Exception("Gagal memperbarui dokumen: " . $e->getMessage());
+        }
+    }
 }
