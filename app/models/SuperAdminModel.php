@@ -175,4 +175,16 @@ class SuperAdminModel
             throw new Exception("Gagal mengedit jenis dokumen: " . $e->getMessage());
         }
     }
+    public function getAllProdi()
+    {
+        try {
+            $sql = "SELECT * FROM ProgramStudi ORDER BY ProdiID ASC";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

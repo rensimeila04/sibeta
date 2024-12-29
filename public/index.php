@@ -471,6 +471,8 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+        // Add this line to get all prodi data
+        $allProdi = $superAdminController->getAllProdi();
         include '../app/views/super_admin/program_studi.php';
         break;
     case 'super_admin/dokumen':

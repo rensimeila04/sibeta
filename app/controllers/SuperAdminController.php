@@ -91,4 +91,8 @@ class SuperAdminController
     {
         return $this->superAdminModel->editJenisDokumen($jenisDokumenID, $namaDokumen, $tipe, $isRequired);
     }
+    public function getAllProdi()
+    {
+        return $this->superAdminModel->getAllProdi();
+    }
 }

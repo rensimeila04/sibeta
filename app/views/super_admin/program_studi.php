@@ -97,44 +97,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Teknik Informatika</td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="/sibeta/public/index.php?page=detail_program_studi" style="text-decoration: none;" class="align-items-center">
-                                                    <button type="button" class="btn-custom px-2 d-flex align-self-center">
-                                                        <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
+                                    <?php foreach ($allProdi as $prodi): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($prodi['ProdiID']); ?></td>
+                                            <td><?php echo htmlspecialchars($prodi['NamaProdi']); ?></td>
+                                            <td>
+                                                <div class="d-flex justify-content-start align-items-center gap-2">
+                                                    <a href="/sibeta/public/index.php?page=detail_program_studi&id=<?php echo htmlspecialchars($prodi['ProdiID']); ?>"
+                                                        style="text-decoration: none;"
+                                                        class="align-items-center">
+                                                        <button type="button" class="btn-custom px-2 py-1" style="font-size: 18px;">
+                                                            <span class="material-symbols-outlined m-0">visibility</span>
+                                                        </button>
+                                                    </a>
+                                                    <button type="button" class="btn-custom px-2 py-1" style="background-color: #DC3545 !important; font-size: 18px;">
+                                                        <span class="material-symbols-outlined m-0" style="color:#FFFFFF; background-color: #DC3545 !important;">delete</span>
                                                     </button>
-                                                </a>
-                                                <button type="button" class="btn-hapus px-2 d-flex align-self-center" style="background-color: #DC3545;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#hapusProdi"
-                                                    data-document-id="<?php echo $document['DokumenID']; ?>"
-                                                    data-document-name="<?php echo $document['NamaDokumen']; ?>">
-                                                    <span class="material-symbols-outlined m-0" style="color:#FFFFFF; font-size: 18px;">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Sistem Informasi Bisnis</td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <button type="button" class="btn-custom px-2 d-flex align-self-center">
-                                                    <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
-                                                </button>
-                                                <button type="button" class="btn-hapus px-2 d-flex align-self-center" style="background-color: #DC3545;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#hapusProdi"
-                                                    data-document-id="<?php echo $document['DokumenID']; ?>"
-                                                    data-document-name="<?php echo $document['NamaDokumen']; ?>">
-                                                    <span class="material-symbols-outlined m-0" style="color:#FFFFFF; font-size: 18px;">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
