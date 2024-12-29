@@ -195,30 +195,77 @@ switch ($page) {
         $role = $_SESSION['role'];
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Sanitizing ID as a number
         $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : ''; // No sanitization needed for 'aksi' since it's a simple action
+        // Debug information
+        error_log("Processing verification for ID: " . $id . " with action: " . $aksi);
+
+        // Initialize NotifikasiController
+        $notifikasiController = new NotifikasiController($conn);
+        error_log("NotifikasiController initialized");
 
         if ($id && $role) {
             switch ($role) {
                 case 'Admin Prodi':
                     $role = 'admin';
                     $documentsMahasiswa = $dokumenController->getDocumentMahasiswaByIDDocument($id, 'Administratif');
+                    error_log("Retrieved document information: " . print_r($documentsMahasiswa, true));
 
                     if ($aksi) {
                         switch ($aksi) {
                             case 'reject':
-                                // Sanitize comment input
-                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                $dokumenController->updateDocumentStatus($id, $nip, 'Ditolak', $comment);
-                                $file = basename($documentsMahasiswa[0]['FilePath']);
-                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                exit;
+                                try {
+                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                    error_log("Processing reject with comment: " . $comment);
+                                    // Update document status
+                                    $dokumenController->updateDocumentStatus($id, $nip, 'Ditolak', $comment);
+                                    error_log("Document status updated successfully");
+
+                                    // Add notification
+                                    $result = $notifikasiController->createNotifikasi(
+                                        $documentsMahasiswa[0]['Nim'],
+                                        "Dokumen " . $documentsMahasiswa[0]['NamaDokumen'] . " ditolak, perbaiki dokumen anda"
+                                    );
+                                    error_log("Notification creation result: " . ($result ? "success" : "failed"));
+
+                                    if (!$result) {
+                                        throw new Exception("Gagal membuat notifikasi");
+                                    }
+
+                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                    exit;
+                                } catch (Exception $e) {
+                                    error_log("Error in reject process: " . $e->getMessage());
+                                    throw $e;
+                                }
+                                break;
+
                             case 'verify':
-                                $dokumenController->updateDocumentStatus($id, $nip, 'Diverifikasi', null);
-                                $file = basename($documentsMahasiswa[0]['FilePath']);
-                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                exit;
+                                try {
+                                    error_log("Processing verify action");
+
+                                    // Update document status
+                                    $dokumenController->updateDocumentStatus($id, $nip, 'Diverifikasi', null);
+                                    error_log("Document status updated successfully");
+
+                                    // Add notification
+                                    $result = $notifikasiController->createNotifikasi(
+                                        $documentsMahasiswa[0]['Nim'],
+                                        "Dokumen " . $documentsMahasiswa[0]['NamaDokumen'] . " berhasil di verifikasi"
+                                    );
+                                    error_log("Notification creation result: " . ($result ? "success" : "failed"));
+
+                                    if (!$result) {
+                                        throw new Exception("Gagal membuat notifikasi");
+                                    }
+
+                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                    exit;
+                                } catch (Exception $e) {
+                                    error_log("Error in verify process: " . $e->getMessage());
+                                    throw $e;
+                                }
+                                break;
                         }
                     }
-
                     include '../app/views/admin_prodi/verifikasi.php';
                     break;
 
@@ -229,17 +276,60 @@ switch ($page) {
                     if ($aksi) {
                         switch ($aksi) {
                             case 'reject':
-                                // Sanitize comment input
-                                $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
-                                $dokumenController->updateDocumentStatus($id, $nip, 'Ditolak', $comment);
-                                $file = basename($documentsMahasiswa[0]['FilePath']);
-                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                exit;
+                                try {
+                                    // Sanitize comment input
+                                    $comment = isset($_POST['comment']) ? htmlspecialchars(trim($_POST['comment']), ENT_QUOTES, 'UTF-8') : null;
+                                    error_log("Processing reject with comment: " . $comment);
+
+                                    // Update document status
+                                    $dokumenController->updateDocumentStatus($id, $nip, 'Ditolak', $comment);
+                                    error_log("Document status updated successfully");
+
+                                    // Add notification
+                                    $result = $notifikasiController->createNotifikasi(
+                                        $documentsMahasiswa[0]['Nim'],
+                                        "Dokumen " . $documentsMahasiswa[0]['NamaDokumen'] . " ditolak, perbaiki dokumen anda"
+                                    );
+                                    error_log("Notification creation result: " . ($result ? "success" : "failed"));
+
+                                    if (!$result) {
+                                        throw new Exception("Gagal membuat notifikasi");
+                                    }
+
+                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                    exit;
+                                } catch (Exception $e) {
+                                    error_log("Error in reject process: " . $e->getMessage());
+                                    throw $e;
+                                }
+                                break;
+
                             case 'verify':
-                                $dokumenController->updateDocumentStatus($id, $nip, 'Diverifikasi', null);
-                                $file = basename($documentsMahasiswa[0]['FilePath']);
-                                header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
-                                exit;
+                                try {
+                                    error_log("Processing verify action");
+
+                                    // Update document status
+                                    $dokumenController->updateDocumentStatus($id, $nip, 'Diverifikasi', null);
+                                    error_log("Document status updated successfully");
+
+                                    // Add notification
+                                    $result = $notifikasiController->createNotifikasi(
+                                        $documentsMahasiswa[0]['Nim'],
+                                        "Dokumen " . $documentsMahasiswa[0]['NamaDokumen'] . " berhasil di verifikasi"
+                                    );
+                                    error_log("Notification creation result: " . ($result ? "success" : "failed"));
+
+                                    if (!$result) {
+                                        throw new Exception("Gagal membuat notifikasi");
+                                    }
+
+                                    header('Location: /sibeta/public/index.php?page=kelola&nim=' . urlencode($documentsMahasiswa[0]['Nim']));
+                                    exit;
+                                } catch (Exception $e) {
+                                    error_log("Error in verify process: " . $e->getMessage());
+                                    throw $e;
+                                }
+                                break;
                         }
                     }
 
