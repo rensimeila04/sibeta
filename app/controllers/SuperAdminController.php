@@ -118,4 +118,19 @@ class SuperAdminController
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
+
+    public function getProdiById($prodiID)
+    {
+        try {
+            $result = $this->superAdminModel->getProdiById($prodiID);
+
+            if ($result) {
+                return ["success" => true, "data" => $result];
+            } else {
+                return ["success" => false, "message" => "Program studi tidak ditemukan."];
+            }
+        } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

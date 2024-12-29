@@ -122,7 +122,7 @@
                                             <td><?php echo htmlspecialchars($prodi['NamaProdi']); ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-start align-items-center gap-2">
-                                                    <a href="/sibeta/public/index.php?page=detail_program_studi&id=<?php echo htmlspecialchars($prodi['ProdiID']); ?>"
+                                                    <a href="/sibeta/public/index.php?page=super_admin/detail_prodi&id=<?php echo $prodi['ProdiID']; ?>"
                                                         style="text-decoration: none;"
                                                         class="align-items-center">
                                                         <button type="button" class="btn-custom px-2 py-1" style="font-size: 18px;">

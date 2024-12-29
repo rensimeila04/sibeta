@@ -218,4 +218,22 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+    public function getProdiById($prodiID)
+    {
+        try {
+            $sql = "SELECT * FROM ProgramStudi WHERE ProdiID = :prodiID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':prodiID', $prodiID, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($result) {
+                return $result;
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

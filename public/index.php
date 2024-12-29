@@ -599,6 +599,17 @@ switch ($page) {
             exit;
         }
         break;
+    case 'super_admin/detail_prodi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+
+        // Debug
+        error_log("Accessing detail_program_studi with ID: " . ($_GET['id'] ?? 'none'));
+
+        include '../app/views/super_admin/detail_program_studi.php';
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;
