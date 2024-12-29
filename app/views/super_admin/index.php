@@ -1,3 +1,10 @@
+<?php
+$totalMahasiswa = $superAdminController->getMahasiswaCount();
+$totalTeknisi = $superAdminController->getTechniciansCount();
+$totalAdmin = $superAdminController->getAdminProdiCount();
+$totalDokumen = $superAdminController->getDocumentsCount();
+$studentsByProdi = $superAdminController->getMahasiswaByProdi();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +44,7 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body-dash">
                                 <h6 class="text-secondary">Jumlah Mahasiswa</h6>
-                                <h1 class="text" style="color: #3E368C;">12</h1>
+                                <h1 class="text" style="color: #3E368C;"><?php echo $totalMahasiswa; ?></h1>
                             </div>
                         </div>
                     </div>
@@ -45,7 +52,7 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body-dash">
                                 <h6 class="text-secondary">Jumlah Teknisi</h6>
-                                <h1 class="text-warning">2</h1>
+                                <h1 class="text-warning"><?php echo $totalTeknisi; ?></h1>
                             </div>
                         </div>
                     </div>
@@ -53,7 +60,7 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body-dash">
                                 <h6 class="text-secondary">Jumlah Admin</h6>
-                                <h1 class="text-success">2</h1>
+                                <h1 class="text-success"><?php echo $totalAdmin; ?></h1>
                             </div>
                         </div>
                     </div>
@@ -61,45 +68,45 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-body-dash">
                                 <h6 class="text-secondary">Dokumen Diajukan</h6>
-                                <h1 class="text-info">36</h1>
+                                <h1 class="text-info"><?php echo $totalDokumen; ?></h1>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row row-cols-2 mt-4">
-    <div class="col-md-6">
-        <div class="card border-0 shadow-sm p-4 h-100">
-            <h4 class="mb-5">Jumlah Dokumen Diajukan</h4>
-            <canvas id="myChart" width="400" height="300"></canvas>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card border-0 shadow-sm p-4 h-100">
-            <h4 class="mb-4">Program Studi</h4>
-            <div class="d-flex flex-column justify-content-between gap-5">
-                <div class="card flex-grow-1 shadow-sm">
-                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
-                        <h5 class="fw-medium mb-3">D-IV Teknik Informatika</h5>
-                        <div class="mt-2">
-                            <h1 style="color: #3E368C">526</h1>
-                            <h6 class="text-secondary">Mahasiswa</h6>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-4 h-100">
+                            <h4 class="mb-5">Jumlah Dokumen Diajukan</h4>
+                            <canvas id="myChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-4 h-100">
+                            <h4 class="mb-4">Program Studi</h4>
+                            <div class="d-flex flex-column justify-content-between gap-5">
+                                <div class="card flex-grow-1 shadow-sm">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                                        <h5 class="fw-medium mb-3">D-IV Teknik Informatika</h5>
+                                        <div class="mt-2">
+                                            <h1 style="color: #3E368C"><?php echo $studentsByProdi['Teknik Informatika']; ?></h1>
+                                            <h6 class="text-secondary">Mahasiswa</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card flex-grow-1 shadow-sm">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
+                                        <h5 class="fw-medium mb-3">D-IV Sistem Informasi Bisnis</h5>
+                                        <div class="mt-2">
+                                            <h1 style="color: #3E368C"><?php echo $studentsByProdi['Sistem Informasi Bisnis']; ?></h1>
+                                            <h6 class="text-secondary">Mahasiswa</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card flex-grow-1 shadow-sm">
-                    <div class="card-body text-center d-flex flex-column justify-content-center p-4">
-                        <h5 class="fw-medium mb-3">D-IV Sistem Informasi Bisnis</h5>
-                        <div class="mt-2">
-                            <h1 style="color: #3E368C">526</h1>
-                            <h6 class="text-secondary">Mahasiswa</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             </div>
 
         </div>
@@ -107,14 +114,14 @@
     </div>
 
     <script>
-        const labels = ['2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+        const jumlahDokumen = <?php echo $totalDokumen; ?>;
         const data = {
-            labels: labels,
+            labels: ['2024', '2025', '2026', '2027', '2028', '2029'],
             datasets: [{
                 label: 'Dokumen',
                 backgroundColor: 'rgba(78, 115, 223, 1)',
                 borderColor: 'rgba(78, 115, 223, 1)',
-                data: [1799, 2170, 2690, 3376, 2810, 1890, 1090],
+                data: [jumlahDokumen, 0, 0, 0, 0, 0],
             }]
         };
 
@@ -136,6 +143,7 @@
             config
         );
     </script>
+
 </body>
 
 </html>
