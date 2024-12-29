@@ -16,6 +16,8 @@ $mahasiswaController = new MahasiswaController($conn);
 $staffController = new StaffController($conn);
 $dokumenController = new DokumenController($conn);
 $superAdminController = new SuperAdminController($conn);
+$kelasController = new KelasController($conn);
+
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
 $action = $_GET['action'] ?? '';

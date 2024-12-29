@@ -1,3 +1,24 @@
+<?php
+$kelas = $kelasController->showKelas();
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    $kelasID = $_GET['id'];
+    $kelasController->hapusKelas($kelasID);
+    header("Location: /sibeta/public/index.php?page=super_admin/kelas"); // Redirect after deletion
+    exit();
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $namaKelas = $_POST['namaKelas'];
+        $programStudi = $_POST['programStudi'];
+
+        // Panggil method tambahKelas di controller
+        $kelasController->tambahKelas($namaKelas, $programStudi);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,180 +71,110 @@
                 </div>
 
                 <div class="table-container w-100">
-                    <table class="table table-striped table-borderless table-hover" id="documentsTable">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Program Studi</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $documents = [
-                                [
-                                    "Nama" => "1A",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1A",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1B",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1B",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1C",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1C",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1D",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1D",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                            ];
-
-                            $limit = 5;
-                            $offset = 0;
-                            $total_pages = ceil(count($documents) / $limit);
-
-                            if (isset($_GET['page'])) {
-                                $page = (int)$_GET['page'];
-                                $offset = ($page - 1) * $limit;
-                            } else {
-                                $page = 1;
-                                $offset = 0;
-                            }
-                            
-
-                            $paginated_documents = array_slice($documents, $offset, $limit);
-
-                            if (count($paginated_documents) > 0) {
-                                $no = 1;
-                                foreach ($paginated_documents as $data) {
-                                    $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload'] ?? ''));
-                            ?>
+                    <?php if (!empty($kelas)): ?>
+                        <table class="table table-striped table-borderless table-hover" id="documentsTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Program Studi</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($kelas as $index => $data): ?>
                                     <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $data['Nama']; ?></td>
-                                        <td><?= $data['Program Studi']; ?></td>
+                                        <td><?= $index + 1; ?></td>
+                                        <td><?= $data['NamaKelas']; ?></td>
+                                        <td><?= $data['ProdiID']; ?></td>
                                         <td>
-                                            <a href="/sibeta/public/index.php?page=super_admin/detail_kelas" class="material-symbols-outlined align-items-center btn-custom text-decoration-none">
-                                                visibility
-                                            </a>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
-                                                delete
-                                            </a>
+                                            <a href="/sibeta/public/index.php?page=super_admin/detail_kelas&id=<?= $data['KelasID']; ?>" class="material-symbols-outlined btn-custom" style="text-decoration: none;">visibility</a>
+                                            <a href="#" class="material-symbols-outlined btn-custom3" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="<?= $data['KelasID']; ?>" style="text-decoration: none;">delete</a>
                                         </td>
                                     </tr>
-                            <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='4' class='text-center'>Tidak ada data mahasiswa ditemukan.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-
-                    <div class="pagination justify-content-center mt-5 text-center">
-                        <?php
-
-                        $totalPages = 5;
-                        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
-
-                        if ($totalPages > 1) {
-                            echo '<div class="pagination-nav">';
-
-                            // Add "Previous" arrow
-                            if ($currentPage > 1) {
-                                $prevPage = $currentPage - 1;
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$prevPage' class='arrow'>&laquo;</a>";
-                            }
-
-                            // Display static page numbers
-                            for ($i = 1; $i <= $totalPages; $i++) {
-                                $active = $i == $currentPage ? 'active' : '';
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$i' class='$active'>$i</a>";
-                            }
-
-                            // Add "Next" arrow
-                            if ($currentPage < $totalPages) {
-                                $nextPage = $currentPage + 1;
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$nextPage' class='arrow'>&raquo;</a>";
-                            }
-
-                            echo '</div>';
-                        }
-                        ?>
-                        </tbody>
+                                <?php endforeach; ?>
+                            </tbody>
                         </table>
-                    </div>
+                        <div class="pagination justify-content-center mt-5 text-center">
+                            <p>Page <?= $currentPage ?> of <?= $totalPages ?></p>
+                        </div>
                 </div>
+            <?php else: ?>
+                <p class="text-center">Data kelas tidak ditemukan.</p>
+            <?php endif; ?>
             </div>
         </div>
+    </div>
+    </div>
 
-        <div class="modal fade" id="tambahKelasModal" tabindex="-1" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahKelasModalLabel">Tambahkan Kelas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="namaKelas" class="form-label">Nama Kelas</label>
-                                <input type="text" class="form-control" id="namaKelas" placeholder="Pilih Dokumen">
-                            </div>
-                            <div class="mb-3">
-                                <label for="programStudi" class="form-label">Program Studi</label>
-                                <select class="form-select" id="programStudi">
-                                    <option selected>Pilih Program Studi</option>
-                                    <option value="1">Teknik Informatika</option>
-                                    <option value="2">Sistem Informasi Bisnis</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn" style="background-color: #3E368C; color: #fff;">Simpan</button>
-                    </div>
+    <div class="modal fade" id="tambahKelasModal" tabindex="-1" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahKelasModalLabel">Tambahkan Kelas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/sibeta/public/index.php?page=super_admin/kelas&action=tambah" id="tambahKelasForm">
+                        <div class="mb-3">
+                            <label for="namaKelas" class="form-label">Nama Kelas</label>
+                            <input type="text" class="form-control" id="namaKelas" name="namaKelas" placeholder="Nama Kelas" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="programStudi" class="form-label">Program Studi</label>
+                            <select class="form-select" id="programStudi" name="programStudi" required>
+                                <option value="">Pilih Program Studi</option>
+                                <option value="Teknik Informatika">Teknik Informatika</option>
+                                <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn" style="background-color: #3E368C; color: #fff;" form="tambahKelasForm">Simpan</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Hapus kelas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin menghapus <strong>Kelas 1A</strong>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
-                    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Hapus kelas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus <strong><span id="kelasName"></span></strong> kelas ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a id="confirmDeleteButton" href="#" class="btn btn-danger">
+                        Hapus
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        // Get all delete buttons and trigger modal with the correct KelasID
+        document.querySelectorAll('.btn-custom3').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var kelasID = button.getAttribute('data-id');
+                var kelasName = button.closest('tr').querySelector('td:nth-child(2)').innerText; // Get class name
+
+                // Set the Kelas name in the modal
+                document.getElementById('kelasName').innerText = kelasName;
+
+                // Update the modal link with the KelasID for deletion
+                document.getElementById('confirmDeleteButton').setAttribute('href', '/sibeta/public/index.php?page=super_admin/kelas&action=delete&id=' + kelasID);
+            });
+        });
+    </script>
 
 
 </body>
