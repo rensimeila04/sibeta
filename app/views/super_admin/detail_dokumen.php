@@ -1,3 +1,43 @@
+<?php
+// Get document ID from URL
+$documentId = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+if ($documentId) {
+    try {
+        // If form is submitted
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validate and sanitize input
+            $namaDokumen = filter_input(INPUT_POST, 'nama_dokumen', FILTER_SANITIZE_STRING);
+            $jenis = filter_input(INPUT_POST, 'jenis', FILTER_SANITIZE_STRING);
+            $isRequired = filter_input(INPUT_POST, 'is_required', FILTER_VALIDATE_INT);
+
+            // Update document
+            $result = $superAdminController->updateJenisDokumen(
+                $documentId,
+                $namaDokumen,
+                $jenis,
+                $isRequired
+            );
+
+            if ($result) {
+                // Redirect with success message
+                header('Location: /sibeta/public/index.php?page=super_admin/dokumen&success=update');
+                exit;
+            } else {
+                throw new Exception("Gagal memperbarui dokumen");
+            }
+        }
+
+        // Get current document data
+        $dokumen = $superAdminController->getJenisDokumenById($documentId);
+    } catch (Exception $e) {
+        echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($e->getMessage()) . '</div>';
+        $dokumen = null;
+    }
+} else {
+    echo '<div class="alert alert-warning">No document ID provided</div>';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,35 +78,15 @@
                     <h2>Detail Dokumen</h2>
                 </div>
 
-                <?php
-
-                // Get document ID from URL
-                $documentId = isset($_GET['id']) ? intval($_GET['id']) : null;
-
-                if ($documentId) {
-                    try {
-                        $dokumen = $superAdminController->getJenisDokumenById($documentId);
-                    } catch (Exception $e) {
-                        echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($e->getMessage()) . '</div>';
-                        // Debug exception
-                        echo "Exception details: <pre>";
-                        var_dump($e);
-                        echo "</pre>";
-                        $dokumen = null;
-                    }
-                } else {
-                    echo '<div class="alert alert-warning">No document ID provided</div>';
-                }
-                ?>
-
                 <div class="container">
-                    <form action="/sibeta/public/index.php?page=update_dokumen" method="POST">
+                    <form action="" method="POST">
                         <input type="hidden" name="id" value="<?php echo htmlspecialchars($dokumen['JenisDokumenID'] ?? ''); ?>">
 
                         <div class="mb-3 d-flex align-items-center">
                             <p class="mb-0" style="width: 30%; white-space: nowrap; margin-left: 20px;">ID</p>
                             <div style="width: 65%;">
-                                <input type="number" class="form-control" id="idDokumen" name="id" style="margin-left: 50px;" value="<?php echo htmlspecialchars($dokumen['JenisDokumenID'] ?? ''); ?>" readonly disabled>
+                                <input type="number" class="form-control" id="idDokumen" name="id" style="margin-left: 50px;"
+                                    value="<?php echo htmlspecialchars($dokumen['JenisDokumenID'] ?? ''); ?>" readonly disabled>
                             </div>
                         </div>
 

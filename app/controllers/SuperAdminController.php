@@ -86,4 +86,9 @@ class SuperAdminController
             throw $e; // Re-throw untuk ditangkap oleh view
         }
     }
+
+    public function updateJenisDokumen($jenisDokumenID, $namaDokumen, $tipe, $isRequired)
+    {
+        return $this->superAdminModel->editJenisDokumen($jenisDokumenID, $namaDokumen, $tipe, $isRequired);
+    }
 }

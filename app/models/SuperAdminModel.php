@@ -150,4 +150,29 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function editJenisDokumen($jenisDokumenID, $namaDokumen, $tipe, $isRequired)
+    {
+        try {
+            $sql = "
+            UPDATE JenisDokumen
+            SET 
+                NamaDokumen = :namaDokumen,
+                Tipe = :tipe,
+                IsRequired = :isRequired
+            WHERE 
+                JenisDokumenID = :jenisDokumenID
+        ";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':namaDokumen', $namaDokumen);
+            $stmt->bindParam(':tipe', $tipe);
+            $stmt->bindParam(':isRequired', $isRequired, PDO::PARAM_BOOL);
+            $stmt->bindParam(':jenisDokumenID', $jenisDokumenID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount() > 0; // Mengembalikan true jika ada perubahan
+        } catch (PDOException $e) {
+            throw new Exception("Gagal mengedit jenis dokumen: " . $e->getMessage());
+        }
+    }
 }
