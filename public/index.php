@@ -15,6 +15,8 @@ $authController = new AuthController($conn);
 $mahasiswaController = new MahasiswaController($conn);
 $staffController = new StaffController($conn);
 $dokumenController = new DokumenController($conn);
+$superAdminController = new SuperAdminController($conn);
+$kelasController = new KelasController($conn);
 $notifikasiController = new NotifikasiController($conn);
 
 // Routes
@@ -530,6 +532,11 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+
+        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
+        $itemsPerPage = 8;
+        $mahasiswa = $staffController->getPaginatedMahasiswa($currentPage, $itemsPerPage);
+        $totalMahasiswaCount = $staffController->getTotalMahasiswaCount();
         include '../app/views/super_admin/mahasiswa.php';
         break;
     case 'super_admin/admin':
@@ -558,6 +565,8 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+        // Add this line to get all prodi data
+        $allProdi = $superAdminController->getAllProdi();
         include '../app/views/super_admin/program_studi.php';
         break;
     case 'super_admin/dokumen':
@@ -593,15 +602,144 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nama = $_POST['nama'];
+            $nim = $_POST['nim'];
+            $kelas = $_POST['kelas'];
+            $username = $nim; // Set username to be the same as NIM
+            $password = $_POST['kata_sandi'];
+
+            // Handle file upload
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/uploads/profile/"; // Directory to save uploaded files
+            $targetFile = $targetDir . basename($nama) . ".jpg"; // Menggunakan nama mahasiswa untuk file
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+
+            // Check if image file is a actual image or fake image
+            $check = getimagesize($_FILES["foto_profil"]["tmp_name"]);
+            if ($check === false) {
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            // Check file size (optional)
+            if ($_FILES["foto_profil"]["size"] > 500000) {
+                echo "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+
+            // Allow certain file formats
+            if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
+                echo " Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                echo "Sorry, your file was not uploaded.";
+            } else {
+                if (move_uploaded_file($_FILES["foto_profil"]["tmp_name"], $targetFile)) {
+                    // File is uploaded successfully, now save student data to the database
+                    $staffController = new StaffController($conn);
+                    $uploadResult = $staffController->insertMahasiswa($nim, $nama, $kelas, $username, $password, $file);
+
+                    // Redirect to super_admin/mahasiswa after successful addition
+                    if ($uploadResult) {
+                        header('Location: /sibeta/public/index.php?page=super_admin/mahasiswa');
+                        exit(); // Make sure to exit after redirect
+                    } else {
+                        echo "Gagal menambahkan mahasiswa."; // Display error message
+                    }
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            }
+        }
+
         include '../app/views/super_admin/tambah_mahasiswa.php';
+        break;
+    case 'delete_mahasiswa':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nim = $_POST['nim']; // Ambil NIM dari form
+            // Panggil metode untuk menghapus mahasiswa
+            try {
+                $staffController->deleteMahasiswa($nim);
+                // Redirect atau beri pesan sukses
+                header('Location: /sibeta/public/index.php?page=super_admin/mahasiswa&success=deleteSuccess');
+                exit();
+            } catch (Exception $e) {
+                // Tangani error jika gagal menghapus
+                header('Location: /sibeta/public/index.php?page=super_admin/mahasiswa&error=' . urlencode($e->getMessage()));
+                exit();
+            }
+        }
         break;
     case 'super_admin/detail_mahasiswa':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+
+        // Ambil NIM dari parameter URL
+        $nim = $_GET['nim'] ?? null; // Menggunakan null coalescing operator untuk menghindari undefined index
+
+        if (!$nim) {
+            echo "NIM tidak ditemukan.";
+            exit;
+        }
+
+        // Buat instance dari StaffController
+        $staffController = new StaffController($conn);
+
+        // Ambil data mahasiswa dari database
+        $mahasiswa = $staffController->getMahasiswa($nim);
+
+        if (!$mahasiswa) {
+            // Jika mahasiswa tidak ditemukan, tampilkan pesan error atau redirect
+            echo "Mahasiswa tidak ditemukan.";
+            exit;
+        }
+
+        // Ambil data untuk ditampilkan di form
+        $username = $mahasiswa['Username'];
+        $namaMahasiswa = $mahasiswa['Nama'];
+        $nimMahasiswa = $mahasiswa['NIM'];
+        $kelasID = $mahasiswa['KelasID']; // Ambil KelasID untuk menandai kelas yang terpilih
+        $kelas = $mahasiswa['NamaKelas'];
+        $program_studi = $mahasiswa['NamaProdi'];
+        $photo_profile_path = $mahasiswa['photo_profile_path'];
+
+        // Ambil semua kelas untuk dropdown
+        $kelasOptions = $staffController->getKelasOptions(); // Pastikan Anda memiliki metode ini di StaffModel
+
         include '../app/views/super_admin/detail_pengguna_mahasiswa.php';
         break;
+    case 'change_mahasiswa_detail':
+        try {
+            $result = $staffController->handleUpdateMahasiswa();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&success=updateDetail');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&error=Update gagal');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&error=' . urlencode($e->getMessage()));
+        }
+        exit;
+        break;
+    case 'change_mahasiswa_password':
+        try {
+            $result = $staffController->handleUpdatePasswordMahasiswa();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&nim=' . urlencode($_POST['nim']) . '&success=updatePassword');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&nim=' . urlencode($_POST['nim']) . '&error=Update gagal');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/detail_mahasiswa&nim=' . urlencode($_POST['nim']) . '&error=' . urlencode($e->getMessage()));
+        }
+        exit;
     case 'super_admin/detail_admin':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
@@ -622,6 +760,109 @@ switch ($page) {
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/detail_kelas.php';
+        break;
+    case 'add_dokumen':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $namaDokumen = $_POST['namaDokumen'] ?? '';
+                $tipeDokumen = $_POST['tipeDokumen'] ?? '';
+                $isRequired = isset($_POST['isRequired']) ? (int)$_POST['isRequired'] : 1;
+
+                $result = $superAdminController->addJenisDokumen($namaDokumen, $tipeDokumen, $isRequired);
+
+                if ($result) {
+                    header('Location: /sibeta/public/index.php?page=super_admin/dokumen&success=1');
+                } else {
+                    header('Location: /sibeta/public/index.php?page=super_admin/tambah_dokumen&error=Gagal menambahkan dokumen');
+                }
+            } catch (Exception $e) {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_dokumen&error=' . urlencode($e->getMessage()));
+            }
+            exit;
+        }
+        break;
+    case 'super_admin/detail_dokumen':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+
+        // Debug
+        error_log("Accessing detail_dokumen with ID: " . ($_GET['id'] ?? 'none'));
+
+        include '../app/views/super_admin/detail_dokumen.php';
+        break;
+    case 'add_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $namaProdi = $_POST['namaProdi'] ?? '';
+                $result = $superAdminController->addProdi($namaProdi);
+
+                if ($result) {
+                    header('Location: /sibeta/public/index.php?page=super_admin/prodi&success=1');
+                } else {
+                    header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=Gagal menambahkan program studi');
+                }
+            } catch (Exception $e) {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=' . urlencode($e->getMessage()));
+            }
+            exit;
+        }
+        break;
+    case 'delete_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prodiID'])) {
+            $prodiID = $_POST['prodiID'];
+            $result = $superAdminController->deleteProdi($prodiID);
+
+            if ($result['success']) {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&success=delete');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=' . urlencode($result['message']));
+            }
+            exit;
+        }
+        break;
+    case 'super_admin/detail_prodi':
+        $nama = $_SESSION['nama'];
+        $nip = $_SESSION['nip'];
+        $role = 'super admin';
+        $photo_profile_path = $_SESSION['photo_profile'];
+
+        // Debug
+        error_log("Accessing detail_program_studi with ID: " . ($_GET['id'] ?? 'none'));
+
+        include '../app/views/super_admin/detail_program_studi.php';
+        break;
+    case 'update_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $prodiID = $_POST['prodiID'] ?? '';
+            $namaProdi = $_POST['namaProdi'] ?? '';
+
+            $result = $superAdminController->editProdi($prodiID, $namaProdi);
+
+            if ($result['success']) {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_prodi&id=' . $prodiID . '&success=update');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_prodi&id=' . $prodiID . '&error=' . urlencode($result['message']));
+            }
+            exit;
+        }
+        break;
+    case 'update_kelas':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $kelasID = $_POST['id'] ?? '';
+            $namaKelas = $_POST['nama'] ?? '';
+            $prodiID = $_POST['programStudi'] ?? '';
+
+            // Convert program studi name to ID
+            if ($prodiID === "Teknik Informatika") {
+                $prodiID = 1;
+            } elseif ($prodiID === "Sistem Informasi Bisnis") {
+                $prodiID = 2;
+            }
+
+            $result = $kelasController->editKelas($kelasID, $prodiID, $namaKelas);
+        }
         break;
     default:
         echo "Halaman tidak ditemukan.";

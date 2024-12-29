@@ -30,14 +30,34 @@
                     <span>Program Studi</span>
                 </div>
 
-                <h5 class="mt-3">Program Studi</h5>
+                <h3 class="mt-3">Program Studi</h3>
+
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?php
+                        if ($_GET['success'] === 'delete') {
+                            echo "Program studi berhasil dihapus!";
+                        } else {
+                            echo "Program studi berhasil ditambahkan!";
+                        }
+                        ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?php echo htmlspecialchars($_GET['error']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
 
                 <div class="py-3">
                     <div class="card">
                         <div class="card-body">
                             <!-- modal tambah program studi -->
                             <div class="modal fade" id="tambahProdi" tabindex="-1" aria-labelledby="tambahProdiLabel" aria-hidden="true">
-                                <form method="POST" enctype="multipart/form-data" class="modal-dialog modal-dialog-centered">
+                                <form method="POST" action="/sibeta/public/index.php?page=add_prodi" class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="tambahProdiLabel">Tambahkan Program Studi</h1>
@@ -58,16 +78,15 @@
 
                             <!-- Modal Delete -->
                             <div class="modal fade" id="hapusProdi" tabindex="-1" aria-labelledby="hapusProdiLabel" aria-hidden="true">
-                                <form method="POST" class="modal-dialog modal-dialog-centered">
+                                <form method="POST" action="/sibeta/public/index.php?page=delete_prodi" class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="hapusDokumenLabel">Hapus Program Studi</h1>
+                                            <h1 class="modal-title fs-5" id="hapusProdiLabel">Hapus Program Studi</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="hidden" name="action" value="delete_document">
-                                            <input type="hidden" name="documentId" id="deleteDocumentId">
-                                            Apakah Anda yakin ingin menghapus <b id="deleteDocumentName"></b>?
+                                            <input type="hidden" name="prodiID" id="deleteProdiId">
+                                            Apakah Anda yakin ingin menghapus program studi <b id="deleteProdiName"></b>?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn-hapus">Hapus</button>
@@ -97,44 +116,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Teknik Informatika</td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <a href="/sibeta/public/index.php?page=detail_program_studi" style="text-decoration: none;" class="align-items-center">
-                                                    <button type="button" class="btn-custom px-2 d-flex align-self-center">
-                                                        <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
+                                    <?php foreach ($allProdi as $prodi): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($prodi['ProdiID']); ?></td>
+                                            <td><?php echo htmlspecialchars($prodi['NamaProdi']); ?></td>
+                                            <td>
+                                                <div class="d-flex justify-content-start align-items-center gap-2">
+                                                <a href="/sibeta/public/index.php?page=super_admin/detail_prodi&id=<?php echo $prodi['ProdiID']; ?>" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
+                                                    <button type="button" class="material-symbols-outlined align-items-center btn-custom3 deleteButton" style="text-decoration: none;"
+                                                        onclick="showDeleteModal('<?php echo $prodi['ProdiID']; ?>', '<?php echo $prodi['NamaProdi']; ?>')">
+                                                        <span class="material-symbols-outlined m-0" style="color:#FFFFFF;">delete</span>
                                                     </button>
-                                                </a>
-                                                <button type="button" class="btn-hapus px-2 d-flex align-self-center" style="background-color: #DC3545;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#hapusProdi"
-                                                    data-document-id="<?php echo $document['DokumenID']; ?>"
-                                                    data-document-name="<?php echo $document['NamaDokumen']; ?>">
-                                                    <span class="material-symbols-outlined m-0" style="color:#FFFFFF; font-size: 18px;">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Sistem Informasi Bisnis</td>
-                                        <td>
-                                            <div class="d-flex justify-content-start align-items-center gap-2">
-                                                <button type="button" class="btn-custom px-2 d-flex align-self-center">
-                                                    <span class="material-symbols-outlined m-0" style="font-size: 18px;">visibility</span>
-                                                </button>
-                                                <button type="button" class="btn-hapus px-2 d-flex align-self-center" style="background-color: #DC3545;"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#hapusProdi"
-                                                    data-document-id="<?php echo $document['DokumenID']; ?>"
-                                                    data-document-name="<?php echo $document['NamaDokumen']; ?>">
-                                                    <span class="material-symbols-outlined m-0" style="color:#FFFFFF; font-size: 18px;">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -177,6 +173,13 @@
             });
             searchInput.addEventListener('input', performSearch);
         });
+    </script>
+    <script>
+        function showDeleteModal(prodiId, prodiName) {
+            document.getElementById('deleteProdiId').value = prodiId;
+            document.getElementById('deleteProdiName').textContent = prodiName;
+            new bootstrap.Modal(document.getElementById('hapusProdi')).show();
+        }
     </script>
 </body>
 

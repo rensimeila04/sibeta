@@ -204,4 +204,249 @@ class StaffModel
             throw new Exception("Gagal mengubah kata sandi: " . $e->getMessage());
         }
     }
+
+    public function getTotalMahasiswaCount()
+    {
+        try {
+            $sql = "SELECT COUNT(*) as count FROM Mahasiswa";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'];
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getAllMahasiswa()
+    {
+        try {
+            $sql = "SELECT m.NIM, u.Nama AS NamaMahasiswa, k.NamaKelas AS Kelas, p.NamaProdi AS ProgramStudi
+                    FROM Mahasiswa m
+                    JOIN Users u ON m.UserID = u.UserID
+                    JOIN Kelas k ON m.KelasID = k.KelasID
+                    JOIN ProgramStudi p ON k.ProdiID = p.ProdiID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getPaginatedMahasiswa($currentPage, $itemsPerPage)
+    {
+        try {
+            $offset = ($currentPage - 1) * $itemsPerPage;
+            $sql = "SELECT m.NIM, u.Nama AS NamaMahasiswa, k.NamaKelas AS Kelas, p.NamaProdi AS ProgramStudi
+                    FROM Mahasiswa m
+                    JOIN Users u ON m.UserID = u.UserID
+                    JOIN Kelas k ON m.KelasID = k.KelasID
+                    JOIN ProgramStudi p ON k.ProdiID = p.ProdiID
+                    ORDER BY m.NIM
+                    OFFSET :offset ROWS
+                    FETCH NEXT :itemsPerPage ROWS ONLY";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getKelasOptions()
+    {
+        try {
+            $query = "SELECT k.KelasID, k.NamaKelas, p.NamaProdi 
+                      FROM Kelas k 
+                      JOIN ProgramStudi p ON k.ProdiID = p.ProdiID"; // Mengambil data kelas beserta nama program studi
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getProgramStudiOptions()
+    {
+        try {
+            $query = "SELECT ProdiID, NamaProdi FROM ProgramStudi"; // Mengambil semua program studi
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function insertMahasiswa($nim, $nama, $kelasID, $username, $password, $file)
+    {
+        try {
+            // Hash the password
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Check if the username already exists
+            $sqlCheckUser   = "SELECT COUNT(*) FROM Users WHERE Username = :username";
+            $stmtCheckUser   = $this->conn->prepare($sqlCheckUser);
+            $stmtCheckUser->bindParam(':username', $username);
+            $stmtCheckUser->execute();
+            $userExists = $stmtCheckUser->fetchColumn();
+
+            if ($userExists > 0) {
+                throw new Exception("Username sudah terdaftar.");
+            }
+
+            // Get RoleID for Mahasiswa
+            $sqlRole = "SELECT RoleID FROM Roles WHERE RoleName = 'Mahasiswa'";
+            $stmtRole = $this->conn->prepare($sqlRole);
+            $stmtRole->execute();
+            $roleID = $stmtRole->fetchColumn(); // Ambil RoleID
+
+            // Set photo_profile_path
+            $photoProfilePath = "/uploads/profile/" . basename($nama) . ".jpg"; // Format yang diinginkan
+
+            // Insert user data into the Users table
+            $sqlUser   = "INSERT INTO Users (Username, Password, Nama, photo_profile_path, RoleID)
+                        VALUES (:username, :password, :nama, :photoProfilePath, :roleID)";
+            $stmtUser   = $this->conn->prepare($sqlUser);
+            $stmtUser->bindParam(':username', $username);
+            $stmtUser->bindParam(':password', $hashedPassword);
+            $stmtUser->bindParam(':nama', $nama);
+            $stmtUser->bindParam(':photoProfilePath', $photoProfilePath); // Menggunakan path yang benar
+            $stmtUser->bindParam(':roleID', $roleID); // Gunakan RoleID untuk Mahasiswa
+
+            // Execute the user insert
+            $stmtUser->execute();
+
+            // Get the last inserted UserID
+            $userID = $this->conn->lastInsertId(); // Ambil UserID yang baru saja dimasukkan
+
+            // Debugging: Print values before inserting into Mahasiswa
+            echo "Inserting into Mahasiswa: UserID = $userID, NIM = $nim, KelasID = $kelasID\n";
+
+            // Insert mahasiswa data into the Mahasiswa table
+            $sqlMahasiswa = "INSERT INTO Mahasiswa (UserID, NIM, KelasID) VALUES (:userID, :nim, :kelasID)";
+            $stmtMahasiswa = $this->conn->prepare($sqlMahasiswa);
+            $stmtMahasiswa->bindParam(':userID', $userID);
+            $stmtMahasiswa->bindParam(':nim', $nim);
+            $stmtMahasiswa->bindParam(':kelasID', $kelasID);
+
+            // Execute the mahasiswa insert
+            if (!$stmtMahasiswa->execute()) {
+                // If the insert fails, throw an exception with the error message
+                $errorInfo = $stmtMahasiswa->errorInfo();
+                throw new Exception("Gagal memasukkan data mahasiswa: " . $errorInfo[2]);
+            }
+
+            return true; // Return true if both inserts are successful
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    // Mengambil data mahasiswa berdasarkan NIM
+    public function getMahasiswaByNIM($nim)
+    {
+        $sql = "SELECT u.Username, u.Nama, m.NIM, m.KelasID, k.NamaKelas, ps.NamaProdi, u.photo_profile_path
+                FROM Users u
+                JOIN Mahasiswa m ON u.UserID = m.UserID
+                JOIN Kelas k ON m.KelasID = k.KelasID
+                JOIN ProgramStudi ps ON k.ProdiID = ps.ProdiID
+                WHERE m.NIM = :nim";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':nim', $nim);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Memperbarui data mahasiswa
+    public function updateMahasiswa($nim, $newData)
+    {
+        try {
+            $sql = "UPDATE Mahasiswa SET KelasID = (SELECT KelasID FROM Kelas WHERE KelasID = :kelas) WHERE NIM = :nim";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':kelas', $newData['kelas'], PDO::PARAM_INT);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            // Update data di tabel Users
+            $sqlUser  = "UPDATE Users SET Username = :username, Nama = :nama WHERE UserID = (SELECT UserID FROM Mahasiswa WHERE NIM = :nim)";
+            $stmtUser  = $this->conn->prepare($sqlUser);
+            $stmtUser->bindParam(':username', $newData['username'], PDO::PARAM_STR);
+            $stmtUser->bindParam(':nama', $newData['nama'], PDO::PARAM_STR);
+            $stmtUser->bindParam(':nim', $nim, PDO::PARAM_STR);
+
+            $stmtUser->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            error_log("Update profile error: " . $e->getMessage());
+            throw new Exception("Update gagal: " . $e->getMessage());
+        }
+    }
+
+    public function handleUpdatePassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nim = $_POST['nim']; // Ambil NIM dari form
+            $newPassword = $_POST['newPassword'];
+
+            if (empty($newPassword)) {
+                throw new Exception("Kata sandi tidak boleh kosong");
+            }
+
+            try {
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $sql = "UPDATE Users SET Password = :password WHERE UserID = (SELECT UserID FROM Mahasiswa WHERE NIM = :nim)";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+                $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+                $stmt->execute();
+
+                return true;
+            } catch (PDOException $e) {
+                error_log("Update password error: " . $e->getMessage());
+                throw new Exception("Gagal mengubah kata sandi: " . $e->getMessage());
+            }
+        }
+        return false;
+    }
+
+    public function deleteMahasiswa($nim)
+    {
+        try {
+            // Verifikasi apakah mahasiswa dengan NIM yang sesuai ada
+            $sqlCheckOwnership = "SELECT COUNT(*) as count FROM Mahasiswa WHERE NIM = :nim";
+            $stmt = $this->conn->prepare($sqlCheckOwnership);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($result['count'] == 0) {
+                throw new Exception("Mahasiswa tidak ditemukan.");
+            }
+
+            // Hapus mahasiswa dari tabel Mahasiswa
+            $sqlDeleteMahasiswa = "DELETE FROM Mahasiswa WHERE NIM = :nim";
+            $stmt = $this->conn->prepare($sqlDeleteMahasiswa);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Hapus pengguna dari tabel Users
+            $sqlDeleteUser  = "DELETE FROM Users WHERE UserID = (SELECT UserID FROM Mahasiswa WHERE NIM = :nim)";
+            $stmt = $this->conn->prepare($sqlDeleteUser);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return true; // Mahasiswa dan pengguna berhasil dihapus
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

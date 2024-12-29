@@ -1,3 +1,24 @@
+<?php
+$prodiID = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+if ($prodiID) {
+    try {
+        $result = $superAdminController->getProdiById($prodiID);
+        if ($result['success']) {
+            $prodi = $result['data'];
+        } else {
+            echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($result['message']) . '</div>';
+            $prodi = null;
+        }
+    } catch (Exception $e) {
+        echo '<div class="alert alert-danger">Error: ' . htmlspecialchars($e->getMessage()) . '</div>';
+        $prodi = null;
+    }
+} else {
+    echo '<div class="alert alert-warning">No program studi ID provided</div>';
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -27,29 +48,42 @@
 
                 <h5>Detail Program Studi</h5>
 
+                <?php if (isset($_GET['success']) && $_GET['success'] === 'update'): ?>
+                    <div class="alert alert-success">Program studi berhasil diperbarui!</div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger">Error: <?php echo htmlspecialchars($_GET['error']); ?></div>
+                <?php endif; ?>
+
                 <!-- Detail Prodi Section -->
-                    <div class="card p-4 mt-4 mb-4" style="width: 1150px;">
-                        <div class="card-body ">
-                            <form method="POST" action="#">
-                                <div class="mb-3 d-flex align-items-center">
-                                    <label for="name" class="form-label me-3" style="width: 100px;">ID</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="1" disabled style="height: 40px; width: 200px;">
-                                </div>
-                                <div class="mb-3 d-flex align-items-center">
-                                    <label for="nim" class="form-label me-3" style="width: 100px;">Nama</label>
-                                    <input type="text" class="form-control" id="nim" value="Teknik Informatika" style="height: 40px; width: 950px;">
-                                </div>
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-custom">Simpan Perubahan</button>
-                                </div>
-                            </form>
-                        </div>
+                <div class="card p-4 mt-4 mb-4">
+                    <div class="card-body">
+                        <form method="POST" action="/sibeta/public/index.php?page=update_prodi">
+                            <input type="hidden" name="prodiID" value="<?php echo htmlspecialchars($prodi['ProdiID'] ?? ''); ?>">
+                            <div class="mb-3 d-flex align-items-center">
+                                <label for="prodiID" class="form-label me-3" style="width: 100px;">ID</label>
+                                <input type="text" class="form-control" id="prodiID"
+                                    value="<?php echo htmlspecialchars($prodi['ProdiID'] ?? ''); ?>"
+                                    disabled style="height: 40px; width: 200px;">
+                            </div>
+                            <div class="mb-3 d-flex align-items-center">
+                                <label for="namaProdi" class="form-label me-3" style="width: 100px;">Nama</label>
+                                <input type="text" class="form-control" id="namaProdi" name="namaProdi"
+                                    value="<?php echo htmlspecialchars($prodi['NamaProdi'] ?? ''); ?>"
+                                    style="height: 40px; width: 950px;">
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-custom">Simpan Perubahan</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
             </div>
 
         </div>
+
+    </div>
     </div>
 </body>
 
