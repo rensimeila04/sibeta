@@ -1,35 +1,55 @@
 <?php
-class KelasController {
-    private $model;
+class KelasController
+{
+    private $kelasModel;
 
-    public function __construct($model) {
-        $this->model = $model;
+    public function __construct($db)
+    {
+        $this->kelasModel = new KelasModel($db);
     }
 
-    public function getKelas($limit, $offset) {
-        $query = "SELECT * FROM kelas ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        $stmt = $this->model->prepare($query);
-        $stmt->bindValue(1, $offset, PDO::PARAM_INT);
-        $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    public function countKelas() {
-        return $this->model->countKelas();
+    public function showKelas($kelasID = null)
+    {
+        return $this->kelasModel->getKelas($kelasID);
     }
 
-    public function delete($id) {
-        $this->model->deleteKelas($id);
-        header('Location: /sibeta/public/index.php?page=kelas');
+    public function getKelasID($kelasID = null)
+    {
+        return $this->kelasModel->getKelasByID($kelasID);
     }
 
-    public function add() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nama = $_POST['namaKelas'];
-            $programStudi = $_POST['programStudi'];
-            $this->model->addKelas($nama, $programStudi);
-            header('Location: /sibeta/public/index.php?page=kelas');
+    // Fungsi untuk menambah data kelas
+    public function tambahKelas($namaKelas, $prodiID)
+    {
+        // Cek apakah program studi adalah "Teknik Informatika"
+        if ($prodiID === "Teknik Informatika") {
+            // Jika iya, ubah menjadi 1
+            $prodiID = 1;
         }
+        // Jika program studi bukan "Teknik Informatika", tetap menggunakan nilai yang ada
+        elseif ($prodiID === "Sistem Informasi Bisnis") {
+            $prodiID = 2;  // Misalkan 2 untuk Sistem Informasi Bisnis
+        }
+
+        return $this->kelasModel->insertKelas($namaKelas, $prodiID);
     }
-}   
+
+    // Fungsi untuk mengedit data kelas
+    public function editKelas($kelasID, $prodiID, $namaKelas)
+    {
+        return $this->kelasModel->updateKelas($kelasID, $prodiID, $namaKelas);
+    }
+
+    // Fungsi untuk menghapus data kelas
+    public function hapusKelas($kelasID)
+    {
+        if ($kelasID) {
+            // Call the model to delete the kelas
+            $this->kelasModel->deleteKelas($kelasID);
+        }
+    
+        // Redirect to the kelas page after deletion
+        header("Location: /sibeta/public/index.php?page=super_admin/kelas");
+        exit();
+    }
+}

@@ -15,6 +15,7 @@ $authController = new AuthController($conn);
 $mahasiswaController = new MahasiswaController($conn);
 $staffController = new StaffController($conn);
 $dokumenController = new DokumenController($conn);
+$kelasController = new KelasController($conn);
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing

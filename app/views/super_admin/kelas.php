@@ -1,3 +1,24 @@
+<?php
+$kelas = $kelasController->showKelas();
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+    $kelasID = $_GET['id'];
+    $kelasController->hapusKelas($kelasID);
+    header("Location: /sibeta/public/index.php?page=super_admin/kelas"); // Redirect after deletion
+    exit();
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $namaKelas = $_POST['namaKelas'];
+        $programStudi = $_POST['programStudi'];
+
+        // Panggil method tambahKelas di controller
+        $kelasController->tambahKelas($namaKelas, $programStudi);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,24 +85,26 @@
                                 <?php foreach ($kelas as $index => $data): ?>
                                     <tr>
                                         <td><?= $index + 1; ?></td>
-                                        <td><?= $data['nama']; ?></td>
-                                        <td><?= $data['program_studi']; ?></td>
+                                        <td><?= $data['NamaKelas']; ?></td>
+                                        <td><?= $data['ProdiID']; ?></td>
                                         <td>
-                                            <a href="?page=kelas&action=delete&id=<?= $data['id']; ?>">Hapus</a>
+                                            <a href="/sibeta/public/index.php?page=super_admin/detail_kelas&id=<?= $data['KelasID']; ?>" class="material-symbols-outlined btn-custom" style="text-decoration: none;">visibility</a>
+                                            <a href="#" class="material-symbols-outlined btn-custom3" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" data-id="<?= $data['KelasID']; ?>" style="text-decoration: none;">delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                         <div class="pagination justify-content-center mt-5 text-center">
-                            <p>Page <?= $page ?> of <?= $totalPages ?></p>
+                            <p>Page <?= $currentPage ?> of <?= $totalPages ?></p>
                         </div>
-                    <?php else: ?>
-                        <p class="text-center">Data kelas tidak ditemukan.</p>
-                    <?php endif; ?>
                 </div>
+            <?php else: ?>
+                <p class="text-center">Data kelas tidak ditemukan.</p>
+            <?php endif; ?>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="tambahKelasModal" tabindex="-1" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
@@ -92,24 +115,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="POST" action="/sibeta/public/index.php?page=super_admin/kelas&action=tambah" id="tambahKelasForm">
                         <div class="mb-3">
                             <label for="namaKelas" class="form-label">Nama Kelas</label>
-                            <input type="text" class="form-control" id="namaKelas" placeholder="Nama Kelas">
+                            <input type="text" class="form-control" id="namaKelas" name="namaKelas" placeholder="Nama Kelas" required>
                         </div>
                         <div class="mb-3">
                             <label for="programStudi" class="form-label">Program Studi</label>
-                            <select class="form-select" id="programStudi">
-                                <option selected>Pilih Program Studi</option>
-                                <option value="1">Teknik Informatika</option>
-                                <option value="2">Sistem Informasi Bisnis</option>
+                            <select class="form-select" id="programStudi" name="programStudi" required>
+                                <option value="">Pilih Program Studi</option>
+                                <option value="Teknik Informatika">Teknik Informatika</option>
+                                <option value="Sistem Informasi Bisnis">Sistem Informasi Bisnis</option>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn" style="background-color: #3E368C; color: #fff;">Simpan</button>
+                    <button type="submit" class="btn" style="background-color: #3E368C; color: #fff;" form="tambahKelasForm">Simpan</button>
                 </div>
             </div>
         </div>
@@ -124,15 +147,34 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus <strong>Kelas 1A</strong>
+                    Apakah Anda yakin ingin menghapus <strong><span id="kelasName"></span></strong> kelas ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
+                    <a id="confirmDeleteButton" href="#" class="btn btn-danger">
+                        Hapus
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Get all delete buttons and trigger modal with the correct KelasID
+        document.querySelectorAll('.btn-custom3').forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                var kelasID = button.getAttribute('data-id');
+                var kelasName = button.closest('tr').querySelector('td:nth-child(2)').innerText; // Get class name
+
+                // Set the Kelas name in the modal
+                document.getElementById('kelasName').innerText = kelasName;
+
+                // Update the modal link with the KelasID for deletion
+                document.getElementById('confirmDeleteButton').setAttribute('href', '/sibeta/public/index.php?page=super_admin/kelas&action=delete&id=' + kelasID);
+            });
+        });
+    </script>
 
 
 </body>

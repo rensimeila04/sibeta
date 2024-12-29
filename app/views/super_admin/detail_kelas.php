@@ -1,47 +1,10 @@
 <?php
+if (isset($_GET['id'])) {
+    $kelasID = $_GET['id'];
+    // Fetch class data based on KelasID
+    $detail = $kelasController->getKelasId($kelasID) ?? null; // Pastikan ada pengembalian null jika tidak ditemukan
+}
 
-$namaKelas = $_GET['kelas'] ?? '';
-
-$kelasDetails = [
-    [
-        "Nama" => "1A",
-        "Program Studi" => "Teknik Informatika",
-    ],
-    [
-        "Nama" => "1A",
-        "Program Studi" => "Sistem Informasi Bisnis",
-    ],
-    [
-        "Nama" => "1B",
-        "Program Studi" => "Teknik Informatika",
-    ],
-    [
-        "Nama" => "1B",
-        "Program Studi" => "Sistem Informasi Bisnis",
-    ],
-    [
-        "Nama" => "1C",
-        "Program Studi" => "Teknik Informatika",
-    ],
-    [
-        "Nama" => "1C",
-        "Program Studi" => "Sistem Informasi Bisnis",
-    ],
-    [
-        "Nama" => "1D",
-        "Program Studi" => "Teknik Informatika",
-    ],
-    [
-        "Nama" => "1D",
-        "Program Studi" => "Sistem Informasi Bisnis",
-    ],
-];
-
-$detail = array_filter($kelasDetails, function ($item) use ($namaKelas) {
-    return $item['Nama'] === $namaKelas;
-});
-
-$detail = $detail ? reset($detail) : null;
 ?>
 
 <!DOCTYPE html>
@@ -53,15 +16,12 @@ $detail = $detail ? reset($detail) : null;
     <link rel="stylesheet" href="/sibeta/public/assets/css/style.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/dashboard.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Kelas - SIBETA</title>
 </head>
-
 
 <body>
     <div class="wrapper">
@@ -71,7 +31,7 @@ $detail = $detail ? reset($detail) : null;
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>
-                    <a href="/sibeta/public/index.php?page=<?php echo $role; ?>">SIBETA</a>
+                    <a href="/sibeta/public/index.php?page=<?php echo htmlspecialchars($role); ?>">SIBETA</a>
                     <span class="separator">/</span>
                     <span>Kelas</span>
                     <span class="separator">/</span>
@@ -82,34 +42,32 @@ $detail = $detail ? reset($detail) : null;
                 </div>
 
                 <div class="container p-4 shadow-sm w-100" style="background: #FFFFFF; border-radius: 8px;">
-                    <h3>Detail Kelas: <?= htmlspecialchars($namaKelas); ?></h3>
-                    <?php if ($detail): ?>
-                        <form id="kelasForm" method="POST" action="update_kelas.php" class="w-100">
-                            <!-- Hidden Field for Nama Kelas -->
-                            <input type="hidden" name="namaKelas" value="<?= htmlspecialchars($namaKelas); ?>">
+                    <?php if (!empty($detail)): ?>
+                        <h3>Detail Kelas: <?= htmlspecialchars($detail['NamaKelas']); ?></h3>
+                        <form id="classForm" method="POST" action="../super_admin/update_kelas.php" class="w-100" onsubmit="console.log('Form submitted')">
+
+                            <input type="hidden" name="namaKelas" value="<?= htmlspecialchars($detail['NamaKelas']); ?>">
 
                             <div class="mb-3 w-25">
                                 <label for="id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="id" value="1" readonly>
+                                <input type="text" class="form-control" id="id" value="<?= htmlspecialchars($detail['KelasID']); ?>" readonly>
                             </div>
 
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama" value="<?= htmlspecialchars($namaKelas); ?>" placeholder="Nama Kelas">
+                                <input type="text" class="form-control" id="nama" name="nama" value="<?= htmlspecialchars($detail['NamaKelas']); ?>" placeholder="Nama Kelas">
                             </div>
 
-                            <!-- Program Studi Field -->
                             <div class="mb-3">
                                 <label for="programStudi" class="form-label">Program Studi</label>
                                 <select class="form-select" id="programStudi" name="programStudi">
-                                    <option value="Teknik Informatika" <?= $detail['Program Studi'] === 'Teknik Informatika' ? 'selected' : ''; ?>>Teknik Informatika</option>
-                                    <option value="Sistem Informasi Bisnis" <?= $detail['Program Studi'] === 'Sistem Informasi Bisnis' ? 'selected' : ''; ?>>Sistem Informasi Bisnis</option>
+                                    <option value="Teknik Informatika" <?= $detail['ProdiID'] === 'Teknik Informatika' ? 'selected' : ''; ?>>Teknik Informatika</option>
+                                    <option value="Sistem Informasi Bisnis" <?= $detail['ProdiID'] === 'Sistem Informasi Bisnis' ? 'selected' : ''; ?>>Sistem Informasi Bisnis</option>
                                 </select>
                             </div>
 
-                            <!-- Submit Button -->
                             <div class="text-end">
-                                <button type="button" class="btn btn-primary" style="background-color: #3E368C;" data-bs-toggle="modal" data-bs-target="#submitModal">Simpan Perubahan</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #3E368C;" data-bs-toggle="modal" data-bs-target="#submitModal">Simpan Perubahan</button>
                             </div>
                         </form>
                     <?php else: ?>
@@ -133,9 +91,10 @@ $detail = $detail ? reset($detail) : null;
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" style="background-color: #3E368C;" onclick="submitForm()">Simpan Perubahan</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #3E368C;" onclick="document.getElementById('classForm').submit()">Simpan Perubahan</button>
                 </div>
             </div>
         </div>
     </div>
 </body>
+</html>
