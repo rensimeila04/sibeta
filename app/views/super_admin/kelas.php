@@ -50,180 +50,89 @@
                 </div>
 
                 <div class="table-container w-100">
-                    <table class="table table-striped table-borderless table-hover" id="documentsTable">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Program Studi</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $documents = [
-                                [
-                                    "Nama" => "1A",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1A",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1B",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1B",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1C",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1C",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                                [
-                                    "Nama" => "1D",
-                                    "Program Studi" => "Teknik Informatika",
-                                ],
-                                [
-                                    "Nama" => "1D",
-                                    "Program Studi" => "Sistem Informasi Bisnis",
-                                ],
-                            ];
-
-                            $limit = 5;
-                            $offset = 0;
-                            $total_pages = ceil(count($documents) / $limit);
-
-                            if (isset($_GET['page'])) {
-                                $page = (int)$_GET['page'];
-                                $offset = ($page - 1) * $limit;
-                            } else {
-                                $page = 1;
-                                $offset = 0;
-                            }
-                            
-
-                            $paginated_documents = array_slice($documents, $offset, $limit);
-
-                            if (count($paginated_documents) > 0) {
-                                $no = 1;
-                                foreach ($paginated_documents as $data) {
-                                    $TanggalUpload = date('d-m-Y', strtotime($data['TanggalUpload'] ?? ''));
-                            ?>
+                    <?php if (!empty($kelas)): ?>
+                        <table class="table table-striped table-borderless table-hover" id="documentsTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Program Studi</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($kelas as $index => $data): ?>
                                     <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $data['Nama']; ?></td>
-                                        <td><?= $data['Program Studi']; ?></td>
+                                        <td><?= $index + 1; ?></td>
+                                        <td><?= $data['nama']; ?></td>
+                                        <td><?= $data['program_studi']; ?></td>
                                         <td>
-                                            <a href="/sibeta/public/index.php?page=super_admin/detail_kelas" class="material-symbols-outlined align-items-center btn-custom text-decoration-none">
-                                                visibility
-                                            </a>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
-                                                delete
-                                            </a>
+                                            <a href="?page=kelas&action=delete&id=<?= $data['id']; ?>">Hapus</a>
                                         </td>
                                     </tr>
-                            <?php
-                                }
-                            } else {
-                                echo "<tr><td colspan='4' class='text-center'>Tidak ada data mahasiswa ditemukan.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-
-                    <div class="pagination justify-content-center mt-5 text-center">
-                        <?php
-
-                        $totalPages = 5;
-                        $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
-
-                        if ($totalPages > 1) {
-                            echo '<div class="pagination-nav">';
-
-                            // Add "Previous" arrow
-                            if ($currentPage > 1) {
-                                $prevPage = $currentPage - 1;
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$prevPage' class='arrow'>&laquo;</a>";
-                            }
-
-                            // Display static page numbers
-                            for ($i = 1; $i <= $totalPages; $i++) {
-                                $active = $i == $currentPage ? 'active' : '';
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$i' class='$active'>$i</a>";
-                            }
-
-                            // Add "Next" arrow
-                            if ($currentPage < $totalPages) {
-                                $nextPage = $currentPage + 1;
-                                echo "<a href='/sibeta/public/index.php?page=kelas&page_number=$nextPage' class='arrow'>&raquo;</a>";
-                            }
-
-                            echo '</div>';
-                        }
-                        ?>
-                        </tbody>
+                                <?php endforeach; ?>
+                            </tbody>
                         </table>
-                    </div>
+                        <div class="pagination justify-content-center mt-5 text-center">
+                            <p>Page <?= $page ?> of <?= $totalPages ?></p>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-center">Data kelas tidak ditemukan.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="modal fade" id="tambahKelasModal" tabindex="-1" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="tambahKelasModalLabel">Tambahkan Kelas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="namaKelas" class="form-label">Nama Kelas</label>
-                                <input type="text" class="form-control" id="namaKelas" placeholder="Pilih Dokumen">
-                            </div>
-                            <div class="mb-3">
-                                <label for="programStudi" class="form-label">Program Studi</label>
-                                <select class="form-select" id="programStudi">
-                                    <option selected>Pilih Program Studi</option>
-                                    <option value="1">Teknik Informatika</option>
-                                    <option value="2">Sistem Informasi Bisnis</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn" style="background-color: #3E368C; color: #fff;">Simpan</button>
-                    </div>
+    <div class="modal fade" id="tambahKelasModal" tabindex="-1" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tambahKelasModalLabel">Tambahkan Kelas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="namaKelas" class="form-label">Nama Kelas</label>
+                            <input type="text" class="form-control" id="namaKelas" placeholder="Nama Kelas">
+                        </div>
+                        <div class="mb-3">
+                            <label for="programStudi" class="form-label">Program Studi</label>
+                            <select class="form-select" id="programStudi">
+                                <option selected>Pilih Program Studi</option>
+                                <option value="1">Teknik Informatika</option>
+                                <option value="2">Sistem Informasi Bisnis</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn" style="background-color: #3E368C; color: #fff;">Simpan</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Delete Confirmation Modal -->
-        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteConfirmationModalLabel">Hapus kelas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Apakah Anda yakin ingin menghapus <strong>Kelas 1A</strong>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
-                    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Hapus kelas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus <strong>Kelas 1A</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteButton">Hapus</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
 </body>
