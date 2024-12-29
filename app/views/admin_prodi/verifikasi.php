@@ -73,40 +73,47 @@
                 <div class="card card-body">
                     <div class="p-3">
                         <h3 class="mb-4">Detail Dokumen</h3>
-                        <div class="d-flex flex-column gap-2">
-                            <div class="info-row">
-                                <span class="label">Nama Dokumen</span>
-                                <span class="value"><?= $documentsMahasiswa[0]['NamaDokumen'] ?></span>
-                            </div>
-                            <div class="info-row">
-                                <span class="label">Jenis Dokumen</span>
-                                <span class="value"><?= $documentsMahasiswa[0]['Tipe'] ?></span>
-                            </div>
-                            <div class="info-row">
-                                <span class="label">Tanggal Upload</span>
-                                <span class="value">
-                                    <?php
-                                    echo (new IntlDateFormatter('id_ID', IntlDateFormatter::LONG, IntlDateFormatter::NONE))
-                                        ->format(strtotime($documentsMahasiswa[0]['TanggalUpload']));
-                                    ?>
+                        <div class="detail-desc mb-5 gap-1 w-75">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th>Nama Dokumen</th>
+                                        <td><?php echo $documentsMahasiswa[0]['NamaDokumen']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jenis Dokumen</th>
+                                        <td><?php echo $documentsMahasiswa[0]['Tipe']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tanggal Upload</th>
+                                        <td>
+                                            <?php
+                                            echo (new IntlDateFormatter('id_ID', IntlDateFormatter::LONG, IntlDateFormatter::NONE))
+                                                ->format(strtotime($documentsMahasiswa[0]['TanggalUpload']));
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dokumen</th>
+                                        <td>
+                                            <?php
+                                            $file = basename($documentsMahasiswa[0]['FilePath']);
+                                            echo $file;
+                                            ?>
+                                            <a href="<?php echo '../app' . $documentsMahasiswa[0]['FilePath']; ?>"
+                                                class="btn-custom text-decoration-none d-inline-flex align-items-center"
+                                                target="_blank" style="margin-left: 16px; vertical-align: middle;">
+                                                <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                                                <span>Lihat</span>
+                                            </a>
 
+                                        </td>
+                                    </tr>
 
-
-                                </span>
-                            </div>
-                            <div class="info-row">
-                                <span class="label">Dokumen</span>
-                                <span class="value">
-                                    <?php
-                                    $file = basename($documentsMahasiswa[0]['FilePath']);
-                                    echo $file;
-                                    ?>
-                                    <a href="<?php echo '../app' . $documentsMahasiswa[0]['FilePath']; ?>" class="material-symbols-outlined align-items-center btn-custom" target="_blank">
-                                        visibility
-                                    </a>
-                                </span>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
+
                         <div class="d-flex justify-content-end gap-3">
                             <button
                                 class="btn btn-outline-danger btn-sm d-flex align-items-center"
