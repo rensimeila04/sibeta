@@ -53,7 +53,7 @@
                             <input type="text" id="searchInput" class="form-control" placeholder="Cari ..." aria-label="Search" aria-describedby="basic-addon1" style="border-left: none;">
                             <button class="btn" id="searchButton" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                         </div>
-                        <a href="#" class="btn btn-primary" style="background-color: #3E368C; color: #fff; border-radius: 4px; height: auto; line-height: 1.5; margin: 20px;">Tambah Admin</a>
+                        <a href="/sibeta/public/index.php?page=super_admin/tambah_admin" class="btn btn-primary" style="background-color: #3E368C; color: #fff; border-radius: 4px; height: auto; line-height: 1.5; margin: 20px;">Tambah Admin</a>
                     </div>
 
                     <!-- Mahasiswa Table -->
