@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Mahasiswa</title>
+    <title>Profil Teknisi</title>
 </head>
 
 <body>
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span>Profil</span>
                 </div>
 
-                <h5>Profil Vefifikator</h5>
+                <h5>Profil Verifikator</h5>
 
                 <!-- Profile Mahasiswa Section -->
                 <div class="row mb-4 mt-4">
