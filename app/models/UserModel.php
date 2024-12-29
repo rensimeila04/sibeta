@@ -61,6 +61,22 @@ class UserModel
         $this->IsActive = $IsActive;
     }
 
+    
+
+
+
+    public function getUserByID($UserID){
+        try {
+            $sql = "SELECT * FROM Users WHERE UserID = :UserID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':UserID', $UserID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
     public function getUserByUsername($username)
     {
         try {
@@ -104,6 +120,19 @@ class UserModel
             $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function updateUserPhoto($id, $photo_name){
+        try {
+            $sql = "UPDATE Users SET photo_profile_path = :photo_name WHERE UserID = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':photo_name', $photo_name, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
         } catch (PDOException $e) {
             throw new Exception("Query gagal: " . $e->getMessage());
         }

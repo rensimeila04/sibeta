@@ -544,6 +544,7 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+        $admin = $staffController->getAllStaffByRole('Admin Prodi');
         include '../app/views/super_admin/admin.php';
         break;
     case 'super_admin/teknisi':
@@ -551,6 +552,7 @@ switch ($page) {
         $nip = $_SESSION['nip'];
         $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
+        $teknisi = $staffController->getAllStaffByRole('Teknisi');
         include '../app/views/super_admin/teknisi.php';
         break;
     case 'super_admin/kelas':
@@ -583,6 +585,90 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/tambah_admin.php';
         break;
+    case 'super_admin/insert_admin':
+        try {
+            $result = $staffController->addStaff('Admin Prodi');
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_admin&success=Admin Berhasil Ditambahkan');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_admin&error=Gagal Menambahkan Admin');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/tambah_admin&error=' . urlencode($e->getMessage()));
+        }
+        exit;
+        break;
+    case 'super_admin/change_staff_profile':
+        $user = $authController->getUserByID($_GET['id']);
+        try {
+            $result = $staffController->handleUpdateProfileSuperAdmin();
+
+            if ($result) {
+                switch ($user['RoleID']) {
+                    case 2:
+                        $admin = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_admin&nip=' . $admin['NIP'] . '&success=updateProfile');
+                        break;
+                    case 3:
+                        $teknisi = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_teknisi&nip=' . $teknisi['NIP'] . '&success=updateProfile');
+                        break;
+                }
+            }
+        } catch (Exception $e) {
+            switch ($user['RoleID']) {
+                case 2:
+                    $admin = $staffController->getStaffByID($_GET['id']);
+                    header('Location: /sibeta/public/index.php?page=super_admin/detail_admin&nip=' . $admin['NIP'] . '&error=Gagal Mengubah Profil : ' . urlencode($e->getMessage()));
+                    break;
+                case 3:
+                    $teknisi = $staffController->getStaffByID($_GET['id']);
+                    header('Location: /sibeta/public/index.php?page=super_admin/detail_teknisi&nip=' . $teknisi['NIP'] . '&error=Gagal Mengubah Profil : ' . urlencode($e->getMessage()));
+                    break;
+            }
+        }
+        exit;
+        break;
+    case 'super_admin/update_password_staff':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $staffController = new StaffController($conn);
+            $staff = $staffController->getStaffByID($_GET['id']);
+            try {
+                $newPassword = $_POST['newPassword'] ?? '';
+                $confirmPassword = $_POST['confirmPassword'] ?? '';
+
+                // Debug
+                error_log("Received password update request");
+
+                if (empty($newPassword) || empty($confirmPassword)) {
+                    throw new Exception("Password fields cannot be empty");
+                }
+
+                if ($newPassword !== $confirmPassword) {
+                    throw new Exception("Passwords do not match");
+                }
+
+                if (!isset($_SESSION['nip'])) {
+                    throw new Exception("User not logged in");
+                }
+
+                $staffController->handleUpdatePasswordSuperAdmin();
+            } catch (Exception $e) {
+                switch ($staff['RoleID']) {
+                    case 2:
+                        $admin = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_admin&nip=' . $admin['NIP'] . '&error=Gagal Mengubah Password : ' . urlencode($e->getMessage()));
+                        break;
+                    case 3:
+                        $teknisi = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_teknisi&nip=' . $teknisi['NIP'] . '&error=Gagal Mengubah Password : ' . urlencode($e->getMessage()));
+                        break;
+                }
+                exit();
+            }
+        }
+        break;
+
     case 'super_admin/tambah_teknisi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
@@ -590,6 +676,20 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/tambah_teknisi.php';
         break;
+    case 'super_admin/insert_teknisi':
+        try {
+            $result = $staffController->addStaff('Teknisi');
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_teknisi&success=Teknisi Berhasil Ditambahkan');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_teknisi&error=Gagal Menambahkan Teknisi');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/tambah_teknisi&error=' . urlencode($e->getMessage()));
+        }
+        exit;
+        break;
+
     case 'super_admin/tambah_dokumen':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
@@ -744,6 +844,10 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
+
+        $nipAdmin = $_GET['nip'];
+        $admin = $staffController->getStaff($nipAdmin);
+
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/detail_pengguna_admin.php';
         break;
@@ -751,6 +855,10 @@ switch ($page) {
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
         $role = 'super admin';
+
+        $nipTeknisi = $_GET['nip'];
+        $teknisi = $staffController->getStaff($nipTeknisi);
+
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/detail_pengguna_teknisi.php';
         break;
@@ -864,6 +972,63 @@ switch ($page) {
             $result = $kelasController->editKelas($kelasID, $prodiID, $namaKelas);
         }
         break;
+    case 'change_profile_photo':
+        try {
+            $result = $authController->handleUpdateProfilePhoto();
+            $user = $authController->getUserByID($_GET['id']);
+            if ($result) {
+                switch ($user['RoleID']) {
+                    case 2:
+                        $admin = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_admin&nip=' . $admin['NIP']);
+                        break;
+                    case 3:
+                        $teknisi = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_teknisi&nip=' . $teknisi['NIP']);
+                        break;
+                }
+            } else {
+                switch ($user['RoleID']) {
+                    case 2:
+                        $admin = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_admin&nip=' . $admin['NIP']);
+                        break;
+                    case 3:
+                        $teknisi = $staffController->getStaffByID($_GET['id']);
+                        header('Location: /sibeta/public/index.php?page=super_admin/detail_teknisi&nip=' . $teknisi['NIP']);
+                        break;
+                }
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        exit;
+        break;
+
+    case 'super_admin/delete_teknisi':
+        try {
+            $result = $staffController->deleteStaff();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/teknisi&success=Teknisi Berhasil Dihapus');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/teknisi&error=Gagal Menghapus Teknisi');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/teknisi&error=' . urlencode($e->getMessage()));
+        }
+        exit;
+        break;
+    case 'super_admin/delete_admin':
+        try {
+            $result = $staffController->deleteStaff();
+            if ($result) {
+                header('Location: /sibeta/public/index.php?page=super_admin/admin&success=Admin Berhasil Dihapus');
+            } else {                
+                header('Location: /sibeta/public/index.php?page=super_admin/admin&error=Gagal Menghapus Admin');
+            }
+        } catch (Exception $e) {
+            header('Location: /sibeta/public/index.php?page=super_admin/admin&error=' . urlencode($e->getMessage()));
+        }
     default:
         echo "Halaman tidak ditemukan.";
         break;
