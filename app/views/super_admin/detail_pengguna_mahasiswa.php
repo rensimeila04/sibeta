@@ -1,3 +1,23 @@
+<?php
+$programStudiOptions = $staffController->getProgramStudiOptions();
+$kelasOptions = $staffController->getKelasOptions();
+?>
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success">
+        <?php
+        if ($_GET['success'] === 'updateDetail') echo "Detail berhasil diperbarui!";
+        if ($_GET['success'] === 'updatePassword') echo "Kata sandi berhasil diubah!";
+        ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        <?php echo htmlspecialchars($_GET['error']); ?>
+    </div>
+<?php endif;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,19 +30,19 @@
     <link rel="stylesheet" href="../../../public/assets/css/dashboard.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Mahasiswa</title>
+    <title>Detail Mahasiswa</title>
 </head>
 
 <body>
     <div class="wrapper">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
-        
+
         <div class="main">
             <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
 
             <div class="p-3 dashboard">
                 <div class="breadcrumbs ps-3">
-                <span class="material-symbols-outlined">home</span>
+                    <span class="material-symbols-outlined">home</span>
                     <a href="#">SIBETA</a>
                     <span class="separator">/</span>
                     <span>Mahasiswa</span>
@@ -42,26 +62,32 @@
                                 <div class="text-center mb-4">
                                     <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 80px; height: 80px;">
                                 </div>
-                                <form method="POST" action="/sibeta/public/index.php?page=change_mahasiswa_profile">
+                                <form method="POST" action="/sibeta/public/index.php?page=change_mahasiswa_detail">
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="123456789">
+                                        <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Nama</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="Altthalaric Nero M">
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo htmlspecialchars($namaMahasiswa); ?>">
                                     </div>
                                     <div class="mb-3">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim" value="123456789">
+                                        <input type="text" class="form-control" id="nim" name="nim" value="<?php echo htmlspecialchars($nim); ?>">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="class" class="form-label">Kelas</label>
-                                        <input type="text" class="form-control" id="class" value="TI-2E">
+                                        <label for="kelas">Kelas</label>
+                                        <select name="kelas" id="kelas" class="form-control" required>
+                                            <?php foreach ($kelasOptions as $kelas): ?>
+                                                <option value="<?= htmlspecialchars($kelas['KelasID']) ?>" <?= ($kelas['KelasID'] == $kelasID) ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($kelas['NamaKelas']) ?> (<?= htmlspecialchars($kelas['NamaProdi']) ?>)
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="program" class="form-label">Program Studi</label>
-                                        <input type="text" class="form-control" id="program" value="D-IV Teknik Informatika">
+
+                                    <div class="text-center py-3">
+                                        <button type="submit" class="btn btn-custom">Simpan Perubahan</button>
                                     </div>
                                 </form>
                             </div>
@@ -73,7 +99,8 @@
                         <div class="card p-4">
                             <div class="card-body">
                                 <h5 class="card-title text-start mb-4">Ubah Kata Sandi</h5>
-                                <form method="POST" action="/sibeta/public/index.php?page=updatePassword" id="passwordForm" onsubmit="return validatePassword()">
+                                <form method="POST" action="/sibeta/public/index.php?page=change_mahasiswa_password">
+                                    <input type="hidden" name="nim" value="<?php echo htmlspecialchars($nimMahasiswa); ?>"> <!-- NIM mahasiswa yang ingin diubah password-nya -->
                                     <div class="mb-3 password-wrapper">
                                         <label for="new-password" class="form-label">Kata Sandi Baru</label>
                                         <div class="input-group">
