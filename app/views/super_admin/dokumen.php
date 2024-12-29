@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDocument'])) {
                     <span>Dokumen</span>
                 </div>
                 <div class="mb-3">
-                    <h2>Dokumen</h2>
+                    <h3>Dokumen</h3>
                     <div id="alertMessage" class="alert d-none" role="alert"></div>
                 </div>
                 <div class="py-3">
@@ -84,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDocument'])) {
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Dokumen</th>
+                                            <th style="width: 60%;">Nama</th>
+                                            <th style="width: 24%;">Jenis Dokumen</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>

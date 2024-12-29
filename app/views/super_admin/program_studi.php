@@ -30,7 +30,7 @@
                     <span>Program Studi</span>
                 </div>
 
-                <h5 class="mt-3">Program Studi</h5>
+                <h3 class="mt-3">Program Studi</h3>
 
                 <?php if (isset($_GET['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -122,17 +122,10 @@
                                             <td><?php echo htmlspecialchars($prodi['NamaProdi']); ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-start align-items-center gap-2">
-                                                    <a href="/sibeta/public/index.php?page=super_admin/detail_prodi&id=<?php echo $prodi['ProdiID']; ?>"
-                                                        style="text-decoration: none;"
-                                                        class="align-items-center">
-                                                        <button type="button" class="btn-custom px-2 py-1" style="font-size: 18px;">
-                                                            <span class="material-symbols-outlined m-0">visibility</span>
-                                                        </button>
-                                                    </a>
-                                                    <button type="button" class="btn-custom px-2 py-1"
-                                                        style="background-color: #DC3545 !important; font-size: 18px;"
+                                                <a href="/sibeta/public/index.php?page=super_admin/detail_prodi&id=<?php echo $prodi['ProdiID']; ?>" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
+                                                    <button type="button" class="material-symbols-outlined align-items-center btn-custom3 deleteButton" style="text-decoration: none;"
                                                         onclick="showDeleteModal('<?php echo $prodi['ProdiID']; ?>', '<?php echo $prodi['NamaProdi']; ?>')">
-                                                        <span class="material-symbols-outlined m-0" style="color:#FFFFFF; background-color: #DC3545 !important;">delete</span>
+                                                        <span class="material-symbols-outlined m-0" style="color:#FFFFFF;">delete</span>
                                                     </button>
                                                 </div>
                                             </td>

@@ -51,7 +51,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
                     <span>Kelas</span>
                 </div>
                 <div class="mb-3">
-                    <h2>Kelas</h2>
+                    <h3>Kelas</h3>
                 </div>
                 <?php if (isset($_GET['error'])): ?>
                     <div class="alert alert-danger">
@@ -89,7 +89,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
                                     <tr>
                                         <th style="width: 5%;">No</th>
                                         <th style="width: 10%;">Nama</th>
-                                        <th style="width: 70%;">Program Studi</th>
+                                        <th style="width: 73%;">Program Studi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
