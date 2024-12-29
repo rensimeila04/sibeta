@@ -101,9 +101,13 @@
                             $total_pages = ceil(count($documents) / $limit);
 
                             if (isset($_GET['page'])) {
-                                $page = $_GET['page'];
+                                $page = (int)$_GET['page'];
                                 $offset = ($page - 1) * $limit;
+                            } else {
+                                $page = 1;
+                                $offset = 0;
                             }
+                            
 
                             $paginated_documents = array_slice($documents, $offset, $limit);
 
@@ -117,7 +121,7 @@
                                         <td><?= $data['Nama']; ?></td>
                                         <td><?= $data['Program Studi']; ?></td>
                                         <td>
-                                            <a href="detail_kelas.php?kelas=<?=$data['Nama'] ?>" class="material-symbols-outlined align-items-center btn-custom text-decoration-none" target="_blank">
+                                            <a href="/sibeta/public/index.php?page=super_admin/detail_kelas" class="material-symbols-outlined align-items-center btn-custom text-decoration-none">
                                                 visibility
                                             </a>
                                             <a href="#" class="material-symbols-outlined align-items-center btn-custom3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
