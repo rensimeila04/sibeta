@@ -219,13 +219,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
             searchInput.addEventListener('input', performSearch);
         });
     </script>
-    <script>
-        function showDeleteModal(prodiId, prodiName) {
-            document.getElementById('deleteProdiId').value = prodiId;
-            document.getElementById('deleteProdiName').textContent = prodiName;
-            new bootstrap.Modal(document.getElementById('hapusProdi')).show();
-        }
-    </script>
-
 
 </body>
+
+</html>

@@ -189,6 +189,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDocument'])) {
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Cari semua tabel yang ada
+                const tables = document.querySelectorAll('.table');
+
+                tables.forEach(table => {
+                    const tbody = table.querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('tr');
+
+                        rows.forEach(row => {
+                            const documentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                            row.style.display = documentName.includes(searchTerm) ? '' : 'none';
+                        });
+                    }
+                });
+            }
+
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            searchInput.addEventListener('input', performSearch);
+        });
+    </script>
 </body>
 
 </html>
