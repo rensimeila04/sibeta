@@ -118,4 +118,17 @@ class SuperAdminModel
             throw new Exception("Gagal menambahkan jenis dokumen: " . $e->getMessage());
         }
     }
+
+    public function deleteJenisDokumen($jenisDokumenID)
+    {
+        try {
+            $sql = "DELETE FROM JenisDokumen WHERE JenisDokumenID = :jenisDokumenID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':jenisDokumenID', $jenisDokumenID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->rowCount() > 0; // True jika ada baris yang dihapus
+        } catch (PDOException $e) {
+            throw new Exception("Penghapusan gagal: " . $e->getMessage());
+        }
+    }
 }

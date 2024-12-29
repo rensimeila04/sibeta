@@ -66,4 +66,9 @@ class SuperAdminController
             throw new Exception("Gagal menambahkan dokumen: " . $e->getMessage());
         }
     }
+
+    public function deleteJenisDokumen($jenisDokumenID)
+    {
+        return $this->superAdminModel->deleteJenisDokumen($jenisDokumenID);
+    }
 }
