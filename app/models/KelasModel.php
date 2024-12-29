@@ -10,40 +10,52 @@ class KelasModel
 
     public function getKelas()
     {
-        $query = "SELECT * FROM Kelas";
+        $query = "
+            SELECT 
+                Kelas.KelasID AS id_kelas, 
+                Kelas.NamaKelas AS nama_kelas, 
+                ProgramStudi.NamaProdi AS nama_prodi
+            FROM 
+                Kelas
+            INNER JOIN 
+                ProgramStudi
+            ON 
+                Kelas.ProdiID = ProgramStudi.ProdiID
+        ";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll();
     }
 
+
     public function getKelasById($kelasID)
-{
-    // Assuming you have a database connection in $this->db
-    $sql = "SELECT * FROM kelas WHERE KelasID = ?";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([$kelasID]);
-    return $stmt->fetch(PDO::FETCH_ASSOC); // Fetch the row as an associative array
-}
-
-public function insertKelas($namaKelas, $programStudi)
-{
-    // Validasi data yang diterima
-    if (!empty($namaKelas) && !empty($programStudi)) {
-        // Menyimpan data ke database
-        $programStudi = (int)$programStudi;
-
-        $sql = "INSERT INTO kelas (NamaKelas, ProdiID) VALUES (?, ?)";
+    {
+        // Assuming you have a database connection in $this->db
+        $sql = "SELECT * FROM kelas WHERE KelasID = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$namaKelas, $programStudi]);
-
-        // Redirect atau tampilkan pesan sukses
-        header("Location: /sibeta/public/index.php?page=super_admin/kelas");
-        exit();
-    } else {
-        // Tampilkan error jika ada data yang kosong
-        echo "Data tidak lengkap.";
+        $stmt->execute([$kelasID]);
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Fetch the row as an associative array
     }
-}
+
+    public function insertKelas($namaKelas, $programStudi)
+    {
+        // Validasi data yang diterima
+        if (!empty($namaKelas) && !empty($programStudi)) {
+            // Menyimpan data ke database
+            $programStudi = (int)$programStudi;
+
+            $sql = "INSERT INTO kelas (NamaKelas, ProdiID) VALUES (?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$namaKelas, $programStudi]);
+
+            // Redirect atau tampilkan pesan sukses
+            header("Location: /sibeta/public/index.php?page=super_admin/kelas");
+            exit();
+        } else {
+            // Tampilkan error jika ada data yang kosong
+            echo "Data tidak lengkap.";
+        }
+    }
 
     // Fungsi untuk mengedit data kelas
     public function updateKelas($kelasID, $prodiID, $namaKelas)
