@@ -131,4 +131,23 @@ class SuperAdminModel
             throw new Exception("Penghapusan gagal: " . $e->getMessage());
         }
     }
+
+    public function getJenisDokumenById($id)
+    {
+        try {
+            $sql = "SELECT * FROM JenisDokumen WHERE JenisDokumenID = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                throw new Exception("Jenis dokumen dengan ID $id tidak ditemukan.");
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

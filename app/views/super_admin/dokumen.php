@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDocument'])) {
                                                 <td><?php echo htmlspecialchars($doc['NamaDokumen'], ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td><?php echo htmlspecialchars($doc['Tipe'], ENT_QUOTES, 'UTF-8'); ?></td>
                                                 <td>
-                                                    <a href="#" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
+                                                    <a href="/sibeta/public/index.php?page=super_admin/detail_dokumen&id=<?php echo $doc['JenisDokumenID']; ?>" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
                                                     <button class="material-symbols-outlined align-items-center btn-custom3 deleteButton" style="text-decoration: none;" data-id="<?php echo $doc['JenisDokumenID']; ?>" data-bs-toggle="modal" data-bs-target="#deleteModal">delete</button>
                                                 </td>
                                             </tr>

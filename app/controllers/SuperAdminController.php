@@ -71,4 +71,19 @@ class SuperAdminController
     {
         return $this->superAdminModel->deleteJenisDokumen($jenisDokumenID);
     }
+
+    public function getJenisDokumenById($id)
+    {
+        try {
+            $result = $this->superAdminModel->getJenisDokumenById($id);
+            if (!$result) {
+                throw new Exception("Dokumen dengan ID $id tidak ditemukan.");
+            }
+            return $result;
+        } catch (Exception $e) {
+            // Log error
+            error_log("Error in getJenisDokumenById: " . $e->getMessage());
+            throw $e; // Re-throw untuk ditangkap oleh view
+        }
+    }
 }
