@@ -15,6 +15,7 @@ $authController = new AuthController($conn);
 $mahasiswaController = new MahasiswaController($conn);
 $staffController = new StaffController($conn);
 $dokumenController = new DokumenController($conn);
+$notifikasiController = new NotifikasiController($conn);
 
 // Routes
 $page = $_GET['page'] ?? 'landing'; // Default page is landing
@@ -197,10 +198,6 @@ switch ($page) {
         $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : ''; // No sanitization needed for 'aksi' since it's a simple action
         // Debug information
         error_log("Processing verification for ID: " . $id . " with action: " . $aksi);
-
-        // Initialize NotifikasiController
-        $notifikasiController = new NotifikasiController($conn);
-        error_log("NotifikasiController initialized");
 
         if ($id && $role) {
             switch ($role) {

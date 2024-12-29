@@ -1,3 +1,7 @@
+<?php
+$notifications = $notifikasiController->getTopNotifications($nim);
+$unreadCount = $notifikasiController->getUnreadNotificationCount($nim);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,28 +31,29 @@
                         <span class="material-symbols-outlined">
                             notifications
                         </span>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            2
-                        </span>
+                        <?php if ($unreadCount > 0): ?>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?php echo $unreadCount; ?>
+                            </span>
+                        <?php endif; ?>
                     </button>
                     <ul class="dropdown-menu">
                         <li class="notification-header">
                             <h6 class="m-0 p-2 text-center border-bottom">Notifikasi</h6>
                         </li>
-                        <li class="notification-item">
-                            <a href="#" class="dropdown-item notification-link">
-                                <div class="notification-content">
-                                    <p class="notification-text mb-0">Dokumen anda telah di verifikasi</p>
+                        <?php foreach ($notifications as $notification): ?>
+                            <li class="notification-item">
+                                <div class="dropdown-item notification-button w-100 text-start border-0"
+                                    style="<?php echo $notification['IsDibaca'] ? 'background-color: #f8f9fa;' : ''; ?>">
+                                    <div class="notification-content">
+                                        <p class="notification-text mb-0"><?php echo htmlspecialchars($notification['Pesan']); ?></p>
+                                        <small class="text-muted">
+                                            <?php echo date('d M Y H:i', strtotime($notification['TanggalNotifikasi'])); ?>
+                                        </small>
+                                    </div>
                                 </div>
-                            </a>
-                        </li>
-                        <li class="notification-item">
-                            <a href="#" class="dropdown-item notification-link">
-                                <div class="notification-content">
-                                    <p class="notification-text mb-0">Dokumen anda di tolak</p>
-                                </div>
-                            </a>
-                        </li>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
@@ -92,13 +97,13 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

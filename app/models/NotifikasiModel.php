@@ -4,51 +4,51 @@ class NotifikasiModel {
 
     public function __construct($db) {
         $this->conn = $db;
-        if (!$this->conn) {
-            error_log("Database connection is null");
-            throw new Exception("Koneksi database tidak tersedia");
-        }
-        error_log("NotifikasiModel initialized with database connection");
     }
 
     public function addNotifikasi($nim, $pesan) {
         try {
-            error_log("Adding notification - NIM: " . $nim . ", Message: " . $pesan);
-            
-            // Validate database connection
-            if (!$this->conn) {
-                throw new Exception("Koneksi database tidak tersedia");
-            }
-            
-            $sql = "INSERT INTO Notifikasi (MahasiswaNIM, Pesan) VALUES (:nim, :pesan)";
-            error_log("Executing SQL: " . $sql);
+            $sql = "INSERT INTO Notifikasi (MahasiswaNIM, Pesan, TanggalNotifikasi, IsDibaca) 
+                    VALUES (:nim, :pesan, GETDATE(), 0)";
             
             $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                error_log("Failed to prepare statement");
-                throw new Exception("Gagal mempersiapkan query");
-            }
-            
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
             $stmt->bindParam(':pesan', $pesan, PDO::PARAM_STR);
             
-            $result = $stmt->execute();
-            error_log("Query execution result: " . ($result ? "success" : "failed"));
-            
-            if (!$result) {
-                $errorInfo = $stmt->errorInfo();
-                error_log("Database error: " . print_r($errorInfo, true));
-                throw new Exception("Gagal menyimpan notifikasi: " . $errorInfo[2]);
-            }
-            
-            return $result;
+            return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("PDO Exception: " . $e->getMessage());
-            throw new Exception("Query gagal: " . $e->getMessage());
-        } catch (Exception $e) {
-            error_log("General Exception: " . $e->getMessage());
-            throw $e;
+            throw new Exception("Gagal menambah notifikasi: " . $e->getMessage());
+        }
+    }
+
+    public function getTopThreeNotifications($nim) {
+        try {
+            $sql = "SELECT TOP 3 *
+                    FROM Notifikasi
+                    WHERE MahasiswaNIM = :nim
+                    ORDER BY TanggalNotifikasi DESC";
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Gagal mengambil notifikasi: " . $e->getMessage());
+        }
+    }
+
+    public function markAsRead($notifikasiId) {
+        try {
+            $sql = "UPDATE Notifikasi 
+                    SET IsDibaca = 1 
+                    WHERE NotifikasiID = :notifikasiId";
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':notifikasiId', $notifikasiId, PDO::PARAM_INT);
+            
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Gagal menandai notifikasi sebagai dibaca: " . $e->getMessage());
         }
     }
 }
-?>
