@@ -187,4 +187,17 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function addProdi($namaProdi)
+    {
+        try {
+            $sql = "INSERT INTO ProgramStudi (NamaProdi) VALUES (:namaProdi)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':namaProdi', $namaProdi, PDO::PARAM_STR);
+            $stmt->execute();
+            return $this->conn->lastInsertId(); // Mengembalikan ID dari program studi yang baru ditambahkan
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

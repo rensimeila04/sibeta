@@ -32,12 +32,26 @@
 
                 <h5 class="mt-3">Program Studi</h5>
 
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Program studi berhasil ditambahkan!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?php echo htmlspecialchars($_GET['error']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
                 <div class="py-3">
                     <div class="card">
                         <div class="card-body">
                             <!-- modal tambah program studi -->
                             <div class="modal fade" id="tambahProdi" tabindex="-1" aria-labelledby="tambahProdiLabel" aria-hidden="true">
-                                <form method="POST" enctype="multipart/form-data" class="modal-dialog modal-dialog-centered">
+                                <form method="POST" action="/sibeta/public/index.php?page=add_prodi" class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="tambahProdiLabel">Tambahkan Program Studi</h1>

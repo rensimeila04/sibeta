@@ -95,4 +95,13 @@ class SuperAdminController
     {
         return $this->superAdminModel->getAllProdi();
     }
+
+    public function addProdi($namaProdi)
+    {
+        if (empty($namaProdi)) {
+            throw new Exception("Nama program studi tidak boleh kosong.");
+        }
+
+        return $this->superAdminModel->addProdi($namaProdi);
+    }
 }

@@ -569,6 +569,23 @@ switch ($page) {
 
         include '../app/views/super_admin/detail_dokumen.php';
         break;
+    case 'add_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $namaProdi = $_POST['namaProdi'] ?? '';
+                $result = $superAdminController->addProdi($namaProdi);
+
+                if ($result) {
+                    header('Location: /sibeta/public/index.php?page=super_admin/prodi&success=1');
+                } else {
+                    header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=Gagal menambahkan program studi');
+                }
+            } catch (Exception $e) {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=' . urlencode($e->getMessage()));
+            }
+            exit;
+        }
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;
