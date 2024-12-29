@@ -43,36 +43,33 @@ if (isset($_GET['id'])) {
 
                 <div class="container p-4 shadow-sm w-100" style="background: #FFFFFF; border-radius: 8px;">
                     <?php if (!empty($detail)): ?>
-                        <h3>Detail Kelas: <?= htmlspecialchars($detail['NamaKelas']); ?></h3>
-                        <form id="classForm" method="POST" action="../super_admin/update_kelas.php" class="w-100" onsubmit="console.log('Form submitted')">
-
-                            <input type="hidden" name="namaKelas" value="<?= htmlspecialchars($detail['NamaKelas']); ?>">
+                        <form id="classForm" method="POST" action="/sibeta/public/index.php?page=update_kelas" class="w-100">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($detail['KelasID']); ?>">
 
                             <div class="mb-3 w-25">
                                 <label for="id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="id" value="<?= htmlspecialchars($detail['KelasID']); ?>" readonly>
+                                <input type="text" class="form-control" value="<?= htmlspecialchars($detail['KelasID']); ?>" readonly>
                             </div>
 
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="nama" name="nama" value="<?= htmlspecialchars($detail['NamaKelas']); ?>" placeholder="Nama Kelas">
+                                <input type="text" class="form-control" id="nama" name="nama" value="<?= htmlspecialchars($detail['NamaKelas']); ?>" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="programStudi" class="form-label">Program Studi</label>
-                                <select class="form-select" id="programStudi" name="programStudi">
-                                    <option value="Teknik Informatika" <?= $detail['ProdiID'] === 'Teknik Informatika' ? 'selected' : ''; ?>>Teknik Informatika</option>
-                                    <option value="Sistem Informasi Bisnis" <?= $detail['ProdiID'] === 'Sistem Informasi Bisnis' ? 'selected' : ''; ?>>Sistem Informasi Bisnis</option>
+                                <select class="form-select" id="programStudi" name="programStudi" required>
+                                    <option value="Teknik Informatika" <?= $detail['ProdiID'] == 1 ? 'selected' : ''; ?>>Teknik Informatika</option>
+                                    <option value="Sistem Informasi Bisnis" <?= $detail['ProdiID'] == 2 ? 'selected' : ''; ?>>Sistem Informasi Bisnis</option>
                                 </select>
                             </div>
-
                             <div class="text-end">
                                 <button type="submit" class="btn btn-primary" style="background-color: #3E368C;" data-bs-toggle="modal" data-bs-target="#submitModal">Simpan Perubahan</button>
                             </div>
                         </form>
-                    <?php else: ?>
-                        <p class="text-danger">Kelas tidak ditemukan.</p>
-                    <?php endif; ?>
+                        <?php else: ?>
+                            <p class="text-danger">Kelas tidak ditemukan.</p>
+                        <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -97,4 +94,5 @@ if (isset($_GET['id'])) {
         </div>
     </div>
 </body>
+
 </html>

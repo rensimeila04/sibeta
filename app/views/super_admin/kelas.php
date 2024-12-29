@@ -53,6 +53,17 @@ if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
                 <div class="mb-3">
                     <h2>Kelas</h2>
                 </div>
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger">
+                        <?= htmlspecialchars($_GET['error']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success">
+                        Data kelas berhasil diperbarui
+                    </div>
+                <?php endif; ?>
 
                 <div class="card p-3">
                     <div class="d-flex justify-content-between align-items-center mb-3 w-100">
@@ -173,6 +184,47 @@ if (isset($_GET['action']) && $_GET['action'] === 'tambah') {
                 document.getElementById('confirmDeleteButton').setAttribute('href', '/sibeta/public/index.php?page=super_admin/kelas&action=delete&id=' + kelasID);
             });
         });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Cari semua tabel yang ada
+                const tables = document.querySelectorAll('.table');
+
+                tables.forEach(table => {
+                    const tbody = table.querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('tr');
+
+                        rows.forEach(row => {
+                            const documentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                            row.style.display = documentName.includes(searchTerm) ? '' : 'none';
+                        });
+                    }
+                });
+            }
+
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            searchInput.addEventListener('input', performSearch);
+        });
+    </script>
+    <script>
+        function showDeleteModal(prodiId, prodiName) {
+            document.getElementById('deleteProdiId').value = prodiId;
+            document.getElementById('deleteProdiName').textContent = prodiName;
+            new bootstrap.Modal(document.getElementById('hapusProdi')).show();
+        }
     </script>
 
 

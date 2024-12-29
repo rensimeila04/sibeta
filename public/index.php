@@ -627,6 +627,22 @@ switch ($page) {
             exit;
         }
         break;
+    case 'update_kelas':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $kelasID = $_POST['id'] ?? '';
+            $namaKelas = $_POST['nama'] ?? '';
+            $prodiID = $_POST['programStudi'] ?? '';
+
+            // Convert program studi name to ID
+            if ($prodiID === "Teknik Informatika") {
+                $prodiID = 1;
+            } elseif ($prodiID === "Sistem Informasi Bisnis") {
+                $prodiID = 2;
+            }
+
+            $result = $kelasController->editKelas($kelasID, $prodiID, $namaKelas);
+        }
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;
