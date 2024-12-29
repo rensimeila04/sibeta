@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../public/assets/css/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,15 +37,11 @@
                 <div class="mb-3">
                     <h2>Teknisi</h2>
                 </div>
-
-
             </div>
-
-            
 
             <div class="container">
                 <div class="card">
-                    <!-- Search and Add Mahasiswa Buttons -->
+                    <!-- Search and Add Teknisi Buttons -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="input-group w-25" style="border-radius: 8px;">
                             <span class="input-group-text" id="basic-addon1" style="background-color: #FFFFFF;">
@@ -56,19 +53,9 @@
                         <a href="/sibeta/public/index.php?page=super_admin/tambah_teknisi" class="btn btn-primary" style="background-color: #3E368C; color: #fff; border-radius: 4px; height: auto; line-height: 1.5; margin: 20px;">Tambah Teknisi</a>
                     </div>
 
-                    <!-- Mahasiswa Table -->
+                    <!-- Teknisi Table -->
                     <div class="table-container w-100">
                         <table class="table table-striped table-borderless" id="documentsTable">
-                            <?php
-                            $mahasiswa = [
-                                ['nim' => '123456789', 'nama' => 'John Doe', 'program_studi' => 'D-IV Teknik Informatika', 'kelas' => '4E', 'tanggal_upload' => '22 November 2024'],
-                                ['nim' => '987654321', 'nama' => 'Jane Smith', 'program_studi' => 'D-IV Teknik Informatika', 'kelas' => '4E', 'tanggal_upload' => '25 November 2024'],
-                                ['nim' => '234567890', 'nama' => 'Michael Johnson', 'program_studi' => 'D-IV Sistem Informasi', 'kelas' => '4E', 'tanggal_upload' => '28 November 2024'],
-                                ['nim' => '345678901', 'nama' => 'Emily Brown', 'program_studi' => 'D-IV Teknik Informatika', 'kelas' => '4F', 'tanggal_upload' => '01 Desember 2024'],
-                                ['nim' => '456789012', 'nama' => 'David Lee', 'program_studi' => 'D-IV Sistem Informasi', 'kelas' => '4F', 'tanggal_upload' => '05 Desember 2024'],
-                                ['nim' => '567890123', 'nama' => 'Olivia Taylor', 'program_studi' => 'D-IV Teknik Informatika', 'kelas' => '4E', 'tanggal_upload' => '10 Desember 2024']
-                            ];
-                            ?>
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -79,41 +66,78 @@
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
-                                <?php foreach ($mahasiswa as $mhs): ?>
+                                <?php foreach ($teknisi as $row): ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
-                                        <td><?php echo $mhs['nim']; ?></td>
-                                        <td><?php echo $mhs['nama']; ?></td>
+                                        <td><?php echo $row['NIP']; ?></td>
+                                        <td><?php echo $row['Nama']; ?></td>
                                         <td>
-                                            <a href="/sibeta/public/index.php?page=super_admin/detail_teknisi" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;" target="_blank">visibility</a>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;">delete</a>
+                                            <a href="/sibeta/public/index.php?page=super_admin/detail_teknisi&nip=<?= $row['NIP']; ?>" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
+                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;" onclick="showDeleteModal('<?= $row['NIP']; ?>')">delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
 
-                        <!-- Pagination -->
-                        <div class="pagination mt-5">
-                            <span>Total 10 items</span>
-                            <div class="pagination-nav">
-                                <a href="#" class="arrow">&laquo;</a>
-                                <a href="#" class="active">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                                <a href="#">4</a>
-                                <a href="#">5</a>
-                                <a href="#">6</a>
-                                <span>...</span>
-                                <a href="#">20</a>
-                                <a href="#" class="arrow">&raquo;</a>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal for Deletion Confirmation -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #f8f9fa; color: #333; border-radius: 8px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus data terkait?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <a id="confirmDeleteBtn" class="btn btn-danger" href="#">Hapus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showDeleteModal(nip) {
+            // Set the action of the delete button
+            var deleteButton = document.getElementById("confirmDeleteBtn");
+            deleteButton.href = "/sibeta/public/index.php?page=super_admin/delete_teknisi&nip=" + nip;
+
+            // Show the modal
+            var myModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            myModal.show();
+        }
+    </script>
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            var searchInput = document.getElementById("searchInput").value.toLowerCase();
+            var table = document.getElementById("documentsTable");
+            var rows = table.getElementsByTagName("tr");
+
+            // Loop through all table rows (excluding the header)
+            for (var i = 1; i < rows.length; i++) {
+                var row = rows[i];
+                var nameColumn = row.cells[2].textContent.toLowerCase(); // The Nama column is index 2
+
+                if (nameColumn.includes(searchInput)) {
+                    row.style.display = ""; // Show row
+                } else {
+                    row.style.display = "none"; // Hide row
+                }
+            }
+        });
+    </script>
+
 </body>
 
 </html>
