@@ -422,17 +422,15 @@ class StaffModel
     {
         try {
             // Verifikasi apakah mahasiswa dengan NIM yang sesuai ada
-            $sqlCheckOwnership = "SELECT UserID FROM Mahasiswa WHERE NIM = :nim";
+            $sqlCheckOwnership = "SELECT COUNT(*) as count FROM Mahasiswa WHERE NIM = :nim";
             $stmt = $this->conn->prepare($sqlCheckOwnership);
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$result) {
+            if ($result['count'] == 0) {
                 throw new Exception("Mahasiswa tidak ditemukan.");
             }
-
-            $userID = $result['User ID'];
 
             // Hapus mahasiswa dari tabel Mahasiswa
             $sqlDeleteMahasiswa = "DELETE FROM Mahasiswa WHERE NIM = :nim";
@@ -441,9 +439,9 @@ class StaffModel
             $stmt->execute();
 
             // Hapus pengguna dari tabel Users
-            $sqlDeleteUser  = "DELETE FROM Users WHERE UserID = :userID";
+            $sqlDeleteUser  = "DELETE FROM Users WHERE UserID = (SELECT UserID FROM Mahasiswa WHERE NIM = :nim)";
             $stmt = $this->conn->prepare($sqlDeleteUser);
-            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
             $stmt->execute();
 
             return true; // Mahasiswa dan pengguna berhasil dihapus

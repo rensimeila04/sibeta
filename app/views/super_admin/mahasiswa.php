@@ -1,3 +1,30 @@
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteMahasiswa'])) {
+    $nim = $_POST['nim'];
+
+    if ($nim) {
+        try {
+            $isDeleted = $staffController->deleteMahasiswa($nim);
+
+            if ($isDeleted) {
+                echo json_encode(['success' => true, 'message' => 'Mahasiswa berhasil dihapus!']);
+                exit;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal menghapus mahasiswa. Mahasiswa mungkin tidak ditemukan.']);
+                exit;
+            }
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            exit;
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'ID mahasiswa tidak valid.']);
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,14 +102,11 @@
                                                 <td><?php echo htmlspecialchars($mhs['ProgramStudi']); ?></td>
                                                 <td>
                                                     <a href="/sibeta/public/index.php?page=super_admin/detail_mahasiswa&nim=<?php echo urlencode($mhs['NIM']); ?>" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;">visibility</a>
-                                                    <a href="#" class="material-symbols-outlined align-items-center btn-custom3 delete-button" style="text-decoration: none;"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#hapusMahasiswa"
+                                                    <button class="material-symbols-outlined align-items-center btn-custom3 deleteButton" style="text-decoration: none;"
                                                         data-nim="<?php echo htmlspecialchars($mhs['NIM']); ?>"
                                                         data-nama="<?php echo htmlspecialchars($mhs['NamaMahasiswa']); ?>"
-                                                        onclick="document.getElementById('deleteMahasiswaNim').value = this.getAttribute('data-nim'); document.getElementById('deleteMahasiswaName').innerText = this.getAttribute('data-nama');">
-                                                        delete
-                                                    </a>
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal">delete</button>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -144,24 +168,23 @@
                         </div>
 
                         <!-- Modal Konfirmasi Hapus -->
-                        <div class="modal fade" id="hapusMahasiswa" tabindex="-1" aria-labelledby="hapusMahasiswaLabel" aria-hidden="true">
-                            <form method="POST" class="modal-dialog modal-dialog-centered">
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="hapusMahasiswaLabel">Hapus Mahasiswa</h1>
+                                        <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="hidden" name="action" value="delete_mahasiswa">
-                                        <input type="hidden" name="nim" id="deleteMahasiswaNim">
-                                        Apakah Anda yakin ingin menghapus <b id="deleteMahasiswaName"></b>?
+                                        Apakah Anda yakin ingin menghapus mahasiswa <b id="deleteMahasiswaName"></b>?
+                                        <input type="hidden" id="deleteMahasiswaNim" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-danger">Hapus Mahasiswa</button>
+                                        <button type="button" id="confirmDeleteButton" class="btn btn-danger">Hapus</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -200,15 +223,61 @@
         searchInput.addEventListener('keyup', filterTable);
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Event listener untuk tombol delete
-            document.querySelectorAll('.delete-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const nim = this.getAttribute('data-document-id');
-                    const nama = this.getAttribute('data-document-name');
-                    document.getElementById('deleteDocumentName').textContent = nama; // Set nama mahasiswa di modal
-                    document.getElementById('deleteDocumentId').value = nim; // Set NIM di form
-                });
+        function setDeleteMahasiswaData(button) {
+            const nim = button.getAttribute('data-nim');
+            const nama = button.getAttribute('data-nama');
+            document.getElementById('deleteMahasiswaNim').value = nim;
+            document.getElementById('deleteMahasiswaName').innerText = nama;
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const deleteModal = document.getElementById("deleteModal");
+            const deleteMahasiswaNim = document.getElementById("deleteMahasiswaNim");
+            const deleteMahasiswaName = document.getElementById("deleteMahasiswaName");
+            const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+
+            deleteModal.addEventListener("show.bs.modal", function(event) {
+                const button = event.relatedTarget;
+                const nim = button.getAttribute("data-nim");
+                const nama = button.getAttribute("data-nama");
+
+                deleteMahasiswaNim.value = nim;
+                deleteMahasiswaName.textContent = nama;
+            });
+
+            confirmDeleteButton.addEventListener("click", async function() {
+                const nim = deleteMahasiswaNim.value;
+                try {
+                    const response = await fetch("", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams({
+                            deleteMahasiswa: true,
+                            nim: nim
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert("Mahasiswa berhasil dihapus!");
+                        location.reload();
+                    } else {
+                        alert("Gagal menghapus mahasiswa: " + result.message);
+                    }
+
+                    const bootstrapModal = bootstrap.Modal.getInstance(deleteModal);
+                    bootstrapModal.hide();
+                } catch (error) {
+                    alert("Terjadi kesalahan saat menghapus mahasiswa.");
+                }
+            });
+
+            deleteModal.addEventListener("hidden.bs.modal", function() {
+                const backdrops = document.querySelectorAll(".modal-backdrop");
+                backdrops.forEach(backdrop => backdrop.remove());
             });
         });
     </script>
