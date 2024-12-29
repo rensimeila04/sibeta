@@ -19,36 +19,18 @@
 <body>
     <div class="header">
 
-        <div class="profile">
+        <div class="profile mx-3">
             <div class="profile-info">
                 <div class="profile-name">
                     <?= $nama ?>
                 </div>
-                <div class="text-muted">
+                <div class="text-muted" style="text-transform: capitalize;">
                     <?= $role ?>
                 </div>
             </div>
 
             <div class="profile-settings d-flex flex-row align-items-center">
                 <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-                <div class="dropdown ms-2">
-                    <button 
-                        class="btn border-0 bg-transparent dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <span class="material-symbols-outlined">keyboard_arrow_down</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li>
-                            <a href="/sibeta/public/index.php?page=profile_staff" class="dropdown-item d-flex align-items-center">
-                                <span class="material-symbols-outlined me-2">person</span>
-                                Profil <?= $role; ?>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
                 
             </div>
         </div>

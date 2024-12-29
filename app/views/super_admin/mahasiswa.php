@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteMahasiswa'])) {
 
         <div class="main">
             <!-- Header -->
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
 
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteMahasiswa'])) {
                                     <tr>
                                         <th>No</th>
                                         <th>NIM</th>
-                                        <th>Nama Mahasiswa</th>
-                                        <th>Kelas</th>
-                                        <th>Program Studi</th>
+                                        <th style="width: 30%;">Nama Mahasiswa</th>
+                                        <th style="width: 8%;">Kelas</th>
+                                        <th style="width: 35%;">Program Studi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>

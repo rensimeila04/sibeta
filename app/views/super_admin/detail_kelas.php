@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
     <div class="wrapper">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
         <div class="main">
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
                     <span class="material-symbols-outlined">home</span>

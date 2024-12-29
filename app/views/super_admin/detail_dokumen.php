@@ -62,7 +62,7 @@ if ($documentId) {
 
         <div class="main">
             <!-- Header -->
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
 
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">

@@ -70,7 +70,7 @@ switch ($page) {
     case 'admin':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
-        $role = 'admin';
+        $role = 'Admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $dokumenController->getDocumentCounts('Administratif');
         $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
@@ -83,7 +83,7 @@ switch ($page) {
     case 'teknisi':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
-        $role = 'teknisi';
+        $role = 'Teknisi';
         $photo_profile_path = $_SESSION['photo_profile'];
         $documentCounts = $dokumenController->getDocumentCounts('Teknis');
         $currentPage = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
@@ -95,7 +95,7 @@ switch ($page) {
     case 'super_admin':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
-        $role = 'super admin';
+        $role = 'Super Admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/index.php';
         break;

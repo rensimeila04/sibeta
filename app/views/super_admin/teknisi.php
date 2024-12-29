@@ -23,7 +23,7 @@
 
         <div class="main">
             <!-- Header -->
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
 
             <div class="p-4 dashboard">
                 <div class="breadcrumbs mb-3">
@@ -37,10 +37,7 @@
                 <div class="mb-3">
                     <h2>Teknisi</h2>
                 </div>
-            </div>
-
-            <div class="container">
-                <div class="card">
+                <div class="card p-3">
                     <!-- Search and Add Teknisi Buttons -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="input-group w-25" style="border-radius: 8px;">
@@ -48,9 +45,9 @@
                                 <i class="bi bi-search" style="color: #ADB5BD; font-size: 16px;"></i>
                             </span>
                             <input type="text" id="searchInput" class="form-control" placeholder="Cari ..." aria-label="Search" aria-describedby="basic-addon1" style="border-left: none;">
-                            <button class="btn" id="searchButton" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
+                            <button class="btn btn-custom" id="searchButton" style="margin-left: 10px; color:#fff; background-color: #3E368C; border-radius: 4px; height: auto;">Cari</button>
                         </div>
-                        <a href="/sibeta/public/index.php?page=super_admin/tambah_teknisi" class="btn btn-primary" style="background-color: #3E368C; color: #fff; border-radius: 4px; height: auto; line-height: 1.5; margin: 20px;">Tambah Teknisi</a>
+                        <a href="/sibeta/public/index.php?page=super_admin/tambah_teknisi" class="btn btn-custom">Tambah Teknisi</a>
                     </div>
 
                     <!-- Teknisi Table -->
@@ -60,7 +57,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>NIP</th>
-                                    <th>Nama</th>
+                                    <th style="width: 75%;">Nama</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -79,11 +76,10 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
-
-                        
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -135,6 +131,40 @@
                     row.style.display = "none"; // Hide row
                 }
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                // Cari semua tabel yang ada
+                const tables = document.querySelectorAll('.table');
+
+                tables.forEach(table => {
+                    const tbody = table.querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('tr');
+
+                        rows.forEach(row => {
+                            const documentName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                            row.style.display = documentName.includes(searchTerm) ? '' : 'none';
+                        });
+                    }
+                });
+            }
+
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            searchInput.addEventListener('input', performSearch);
         });
     </script>
 

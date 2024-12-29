@@ -27,7 +27,7 @@ $kelasOptions = $staffController->getKelasOptions();
 
         <div class="main">
             <!-- Header -->
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
 
             <div class="p-3 dashboard">
                 <div class="breadcrumbs ps-3">
@@ -37,9 +37,9 @@ $kelasOptions = $staffController->getKelasOptions();
                     <span>Dashboard</span>
                 </div>
 
-                <h2>Tambah Mahasiswa</h2>
-                <div class="container mt-4 px-4">
-                    <div class="card p-4">
+                <h3 class="mx-3 my-3">Tambah Mahasiswa</h3>
+                <div class="mt-3 px-3">
+                    <div class="card p-3">
                         <div class="card-body">
                             <form method="POST" enctype="multipart/form-data">
                                 <div class="row">

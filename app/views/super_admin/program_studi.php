@@ -21,7 +21,7 @@
     <div class="wrapper">
         <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/sidebar_super_admin.php"; ?>
         <div class="main">
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_admin.php"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . "/sibeta/app/views/components/header_super_admin.php"; ?>
             <div class="dokumen p-3">
                 <div class="breadcrumbs">
                     <span class="material-symbols-outlined">home</span>
