@@ -200,4 +200,22 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function deleteProdi($prodiID)
+    {
+        try {
+            $sql = "DELETE FROM ProgramStudi WHERE ProdiID = :prodiID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':prodiID', $prodiID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return true; // Berhasil dihapus
+            } else {
+                return false; // Tidak ada data yang dihapus
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

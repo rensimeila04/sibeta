@@ -586,6 +586,19 @@ switch ($page) {
             exit;
         }
         break;
+    case 'delete_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['prodiID'])) {
+            $prodiID = $_POST['prodiID'];
+            $result = $superAdminController->deleteProdi($prodiID);
+
+            if ($result['success']) {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&success=delete');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/prodi&error=' . urlencode($result['message']));
+            }
+            exit;
+        }
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;

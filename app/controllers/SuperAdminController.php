@@ -104,4 +104,18 @@ class SuperAdminController
 
         return $this->superAdminModel->addProdi($namaProdi);
     }
+
+    public function deleteProdi($prodiID)
+    {
+        try {
+            $result = $this->superAdminModel->deleteProdi($prodiID);
+            if ($result) {
+                return ["success" => true, "message" => "Program studi berhasil dihapus."];
+            } else {
+                return ["success" => false, "message" => "Program studi tidak ditemukan atau gagal dihapus."];
+            }
+        } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

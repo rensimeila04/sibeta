@@ -34,7 +34,13 @@
 
                 <?php if (isset($_GET['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        Program studi berhasil ditambahkan!
+                        <?php
+                        if ($_GET['success'] === 'delete') {
+                            echo "Program studi berhasil dihapus!";
+                        } else {
+                            echo "Program studi berhasil ditambahkan!";
+                        }
+                        ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
@@ -72,16 +78,15 @@
 
                             <!-- Modal Delete -->
                             <div class="modal fade" id="hapusProdi" tabindex="-1" aria-labelledby="hapusProdiLabel" aria-hidden="true">
-                                <form method="POST" class="modal-dialog modal-dialog-centered">
+                                <form method="POST" action="/sibeta/public/index.php?page=delete_prodi" class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="hapusDokumenLabel">Hapus Program Studi</h1>
+                                            <h1 class="modal-title fs-5" id="hapusProdiLabel">Hapus Program Studi</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <input type="hidden" name="action" value="delete_document">
-                                            <input type="hidden" name="documentId" id="deleteDocumentId">
-                                            Apakah Anda yakin ingin menghapus <b id="deleteDocumentName"></b>?
+                                            <input type="hidden" name="prodiID" id="deleteProdiId">
+                                            Apakah Anda yakin ingin menghapus program studi <b id="deleteProdiName"></b>?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn-hapus">Hapus</button>
@@ -124,7 +129,9 @@
                                                             <span class="material-symbols-outlined m-0">visibility</span>
                                                         </button>
                                                     </a>
-                                                    <button type="button" class="btn-custom px-2 py-1" style="background-color: #DC3545 !important; font-size: 18px;">
+                                                    <button type="button" class="btn-custom px-2 py-1"
+                                                        style="background-color: #DC3545 !important; font-size: 18px;"
+                                                        onclick="showDeleteModal('<?php echo $prodi['ProdiID']; ?>', '<?php echo $prodi['NamaProdi']; ?>')">
                                                         <span class="material-symbols-outlined m-0" style="color:#FFFFFF; background-color: #DC3545 !important;">delete</span>
                                                     </button>
                                                 </div>
@@ -173,6 +180,13 @@
             });
             searchInput.addEventListener('input', performSearch);
         });
+    </script>
+    <script>
+        function showDeleteModal(prodiId, prodiName) {
+            document.getElementById('deleteProdiId').value = prodiId;
+            document.getElementById('deleteProdiName').textContent = prodiName;
+            new bootstrap.Modal(document.getElementById('hapusProdi')).show();
+        }
     </script>
 </body>
 
