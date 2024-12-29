@@ -32,41 +32,65 @@
                     <span>Dokumen</span>
                     <span class="separator">/</span>
                     <span>Tambah Dokumen</span>
-
                 </div>
                 <div class="mb-3">
                     <h2>Tambah Dokumen</h2>
                 </div>
-
-
             </div>
 
-
-
             <div class="container">
-                <!-- Form Inputan untuk ID, Nama Dokumen, dan Jenis Dokumen -->
-                <form action="#">
+                <?php
+                // Display error message if any
+                if (isset($_GET['error'])) {
+                    echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
+                }
+                // Display success message if any
+                if (isset($_GET['success'])) {
+                    echo '<div class="alert alert-success" role="alert">Dokumen berhasil ditambahkan!</div>';
+                }
+                ?>
+
+                <!-- Form Inputan untuk Nama Dokumen dan Jenis Dokumen -->
+                <form action="/sibeta/public/index.php?page=add_dokumen" method="POST">
+                    <!-- Hidden input for handling the form submission -->
+                    <input type="hidden" name="action" value="add_dokumen">
+
                     <div class="mb-3 d-flex align-items-center">
                         <p class="mb-0" style="width: 30%; white-space: nowrap; margin-left: 20px;">Nama Dokumen</p>
                         <div style="width: 100%;">
-                            <input type="text" class="form-control" id="namaDokumen" name="nama_dokumen" required style="margin-left: 50px; width: 100%;" placeholder="Masukkan nama dokumen">
+                            <input type="text" class="form-control" id="namaDokumen" name="namaDokumen" required
+                                style="margin-left: 50px; width: 100%;" placeholder="Masukkan nama dokumen">
                         </div>
                     </div>
+
                     <div class="mb-3 d-flex align-items-center">
                         <p class="mb-0" style="width: 30%; white-space: nowrap; margin-left: 20px;">Jenis Dokumen</p>
                         <div style="width: 65%;">
-                            <select class="form-select" id="jenisDokumen" name="jenis" required style="margin-left: 50px; width: 100%;">
+                            <select class="form-select" id="tipeDokumen" name="tipeDokumen" required
+                                style="margin-left: 50px; width: 100%;">
                                 <option value="Administratif">Administratif</option>
                                 <option value="Teknis">Teknis</option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-custom" style="position: absolute; bottom: 20px; right: 20px;">Tambah Dokumen</button>
+
+                    <div class="mb-3 d-flex align-items-center">
+                        <p class="mb-0" style="width: 30%; white-space: nowrap; margin-left: 20px;">Wajib?</p>
+                        <div style="width: 65%;">
+                            <select class="form-select" id="isRequired" name="isRequired" required
+                                style="margin-left: 50px; width: 100%;">
+                                <option value="1">Ya</option>
+                                <option value="0">Tidak</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-custom"
+                        style="position: absolute; bottom: 20px; right: 20px;">
+                        Tambah Dokumen
+                    </button>
                 </form>
             </div>
-
-
-
         </div>
     </div>
 </body>

@@ -102,4 +102,20 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function addJenisDokumen($namaDokumen, $tipe, $isRequired = 1)
+    {
+        try {
+            $sql = "INSERT INTO JenisDokumen (NamaDokumen, Tipe, IsRequired) 
+                VALUES (:namaDokumen, :tipe, :isRequired)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':namaDokumen', $namaDokumen);
+            $stmt->bindParam(':tipe', $tipe);
+            $stmt->bindParam(':isRequired', $isRequired, PDO::PARAM_BOOL);
+            $stmt->execute();
+            return $this->conn->lastInsertId(); // Mengembalikan ID dari dokumen yang baru ditambahkan
+        } catch (PDOException $e) {
+            throw new Exception("Gagal menambahkan jenis dokumen: " . $e->getMessage());
+        }
+    }
 }

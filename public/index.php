@@ -536,6 +536,26 @@ switch ($page) {
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/detail_kelas.php';
         break;
+    case 'add_dokumen':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $namaDokumen = $_POST['namaDokumen'] ?? '';
+                $tipeDokumen = $_POST['tipeDokumen'] ?? '';
+                $isRequired = isset($_POST['isRequired']) ? (int)$_POST['isRequired'] : 1;
+
+                $result = $superAdminController->addJenisDokumen($namaDokumen, $tipeDokumen, $isRequired);
+
+                if ($result) {
+                    header('Location: /sibeta/public/index.php?page=super_admin/dokumen&success=1');
+                } else {
+                    header('Location: /sibeta/public/index.php?page=super_admin/tambah_dokumen&error=Gagal menambahkan dokumen');
+                }
+            } catch (Exception $e) {
+                header('Location: /sibeta/public/index.php?page=super_admin/tambah_dokumen&error=' . urlencode($e->getMessage()));
+            }
+            exit;
+        }
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;

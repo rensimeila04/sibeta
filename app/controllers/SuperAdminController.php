@@ -39,4 +39,31 @@ class SuperAdminController
     {
         return $this->superAdminModel->getJenisDokumen();
     }
+
+    public function addJenisDokumen($namaDokumen, $tipe, $isRequired = 1)
+    {
+        // Validasi tipe dokumen
+        $validTypes = ['Teknis', 'Administratif'];
+        if (!in_array($tipe, $validTypes)) {
+            throw new Exception("Tipe dokumen tidak valid. Pilihan yang tersedia adalah: " . implode(', ', $validTypes) . ".");
+        }
+
+        // Validasi nama dokumen
+        if (empty($namaDokumen) || strlen($namaDokumen) > 100) {
+            throw new Exception("Nama dokumen harus diisi dan tidak boleh lebih dari 100 karakter.");
+        }
+
+        // Validasi IsRequired (opsional)
+        if (!in_array($isRequired, [0, 1], true)) {
+            throw new Exception("Nilai IsRequired harus berupa 1 (ya) atau 0 (tidak).");
+        }
+
+        try {
+            // Panggil metode dari model untuk menyimpan data
+            return $this->superAdminModel->addJenisDokumen($namaDokumen, $tipe, $isRequired);
+        } catch (Exception $e) {
+            // Tangkap error dari model dan berikan pesan yang lebih deskriptif
+            throw new Exception("Gagal menambahkan dokumen: " . $e->getMessage());
+        }
+    }
 }
