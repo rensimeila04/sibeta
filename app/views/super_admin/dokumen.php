@@ -1,3 +1,8 @@
+<?php
+
+$documents = $superAdminController->getJenisDokumen();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,51 +58,6 @@
                     <!-- Mahasiswa Table -->
                     <div class="table-container w-100">
                         <table class="table table-striped table-borderless" id="documentsTable">
-                            <?php
-                            $documents = [
-                                [
-                                    'id' => 1,
-                                    'nama_dokumen' => 'Surat Pengantar Mahasiswa',
-                                    'jenis' => 'Administratif'
-                                ],
-                                [
-                                    'id' => 2,
-                                    'nama_dokumen' => 'Laporan Tahunan Keuangan',
-                                    'jenis' => 'Administratif'
-                                ],
-                                [
-                                    'id' => 3,
-                                    'nama_dokumen' => 'Panduan Penggunaan Sistem Informasi',
-                                    'jenis' => 'Teknis'
-                                ],
-                                [
-                                    'id' => 4,
-                                    'nama_dokumen' => 'Dokumentasi Instalasi Server',
-                                    'jenis' => 'Teknis'
-                                ],
-                                [
-                                    'id' => 5,
-                                    'nama_dokumen' => 'Formulir Pendaftaran',
-                                    'jenis' => 'Administratif'
-                                ],
-                                [
-                                    'id' => 6,
-                                    'nama_dokumen' => 'Manual Pengguna Aplikasi',
-                                    'jenis' => 'Teknis'
-                                ],
-                                [
-                                    'id' => 7,
-                                    'nama_dokumen' => 'Surat Keputusan Rapat',
-                                    'jenis' => 'Administratif'
-                                ],
-                                [
-                                    'id' => 8,
-                                    'nama_dokumen' => 'Spesifikasi Hardware untuk Server',
-                                    'jenis' => 'Teknis'
-                                ]
-                            ];
-                            ?>
-
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -111,11 +71,11 @@
                                 <?php foreach ($documents as $doc): ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
-                                        <td><?php echo $doc['nama_dokumen']; ?></td>
-                                        <td><?php echo $doc['jenis']; ?></td>
+                                        <td><?php echo htmlspecialchars($doc['NamaDokumen'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><?php echo htmlspecialchars($doc['Tipe'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td>
                                             <a href="#" class="material-symbols-outlined align-items-center btn-custom" style="text-decoration: none;" target="_blank">visibility</a>
-                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?php echo $doc['id']; ?>">delete</a>
+                                            <a href="#" class="material-symbols-outlined align-items-center btn-custom3" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?php echo $doc['JenisDokumenID']; ?>">delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -148,25 +108,6 @@
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Event listener for delete buttons
-        const deleteButtons = document.querySelectorAll('.btn-custom3');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const docId = this.getAttribute('data-id');
-                document.getElementById('deleteButton').setAttribute('data-id', docId);
-            });
-        });
-
-        // Handle delete action
-        document.getElementById('deleteButton').addEventListener('click', function() {
-            const docId = this.getAttribute('data-id');
-            console.log('Dokumen ID ' + docId + ' akan dihapus.');
-            // Add your AJAX call or form submission logic to delete the document
-            // After deletion, close the modal
-            $('#deleteModal').modal('hide');
-        });
-    </script>
 </body>
 
 </html>

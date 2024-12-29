@@ -9,7 +9,8 @@ class SuperAdminController
         $this->superAdminModel = new SuperAdminModel($db);
     }
 
-    public function getMahasiswaCount(){
+    public function getMahasiswaCount()
+    {
         $totalMahasiswa = $this->superAdminModel->getTotalStudents();
         return $totalMahasiswa;
     }
@@ -34,4 +35,8 @@ class SuperAdminController
         return $this->superAdminModel->getStudentsByProdi();
     }
 
+    public function getJenisDokumen()
+    {
+        return $this->superAdminModel->getJenisDokumen();
+    }
 }

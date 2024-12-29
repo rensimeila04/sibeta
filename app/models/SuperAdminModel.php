@@ -1,4 +1,4 @@
-<?php 
+<?php
 class SuperAdminModel
 {
     private $conn;
@@ -86,6 +86,18 @@ class SuperAdminModel
                 $output[$row['NamaProdi']] = $row['count'];
             }
             return $output;
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
+
+    public function getJenisDokumen()
+    {
+        try {
+            $sql = "SELECT JenisDokumenID, NamaDokumen, Tipe, IsRequired FROM JenisDokumen";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Query gagal: " . $e->getMessage());
         }
