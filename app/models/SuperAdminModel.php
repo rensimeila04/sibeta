@@ -236,4 +236,23 @@ class SuperAdminModel
             throw new Exception("Query gagal: " . $e->getMessage());
         }
     }
+
+    public function updateProdi($prodiID, $namaProdi)
+    {
+        try {
+            $sql = "UPDATE ProgramStudi SET NamaProdi = :namaProdi WHERE ProdiID = :prodiID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':namaProdi', $namaProdi, PDO::PARAM_STR);
+            $stmt->bindParam(':prodiID', $prodiID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return true; // Berhasil diperbarui
+            } else {
+                return false; // Tidak ada data yang diperbarui
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Query gagal: " . $e->getMessage());
+        }
+    }
 }

@@ -133,4 +133,19 @@ class SuperAdminController
             return ["success" => false, "message" => $e->getMessage()];
         }
     }
+
+    public function editProdi($prodiID, $namaProdi)
+    {
+        try {
+            $result = $this->superAdminModel->updateProdi($prodiID, $namaProdi);
+
+            if ($result) {
+                return ["success" => true, "message" => "Program studi berhasil diperbarui."];
+            } else {
+                return ["success" => false, "message" => "Program studi tidak ditemukan atau tidak ada perubahan data."];
+            }
+        } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
 }

@@ -610,6 +610,21 @@ switch ($page) {
 
         include '../app/views/super_admin/detail_program_studi.php';
         break;
+    case 'update_prodi':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $prodiID = $_POST['prodiID'] ?? '';
+            $namaProdi = $_POST['namaProdi'] ?? '';
+
+            $result = $superAdminController->editProdi($prodiID, $namaProdi);
+
+            if ($result['success']) {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_prodi&id=' . $prodiID . '&success=update');
+            } else {
+                header('Location: /sibeta/public/index.php?page=super_admin/detail_prodi&id=' . $prodiID . '&error=' . urlencode($result['message']));
+            }
+            exit;
+        }
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;
