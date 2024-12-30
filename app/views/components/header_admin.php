@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div class="header">
+    <div class="header" style="justify-content: end !important;">
 
         <div class="profile">
             <div class="profile-info">
@@ -30,9 +30,20 @@
             </div>
 
             <div class="profile-settings d-flex flex-row align-items-center">
-                <img src="<?php echo '../app/' . $photo_profile_path; ?>" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <?php
+                $profile_path = '../app/' . $photo_profile_path;
+                $default_avatar = "/sibeta/public/assets/img/avatar.png";
+
+                // Check if profile image exists and is readable
+                if (!empty($photo_profile_path) && file_exists($profile_path) && is_readable($profile_path)) {
+                    $image_path = $profile_path;
+                } else {
+                    $image_path = $default_avatar;
+                }
+                ?>
+                <img src="<?php echo $image_path; ?>" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                 <div class="dropdown ms-2">
-                    <button 
+                    <button
                         class="btn border-0 bg-transparent dropdown-toggle"
                         type="button"
                         id="dropdownMenuButton"
@@ -49,7 +60,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
             </div>
         </div>
 

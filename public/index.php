@@ -95,7 +95,7 @@ switch ($page) {
     case 'super_admin':
         $nama = $_SESSION['nama'];
         $nip = $_SESSION['nip'];
-        $role = 'super sdmin';
+        $role = 'super admin';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/super_admin/index.php';
         break;
