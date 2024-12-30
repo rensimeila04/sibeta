@@ -56,20 +56,61 @@
   </aside>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
   <script src="script.js"></script>
 
   <script>
-    // Ambil URL saat ini
-    const currentPage = window.location.pathname.split("/").pop();
+    document.addEventListener("DOMContentLoaded", function() {
+      // Ambil URL saat ini
+      const urlParams = new URLSearchParams(window.location.search); // Ambil parameter query
+      const currentPage = urlParams.get('page'); // Ambil nilai dari parameter 'page'
 
-    // Ambil semua elemen <a> di sidebar
-    const navLinks = document.querySelectorAll("a.sidebar-link");
+      console.log("Current Page:", currentPage); // Debugging
 
-    // Loop semua link dan tambahkan class 'active' jika href cocok
-    navLinks.forEach((link) => {
-      console.log(link.getAttribute("href"));
-      if (link.getAttribute("href") === currentPage) {
-        link.classList.add("sidebar-link-active");
+      // Ambil semua elemen <a> di sidebar
+      const navLinks = document.querySelectorAll('a.sidebar-link');
+
+      // Loop semua link dan tambahkan class 'active' jika href cocok
+      navLinks.forEach(link => {
+        const linkPage = new URL(link.href).searchParams.get('page'); // Ambil nilai dari parameter 'page' di href
+        console.log("Link Page:", linkPage); // Debugging
+
+        // Tambahkan kelas hanya jika linkPage dan currentPage cocok
+        if (linkPage && linkPage === currentPage) {
+          link.classList.add('sidebar-link-active');
+        } else {
+          link.classList.remove('sidebar-link-active'); // Hapus kelas jika tidak cocok
+        }
+      });
+
+      // Tambahkan logika khusus untuk "Unggah Dokumen"
+      const uploadLink = document.querySelector('a[data-bs-toggle="collapse"][data-bs-target="#unggah"]');
+      const uploadDropdown = document.querySelector('#unggah'); // Dropdown Unggah Dokumen
+      const uploadSubLinks = uploadDropdown.querySelectorAll('a.sidebar-link'); // Semua submenu Unggah Dokumen
+
+      let isSubLinkActive = false;
+
+      // Periksa apakah salah satu submenu Unggah Dokumen cocok dengan currentPage
+      uploadSubLinks.forEach(subLink => {
+        const subLinkPage = new URL(subLink.href).searchParams.get('page');
+        if (subLinkPage === currentPage) {
+          isSubLinkActive = true; // Jika cocok, tandai sebagai aktif
+          subLink.classList.add('sidebar-link-active');
+        } else {
+          subLink.classList.remove('sidebar-link-active'); // Hapus kelas jika tidak cocok
+        }
+      });
+
+      // Jika salah satu submenu aktif, tambahkan kelas aktif ke link utama
+      if (isSubLinkActive) {
+        uploadLink.classList.add('sidebar-link-active');
+        uploadDropdown.classList.add('show'); // Buka dropdown jika submenu aktif
+      } else {
+        uploadLink.classList.remove('sidebar-link-active');
+        uploadDropdown.classList.remove('show'); // Pastikan dropdown tertutup jika tidak ada submenu aktif
       }
     });
   </script>

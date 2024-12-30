@@ -24,7 +24,7 @@
                 <div class="profile-name">
                     <?= $nama ?>
                 </div>
-                <div class="text-muted">
+                <div class="text-muted" style="text-transform: capitalize;">
                     <?= $role ?>
                 </div>
             </div>

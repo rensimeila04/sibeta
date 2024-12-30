@@ -86,21 +86,62 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-  <script src="script.js"></script>
-
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
   <script>
-    // Ambil URL saat ini
-    const currentPage = window.location.pathname.split("/").pop();
+    document.addEventListener("DOMContentLoaded", function() {
+      // Ambil URL saat ini
+      const urlParams = new URLSearchParams(window.location.search); // Ambil parameter query
+      const currentPage = urlParams.get('page'); // Ambil nilai dari parameter 'page'
 
-    // Ambil semua elemen <a> di sidebar
-    const navLinks = document.querySelectorAll("a.sidebar-link");
+      console.log("Current Page:", currentPage); // Debugging
 
-    // Loop semua link dan tambahkan class 'active' jika href cocok
-    navLinks.forEach((link) => {
-      console.log(link.getAttribute("href"));
-      if (link.getAttribute("href") === currentPage) {
-        link.classList.add("sidebar-link-active");
-      }
+      // Ambil semua elemen <a> di sidebar
+      const navLinks = document.querySelectorAll('a.sidebar-link');
+
+      // Loop semua link dan tambahkan class 'active' jika href cocok
+      navLinks.forEach(link => {
+        const linkPage = new URL(link.href).searchParams.get('page'); // Ambil nilai dari parameter 'page' di href
+        console.log("Link Page:", linkPage); // Debugging
+
+        // Tambahkan kelas 'sidebar-link-active' jika linkPage cocok dengan currentPage
+        if (linkPage && linkPage === currentPage) {
+          link.classList.add('sidebar-link-active');
+        } else {
+          link.classList.remove('sidebar-link-active'); // Hapus jika tidak cocok
+        }
+      });
+
+      // Tambahkan logika untuk menandai dropdown (jika ada)
+      const dropdownLinks = document.querySelectorAll('.has-dropdown');
+      dropdownLinks.forEach(dropdown => {
+        const targetId = dropdown.getAttribute('data-bs-target'); // Ambil ID target dropdown
+        const dropdownContainer = document.querySelector(targetId); // Temukan elemen dropdown
+
+        if (dropdownContainer) {
+          const dropdownItems = dropdownContainer.querySelectorAll('.sidebar-link'); // Semua item dalam dropdown
+          let isAnyDropdownLinkActive = false;
+
+          // Periksa apakah ada link aktif di dalam dropdown
+          dropdownItems.forEach(item => {
+            const linkPage = new URL(item.href).searchParams.get('page');
+            if (linkPage && linkPage === currentPage) {
+              isAnyDropdownLinkActive = true;
+            }
+          });
+
+          // Highlight dropdown dan buka jika ada link aktif di dalamnya
+          if (isAnyDropdownLinkActive) {
+            dropdown.classList.add('sidebar-link-active');
+            dropdownContainer.classList.add('show'); // Buka dropdown
+          } else {
+            dropdown.classList.remove('sidebar-link-active');
+            dropdownContainer.classList.remove('show'); // Tutup dropdown
+          }
+        }
+      });
     });
   </script>
 </body>
