@@ -374,7 +374,7 @@ class StaffModel
         }
     }
 
-    
+
 
     public function getTotalMahasiswaCount()
     {
@@ -592,16 +592,20 @@ class StaffModel
     public function deleteMahasiswa($nim)
     {
         try {
+            $this->conn->beginTransaction(); // Mulai transaksi
+
             // Verifikasi apakah mahasiswa dengan NIM yang sesuai ada
-            $sqlCheckOwnership = "SELECT COUNT(*) as count FROM Mahasiswa WHERE NIM = :nim";
+            $sqlCheckOwnership = "SELECT UserID FROM Mahasiswa WHERE NIM = :nim";
             $stmt = $this->conn->prepare($sqlCheckOwnership);
             $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($result['count'] == 0) {
+            if (!$result) {
                 throw new Exception("Mahasiswa tidak ditemukan.");
             }
+
+            $userID = $result['UserID'];
 
             // Hapus mahasiswa dari tabel Mahasiswa
             $sqlDeleteMahasiswa = "DELETE FROM Mahasiswa WHERE NIM = :nim";
@@ -610,14 +614,16 @@ class StaffModel
             $stmt->execute();
 
             // Hapus pengguna dari tabel Users
-            $sqlDeleteUser  = "DELETE FROM Users WHERE UserID = (SELECT UserID FROM Mahasiswa WHERE NIM = :nim)";
+            $sqlDeleteUser = "DELETE FROM Users WHERE UserID = :userID";
             $stmt = $this->conn->prepare($sqlDeleteUser);
-            $stmt->bindParam(':nim', $nim, PDO::PARAM_STR);
+            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
             $stmt->execute();
 
+            $this->conn->commit(); // Komit transaksi
             return true; // Mahasiswa dan pengguna berhasil dihapus
-        } catch (PDOException $e) {
-            throw new Exception("Query gagal: " . $e->getMessage());
+        } catch (Exception $e) {
+            $this->conn->rollBack(); // Rollback jika ada kesalahan
+            throw new Exception("Gagal menghapus mahasiswa: " . $e->getMessage());
         }
     }
 }
