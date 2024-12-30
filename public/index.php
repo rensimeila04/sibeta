@@ -1023,12 +1023,24 @@ switch ($page) {
             $result = $staffController->deleteStaff();
             if ($result) {
                 header('Location: /sibeta/public/index.php?page=super_admin/admin&success=Admin Berhasil Dihapus');
-            } else {                
+            } else {
                 header('Location: /sibeta/public/index.php?page=super_admin/admin&error=Gagal Menghapus Admin');
             }
         } catch (Exception $e) {
             header('Location: /sibeta/public/index.php?page=super_admin/admin&error=' . urlencode($e->getMessage()));
         }
+    case 'mark_notification_read':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notificationId'])) {
+            try {
+                $result = $notifikasiController->markNotificationAsRead($_POST['notificationId']);
+                echo json_encode(['success' => $result]);
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        }
+        exit;
+        break;
     default:
         echo "Halaman tidak ditemukan.";
         break;

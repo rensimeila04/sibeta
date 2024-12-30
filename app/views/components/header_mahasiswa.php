@@ -32,7 +32,7 @@ $unreadCount = $notifikasiController->getUnreadNotificationCount($nim);
                             notifications
                         </span>
                         <?php if ($unreadCount > 0): ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-count">
                                 <?php echo $unreadCount; ?>
                             </span>
                         <?php endif; ?>
@@ -43,7 +43,8 @@ $unreadCount = $notifikasiController->getUnreadNotificationCount($nim);
                         </li>
                         <?php foreach ($notifications as $notification): ?>
                             <li class="notification-item">
-                                <div class="dropdown-item notification-button w-100 text-start border-0"
+                                <div class="dropdown-item notification-button w-100 text-start border-0 <?php echo !$notification['IsDibaca'] ? 'unread' : ''; ?>"
+                                    data-notification-id="<?php echo $notification['NotifikasiID']; ?>"
                                     style="<?php echo $notification['IsDibaca'] ? 'background-color: #f8f9fa;' : ''; ?>">
                                     <div class="notification-content">
                                         <p class="notification-text mb-0"><?php echo htmlspecialchars($notification['Pesan']); ?></p>
@@ -103,6 +104,54 @@ $unreadCount = $notifikasiController->getUnreadNotificationCount($nim);
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous">
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all notification items
+            const notifications = document.querySelectorAll('.notification-button.unread');
+
+            notifications.forEach(notification => {
+                notification.addEventListener('click', function() {
+                    const notificationId = this.dataset.notificationId;
+                    markNotificationAsRead(notificationId, this);
+                });
+            });
+
+            function markNotificationAsRead(notificationId, element) {
+                // Create form data
+                const formData = new FormData();
+                formData.append('notificationId', notificationId);
+
+                // Send AJAX request
+                fetch('/sibeta/public/index.php?page=mark_notification_read', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update UI
+                            element.style.backgroundColor = '#f8f9fa';
+                            element.classList.remove('unread');
+
+                            // Update notification count
+                            const countBadge = document.querySelector('.notification-count');
+                            if (countBadge) {
+                                const currentCount = parseInt(countBadge.textContent);
+                                if (currentCount > 1) {
+                                    countBadge.textContent = currentCount - 1;
+                                } else {
+                                    countBadge.remove();
+                                }
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error marking notification as read:', error);
+                    });
+            }
+        });
     </script>
 </body>
 
