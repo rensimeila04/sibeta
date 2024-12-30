@@ -522,8 +522,8 @@ switch ($page) {
         break;
     case 'generate_surat':
         $nama = $_SESSION['nama'];
-        $nip = $_SESSION['nip'];
-        $role = 'super admin';
+        $nip = $_SESSION['nim'];
+        $role = 'mahasiswa';
         $photo_profile_path = $_SESSION['photo_profile'];
         include '../app/views/mahasiswa/generate_surat.php';
         break;
